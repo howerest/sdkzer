@@ -84,7 +84,8 @@ var Sdkzer = (function () {
         var _this = this, promise;
         if (this.attrs['id']) {
             this.syncing = true;
-            var request = new WebServices.HttpRequest(this.resourceEndpoint() + '/' + this.attrs['id'], "GET", httpHeaders);
+            var query = new WebServices.HttpQuery("GET", this.resourceEndpoint() + '/' + this.attrs['id'], {}, httpHeaders, {});
+            var request = new WebServices.HttpRequest(query);
             promise = request.promise;
             promise.then(function (response) {
                 console.log('Success!!');
@@ -130,27 +131,35 @@ var Sdkzer = (function () {
     };
     Sdkzer.prototype.update = function (httpHeaders) {
         if (httpHeaders === void 0) { httpHeaders = []; }
-        var _this = this;
+        var _this = this, query, request;
         if (this.hasChanged()) {
-            var request = new WebServices.HttpRequest(this.resourceEndpoint() + '/' + this.attrs['id'], 'PUT', httpHeaders, {}, this.toOriginJSON());
+            query = new WebServices.HttpQuery("PUT", this.resourceEndpoint() + '/' + this.attrs['id'], {}, httpHeaders, this.toOriginJSON());
+            request = new WebServices.HttpRequest(query);
             return request.promise.then(function (response) {
                 _this.lastResponse = response;
             });
         }
     };
     Sdkzer.prototype.destroy = function () {
-        var request = new WebServices.HttpRequest(this.resourceEndpoint() + '/' + this.attrs['id'], 'DELETE');
+        var query, request;
+        query = new WebServices.HttpQuery("DELETE", this.resourceEndpoint() + '/' + this.attrs['id']);
+        request = new WebServices.HttpRequest(query);
     };
-    Sdkzer.fetchIndex = function (qsParams, httpHeaders) {
-        if (httpHeaders === void 0) { httpHeaders = []; }
-        var model = new this();
-        var request = new WebServices.HttpRequest(model.resourceEndpoint(), "GET", httpHeaders);
+    Sdkzer.fetchIndex = function (httpQuery) {
+        var query, request;
+        query = new WebServices.HttpQuery("GET", new this().resourceEndpoint());
+        request = new WebServices.HttpRequest(query);
         return request.promise;
     };
-    Sdkzer.fetchOne = function (id, httpHeaders) {
-        if (httpHeaders === void 0) { httpHeaders = []; }
-        var model = new this();
-        var request = new WebServices.HttpRequest(model.resourceEndpoint() + '/' + id, "GET", httpHeaders);
+    Sdkzer.fetchOne = function (id, httpQuery) {
+        var model = new this(), query, request;
+        if (typeof (httpQuery) === 'undefined') {
+            query = new WebServices.HttpQuery("GET", model.resourceEndpoint() + '/' + id, {}, []);
+        }
+        else {
+            query = httpQuery;
+        }
+        request = new WebServices.HttpRequest(query);
         return request.promise;
     };
     Sdkzer.DEFAULT_HTTP_HEADERS = [];

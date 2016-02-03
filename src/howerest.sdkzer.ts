@@ -176,7 +176,9 @@ class Sdkzer {
     if (this.attrs['id']) {
       this.syncing = true;
 
-      var request = new WebServices.HttpRequest(this.resourceEndpoint() + '/' + this.attrs['id'], "GET", httpHeaders);
+      var query = new WebServices.HttpQuery("GET", this.resourceEndpoint() + '/' + this.attrs['id'], {}, httpHeaders, {})
+
+      var request = new WebServices.HttpRequest(query);
       promise = request.promise;
       promise.then(
         // Success
@@ -259,16 +261,13 @@ class Sdkzer {
    * Updates the local object into the origin
    */
   public update(httpHeaders:WebServices.HttpHeader[] = []) {
-    var _this =  this;
+    var _this =  this,
+        query,
+        request;
 
     if (this.hasChanged()) {
-      var request = new WebServices.HttpRequest(
-        this.resourceEndpoint()+'/'+this.attrs['id'],
-        'PUT',
-        httpHeaders,
-        {},
-        this.toOriginJSON()
-      );
+      query = new WebServices.HttpQuery("PUT", this.resourceEndpoint()+'/'+this.attrs['id'], {}, httpHeaders, this.toOriginJSON());
+      request = new WebServices.HttpRequest(query);
 
       return request.promise.then(
         // Success
@@ -284,41 +283,43 @@ class Sdkzer {
    * Destroys the current record in the origin
    */
   public destroy() {
-    var request = new WebServices.HttpRequest(
-      this.resourceEndpoint()+'/'+this.attrs['id'],
-      'DELETE'
-    );
+    var query,
+        request;
+
+    query = new WebServices.HttpQuery("DELETE", this.resourceEndpoint()+'/'+this.attrs['id']);
+    request = new WebServices.HttpRequest(query);
   }
 
 
   /*!
-   * Repository ------------------------------------------------------------
+   * Retrieves a collection of records from the origin
    */
+  public static fetchIndex(httpQuery:WebServices.HttpQuery) {
+    var query,
+        request;
 
-  public static fetchIndex(qsParams: Object, httpHeaders:WebServices.HttpHeader[] = []) {
-    var model = new this();
-
-    var request = new WebServices.HttpRequest(
-      model.resourceEndpoint(),
-      "GET",
-      httpHeaders
-    );
+    query = new WebServices.HttpQuery("GET", new this().resourceEndpoint());
+    request = new WebServices.HttpRequest(query);
 
     return request.promise;
   }
 
 
   /*!
-   * Fetches a single record from the origin
+   * Retrieves a single record from the origin
    */
-  public static fetchOne(id: Number, httpHeaders:WebServices.HttpHeader[] = []) {
-    var model = new this();
-    var request = new WebServices.HttpRequest(
-      model.resourceEndpoint()+'/'+id,
-      "GET",
-      httpHeaders
-    );
+  public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) {
+    var model = new this(),
+        query,
+        request;
 
+    if (typeof(httpQuery) === 'undefined') {
+      query = new WebServices.HttpQuery("GET", model.resourceEndpoint()+'/'+id, {}, []);
+    } else {
+      query = httpQuery;
+    }
+
+    request = new WebServices.HttpRequest(query);
     return request.promise;
   }
 }
