@@ -3,6 +3,9 @@
 David Valín
   howerest Labs . http://www.howerest.com/labs
 
+Still defining the API & polishing the tests:
+  [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
+
 ## Introduction ##
 howerest sdkzer implements a dev-friendly javascript API to interact with http restful resources. You can inherit the Sdkzer functionality in your SDK entities and write your custom behavior and data on top of that layer.
 
