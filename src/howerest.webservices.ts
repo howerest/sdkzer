@@ -25,20 +25,12 @@ module WebServices {
    */
   export class HttpRequest {
     client: any;
-    httpHeaders:WebServices.HttpHeader[]
-    endpoint: string
-    httpMethod: string
-    qsParams: Object = {}
-    data: Object = {}
+    query:WebServices.HttpQuery;
     response: HttpResponse = null
     promise: Promise<any>
 
-    constructor(endpoint: string, httpMethod: string, httpHeaders:WebServices.HttpHeader[] = [], qsParams?: Object, data?: Object) {
-      this.endpoint = endpoint
-      this.httpMethod = httpMethod
-      this.httpHeaders = httpHeaders
-      this.qsParams = qsParams
-      this.data = data
+    constructor(httpQuery:WebServices.HttpQuery) {
+      this.query = httpQuery;
       var _this = this
 
       console.log('XMLHttpRequest: ', XMLHttpRequest());
@@ -114,18 +106,25 @@ module WebServices {
    *    User.fetchAll(query)
    */
   export class HttpQuery {
-    public qsParams:Object;
-    public headers:WebServices.HttpHeader[];
+    public endpoint:string;
+    public httpMethod:string = 'GET';
+    public qsParams:Object = {};
+    public headers:WebServices.HttpHeader[] = [];
+    public data:Object = {};
 
-    constructor(qsParams:Object = {}, headers:WebServices.HttpHeader[]) {
+    constructor(httpMethod: string, endpoint: string, qsParams:Object = {}, headers:WebServices.HttpHeader[] = [], data?:Object) {
+      this.endpoint = endpoint
+      this.httpMethod = httpMethod
       this.qsParams = qsParams;
       this.headers = headers;
+      this.data = data;
     }
+
 
     /*
     *  Implements a Http Querier API to modify the query
     */
-    public where(qsParams:Object) {
+    public where(qsParams:Object = this.qsParams) {
       for (var key in qsParams) {
         if (qsParams.hasOwnProperty(key)) {
           this.qsParams[key] = qsParams[key];
