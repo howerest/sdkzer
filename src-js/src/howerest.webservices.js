@@ -9,18 +9,13 @@ var WebServices;
     })();
     WebServices.HttpHeader = HttpHeader;
     var HttpRequest = (function () {
-        function HttpRequest(endpoint, httpMethod, httpHeaders, qsParams, data) {
-            if (httpHeaders === void 0) { httpHeaders = []; }
-            this.qsParams = {};
-            this.data = {};
+        function HttpRequest(httpQuery) {
             this.response = null;
-            this.endpoint = endpoint;
-            this.httpMethod = httpMethod;
-            this.httpHeaders = httpHeaders;
-            this.qsParams = qsParams;
-            this.data = data;
+            this.query = httpQuery;
             var _this = this;
+            console.log('XMLHttpRequest: ', XMLHttpRequest());
             if (Util.EnvChecker.isBrowser()) {
+                console.log('Im in a browser');
                 if (typeof (XMLHttpRequest) !== 'undefined') {
                     this.client = new XMLHttpRequest();
                 }
@@ -32,6 +27,7 @@ var WebServices;
                 }
             }
             else if (Util.EnvChecker.isNode()) {
+                console.log('Im in Node.js');
                 var XMLHttpRequest = require('xhr2');
                 this.client = new XMLHttpRequest();
             }
@@ -70,12 +66,21 @@ var WebServices;
     })();
     WebServices.HttpResponse = HttpResponse;
     var HttpQuery = (function () {
-        function HttpQuery(qsParams, headers) {
+        function HttpQuery(httpMethod, endpoint, qsParams, headers, data) {
             if (qsParams === void 0) { qsParams = {}; }
+            if (headers === void 0) { headers = []; }
+            this.httpMethod = 'GET';
+            this.qsParams = {};
+            this.headers = [];
+            this.data = {};
+            this.endpoint = endpoint;
+            this.httpMethod = httpMethod;
             this.qsParams = qsParams;
             this.headers = headers;
+            this.data = data;
         }
         HttpQuery.prototype.where = function (qsParams) {
+            if (qsParams === void 0) { qsParams = this.qsParams; }
             for (var key in qsParams) {
                 if (qsParams.hasOwnProperty(key)) {
                     this.qsParams[key] = qsParams[key];
