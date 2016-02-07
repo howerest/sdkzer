@@ -53,11 +53,11 @@ module WebServices {
       }
 
       // Set method & url
-      this.client.open(this.httpMethod, this.endpoint);
+      this.client.open(this.query.httpMethod, this.query.endpoint);
 
       // Set headers
-      for (var headerKey in this.httpHeaders) {
-        this.client.setRequestHeader(headerKey, this.httpHeaders[headerKey]);
+      for (var headerKey in this.query.headers) {
+        this.client.setRequestHeader(headerKey, this.query.headers[headerKey]);
       }
       this.client.setRequestHeader('Accept', 'application/json');
       // Promise
@@ -75,7 +75,7 @@ module WebServices {
         };
       });
 
-      this.client.send(data ? JSON.stringify(data) : null);
+      this.client.send(this.query.data ? JSON.stringify(this.query.data) : null);
     }
   }
 
@@ -112,27 +112,50 @@ module WebServices {
     public headers:WebServices.HttpHeader[] = [];
     public data:Object = {};
 
-    constructor(httpMethod: string, endpoint: string, qsParams:Object = {}, headers:WebServices.HttpHeader[] = [], data?:Object) {
-      this.endpoint = endpoint
-      this.httpMethod = httpMethod
-      this.qsParams = qsParams;
-      this.headers = headers;
-      this.data = data;
+    constructor(querySettings: IHttpQuerySettings) {
+      this.endpoint = querySettings.endpoint
+      this.httpMethod = querySettings.httpMethod
+      this.qsParams = querySettings.qsParams;
+      this.headers = querySettings.headers;
+      this.data = querySettings.data;
     }
 
 
-    /*
-    *  Implements a Http Querier API to modify the query
-    */
+    /*!
+     *  Implements a Http Querier API to modify the query
+     *  Query String parameters are right way to query an restful http resource
+     */
     public where(qsParams:Object = this.qsParams) {
+
+      // qs:
+      // headers:
+      // data:
+
       for (var key in qsParams) {
         if (qsParams.hasOwnProperty(key)) {
           this.qsParams[key] = qsParams[key];
         }
       }
 
-       return this;
+      return this;
     }
+
+
+    /*!
+     *  Sets a list of HttpHeaders for the HttpQuery
+     */
+    public withHeaders(headers:WebServices.HttpHeader[] = []) {
+      this.headers = headers;
+    }
+
+
+    /*!
+     *  Sets the data for the HttpQuery
+     */
+    public withData(data:Object = {}) {
+      this.data = data;
+    }
+
 
     /*
      *  Returns the HttpQuery query string in string format (URI encoded)
@@ -140,6 +163,7 @@ module WebServices {
      public qsParamsToString(qsParams:Object = this.qsParams) {
        return this.serialize(qsParams);
      }
+
 
     /*
      *  Serialize
@@ -154,5 +178,13 @@ module WebServices {
 
        return items.join("&");
      }
+  }
+
+  export interface IHttpQuerySetings {
+    endpoint: string
+    httpMethod: string
+    qsParams: Object
+    headers: WebServices.HttpHeader[]
+    data: Object
   }
 }

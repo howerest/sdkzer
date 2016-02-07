@@ -34,9 +34,9 @@ var WebServices;
             else {
                 return;
             }
-            this.client.open(this.httpMethod, this.endpoint);
-            for (var headerKey in this.httpHeaders) {
-                this.client.setRequestHeader(headerKey, this.httpHeaders[headerKey]);
+            this.client.open(this.query.httpMethod, this.query.endpoint);
+            for (var headerKey in this.query.headers) {
+                this.client.setRequestHeader(headerKey, this.query.headers[headerKey]);
             }
             this.client.setRequestHeader('Accept', 'application/json');
             this.promise = new Promise(function (resolve, reject) {
@@ -52,7 +52,7 @@ var WebServices;
                     }
                 };
             });
-            this.client.send(data ? JSON.stringify(data) : null);
+            this.client.send(this.query.data ? JSON.stringify(this.query.data) : null);
         }
         return HttpRequest;
     })();
@@ -66,18 +66,16 @@ var WebServices;
     })();
     WebServices.HttpResponse = HttpResponse;
     var HttpQuery = (function () {
-        function HttpQuery(httpMethod, endpoint, qsParams, headers, data) {
-            if (qsParams === void 0) { qsParams = {}; }
-            if (headers === void 0) { headers = []; }
+        function HttpQuery(querySettings) {
             this.httpMethod = 'GET';
             this.qsParams = {};
             this.headers = [];
             this.data = {};
-            this.endpoint = endpoint;
-            this.httpMethod = httpMethod;
-            this.qsParams = qsParams;
-            this.headers = headers;
-            this.data = data;
+            this.endpoint = querySettings.endpoint;
+            this.httpMethod = querySettings.httpMethod;
+            this.qsParams = querySettings.qsParams;
+            this.headers = querySettings.headers;
+            this.data = querySettings.data;
         }
         HttpQuery.prototype.where = function (qsParams) {
             if (qsParams === void 0) { qsParams = this.qsParams; }
@@ -87,6 +85,14 @@ var WebServices;
                 }
             }
             return this;
+        };
+        HttpQuery.prototype.withHeaders = function (headers) {
+            if (headers === void 0) { headers = []; }
+            this.headers = headers;
+        };
+        HttpQuery.prototype.withData = function (data) {
+            if (data === void 0) { data = {}; }
+            this.data = data;
         };
         HttpQuery.prototype.qsParamsToString = function (qsParams) {
             if (qsParams === void 0) { qsParams = this.qsParams; }
