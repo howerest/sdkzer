@@ -11,12 +11,12 @@ module WebServices {
    * Handles a Http Header
    */
   export class HttpHeader {
-    name: string;
-    value: string;
+    public name: string;
+    public value: string;
 
-    constructor(name: string, value: string) {
-      this.name = name;
-      this.value = value;
+    constructor(header:Object) {
+      this.name = Object.keys(header)[0];
+      this.value = header[Object.keys(header)[0]];
     }
   }
 
@@ -32,8 +32,6 @@ module WebServices {
     constructor(httpQuery:WebServices.HttpQuery) {
       this.query = httpQuery;
       var _this = this
-
-      console.log('XMLHttpRequest: ', XMLHttpRequest());
 
       if (Util.EnvChecker.isBrowser()) {
         console.log('Im in a browser');
@@ -180,7 +178,8 @@ module WebServices {
      }
   }
 
-  export interface IHttpQuerySetings {
+
+  export interface IHttpQuerySettings {
     endpoint: string
     httpMethod: string
     qsParams: Object

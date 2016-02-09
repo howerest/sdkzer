@@ -54,10 +54,15 @@ class Sdkzer {
   }
 
   /*!
-   * Configure
+   * Configure Sdkzer
    */
    public static configure(options:ISdkzerConfigOptions) {
-     Sdkzer['DEFAULT_HTTP_HEADERS'] = options['defaultHttpHeaders'] ? options['defaultHttpHeaders'] : this['DEFAULT_HTTP_HEADERS'];
+     if (options['defaultHttpHeaders']) {
+       Sdkzer['DEFAULT_HTTP_HEADERS'] = [];
+       for (var i = 0; i < options['defaultHttpHeaders'].length; i++) {
+         Sdkzer['DEFAULT_HTTP_HEADERS'].push(new WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
+       }
+     }
      Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
      Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
      Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
@@ -92,7 +97,7 @@ class Sdkzer {
     * Retrieves the http guess config for an specific crud operation
     */
    public static getHttpQueryGuessConfigFor(operation:String) {
-     if (Sdkzer.usingRestfulHttpPattern()) {
+     if (Sdkzer.usingRestfulCrudHttpPattern()) {
        return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
      } else {
        return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['custom'];
