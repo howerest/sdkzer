@@ -15,9 +15,28 @@ var Sdkzer = (function () {
             this.pAttrs[attrKey] = attrs[attrKey];
         }
     }
-    Sdkzer.prototype.configure = function (options) {
-        this['DEFAULT_HTTP_HEADERS'] = options['defaultHttpHeaders'] ? options['defaultHttpHeaders'] : this['DEFAULT_HTTP_HEADERS'];
-        this['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+    Sdkzer.configure = function (options) {
+        Sdkzer['DEFAULT_HTTP_HEADERS'] = options['defaultHttpHeaders'] ? options['defaultHttpHeaders'] : this['DEFAULT_HTTP_HEADERS'];
+        Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+        Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
+        Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
+    };
+    Sdkzer.usingRestfulCrudHttpPattern = function () {
+        return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
+    };
+    Sdkzer.usingCustomHttpPattern = function () {
+        return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
+    };
+    Sdkzer.usingParentsFetchStrategy = function () {
+        return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
+    };
+    Sdkzer.getHttpQueryGuessConfigFor = function (operation) {
+        if (Sdkzer.usingRestfulHttpPattern()) {
+            return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
+        }
+        else {
+            return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['custom'];
+        }
     };
     Sdkzer.prototype.setDefaults = function () {
         if (this.defaults()) {
@@ -142,6 +161,8 @@ var Sdkzer = (function () {
     Sdkzer.prototype.update = function (httpHeaders) {
         if (httpHeaders === void 0) { httpHeaders = []; }
         var _this = this, query, request;
+        if (Sdkzer.HTTP_PATTERN === 'restful-crud') {
+        }
         if (this.hasChanged()) {
             query = new WebServices.HttpQuery({
                 httpMethod: "PUT",
@@ -197,7 +218,27 @@ var Sdkzer = (function () {
         return request.promise;
     };
     Sdkzer.DEFAULT_HTTP_HEADERS = [];
-    Sdkzer.HTTP_PATTERN = 'restful-crud';
+    Sdkzer.HTTP_PATTERN = 'restful_crud';
+    Sdkzer.PARENTS_FETCH_STRATEGY = 'none';
+    Sdkzer.HTTP_QUERY_GUESS_CONFIG = {
+        "restful_crud": {
+            "read_collection": {
+                verb: "GET",
+                endpoint: '' },
+            "read_record": {
+                verb: "GET",
+                endpoint: '' },
+            "create_record": {
+                verb: "GET",
+                endpoint: '' },
+            "update_record": {
+                verb: "GET",
+                endpoint: '' },
+            "delete_record": {
+                verb: "GET",
+                endpoint: '' }
+        }
+    };
     return Sdkzer;
 })();
 Modularizer.defineModule('Sdkzer', Sdkzer);
