@@ -16,8 +16,28 @@ class Sdkzer {
   public lastResponse:WebServices.HttpResponse = null;
 
   // Configuration
-  public static DEFAULT_HTTP_HEADERS:WebServices.HttpHeader[] = [];
-  public static HTTP_PATTERN:String = 'restful-crud';
+  private static DEFAULT_HTTP_HEADERS:WebServices.HttpHeader[] = [];
+  private static HTTP_PATTERN:String = 'restful_crud';
+  private static PARENTS_FETCH_STRATEGY:String = 'none';
+  private static HTTP_QUERY_GUESS_CONFIG:Object = {
+    "restful_crud": {
+      "read_collection" : {
+        verb: "GET",
+        endpoint: ''   },
+      "read_record" :     {
+        verb: "GET",
+        endpoint: ''   },
+      "create_record" :   {
+        verb: "GET",
+        endpoint: ''   },
+      "update_record":    {
+        verb: "GET",
+        endpoint: ''   },
+      "delete_record":    {
+        verb: "GET",
+        endpoint: ''   }
+    }
+  }
 
 
   public constructor(attrs:Object = {}) {
@@ -36,9 +56,47 @@ class Sdkzer {
   /*!
    * Configure
    */
-   public configure(options:Object) {
-     this['DEFAULT_HTTP_HEADERS'] = options['defaultHttpHeaders'] ? options['defaultHttpHeaders'] : this['DEFAULT_HTTP_HEADERS'];
-     this['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+   public static configure(options:ISdkzerConfigOptions) {
+     Sdkzer['DEFAULT_HTTP_HEADERS'] = options['defaultHttpHeaders'] ? options['defaultHttpHeaders'] : this['DEFAULT_HTTP_HEADERS'];
+     Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+     Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
+     Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
+   }
+
+
+   /*!
+    * Verifies if Sdkzer is using a restful CRUD http pattern
+    */
+   public static usingRestfulCrudHttpPattern() {
+     return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
+   }
+
+
+   /*!
+    * Verifies if Sdkzer is using a custom http pattern
+    */
+   public static usingCustomHttpPattern() {
+     return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
+   }
+
+
+   /*!
+    * Verifies if Sdkzer is using any parents fetch strategy
+    */
+   public static usingParentsFetchStrategy() {
+     return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
+   }
+
+
+   /*!
+    * Retrieves the http guess config for an specific crud operation
+    */
+   public static getHttpQueryGuessConfigFor(operation:String) {
+     if (Sdkzer.usingRestfulHttpPattern()) {
+       return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
+     } else {
+       return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['custom'];
+     }
    }
 
 
@@ -86,6 +144,8 @@ class Sdkzer {
    * Retrieves the resource endpoint url
    */
   public resourceEndpoint() {
+    // TODO: This is the base endpoint, not the resource endpoint
+    // TODO: Guess a resourceEndpoint based on a restful or custom http pattern
     return '';
   }
 
@@ -272,6 +332,11 @@ class Sdkzer {
         query,
         request;
 
+    // Update tests
+    if (Sdkzer.HTTP_PATTERN === 'restful-crud') {
+
+    }
+
     if (this.hasChanged()) {
       query = new WebServices.HttpQuery({
         httpMethod: "PUT",
@@ -317,6 +382,8 @@ class Sdkzer {
     var query,
         request;
 
+    // TODO: the endpont and verb
+
     query = new WebServices.HttpQuery({
       httpMethod: "GET",
       endpoint:   (new this().resourceEndpoint()),
@@ -353,6 +420,18 @@ class Sdkzer {
     request = new WebServices.HttpRequest(query);
     return request.promise;
   }
+}
+
+
+interface ISdkzerConfigOptions {
+  defaultHttpHeaders:String;
+  httpPattern:String;
+  parentsFetchStrategy:String;
+  httpQueryGuessConfig:IHttpQueryGuessConfig;
+}
+
+interface IHttpQueryGuessConfig {
+  restful:Object;
 }
 
 Modularizer.defineModule('Sdkzer', Sdkzer);
