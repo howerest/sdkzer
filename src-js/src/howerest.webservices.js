@@ -1,9 +1,9 @@
 var WebServices;
 (function (WebServices) {
     var HttpHeader = (function () {
-        function HttpHeader(name, value) {
-            this.name = name;
-            this.value = value;
+        function HttpHeader(header) {
+            this.name = Object.keys(header)[0];
+            this.value = header[Object.keys(header)[0]];
         }
         return HttpHeader;
     })();
@@ -13,7 +13,6 @@ var WebServices;
             this.response = null;
             this.query = httpQuery;
             var _this = this;
-            console.log('XMLHttpRequest: ', XMLHttpRequest());
             if (Util.EnvChecker.isBrowser()) {
                 console.log('Im in a browser');
                 if (typeof (XMLHttpRequest) !== 'undefined') {
