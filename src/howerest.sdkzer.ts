@@ -279,7 +279,7 @@ class Sdkzer {
       );
     }
 
-    if (typeof(promise === 'undefined')) {
+    if (typeof(promise) === 'undefined') {
       promise = new Promise((resolve, reject) => { });
       promise = Promise.reject(false);
     }
