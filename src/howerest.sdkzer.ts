@@ -281,7 +281,7 @@ class Sdkzer {
 
     if (typeof(promise === 'undefined')) {
       promise = new Promise((resolve, reject) => { });
-      promise = request.promise = Promise.reject(false);
+      promise = Promise.reject(false);
     }
 
     return promise;
@@ -337,7 +337,7 @@ class Sdkzer {
         query,
         request;
 
-    // Update tests
+    // TODO: Adapt tests to test at least restful HTTP_QUERY_GUESS_CONFIG applied to verb and endpoint
     if (Sdkzer.HTTP_PATTERN === 'restful-crud') {
 
     }

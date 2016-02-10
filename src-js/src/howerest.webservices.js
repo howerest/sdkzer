@@ -47,7 +47,8 @@ var WebServices;
                         }
                     }
                     else {
-                        this.promise = Promise.reject(false);
+                        _this.promise = Promise.reject(false);
+                        resolve({});
                     }
                 };
             });
