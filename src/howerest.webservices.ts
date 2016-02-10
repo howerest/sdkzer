@@ -68,7 +68,8 @@ module WebServices {
               resolve(_this.response);
             }
           } else {
-            this.promise = Promise.reject(false);
+            _this.promise = Promise.reject(false);
+            resolve({});
           }
         };
       });
