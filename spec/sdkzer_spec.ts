@@ -199,14 +199,14 @@ describe('Sdkzer', () => {
       var sdkzer = new Sdkzer({
         name: 'My initial name'
       });
-      sdkzer['pAttrs'] = { name: 'My initial name' }; // This is like a sync with origin
-      expect(sdkzer.prevAttrs()).toEqual({});
+      sdkzer['pAttrs'] = { id: null, name: 'My other name' }; // This is like a sync with origin
+      expect(sdkzer.prevAttrs()).toEqual({ name: 'My other name' });
       sdkzer.attrs = {
-        name: "My New Name",
-        age: 101
+        name: "A Special Name",
+        age: 97
       };
       expect(sdkzer.prevAttrs()).toEqual({
-        name: "My initial name",
+        name: "My other name",
         age: null
       });
     });
@@ -273,8 +273,8 @@ describe('Sdkzer', () => {
         sdkzerInstance = new Person({ id: 1 });
       });
 
-      // TODO: This is not testing anything
-      it('should make an HttpRequest', () => {
+      // TODO: This seems silly. Better cases?
+      xit('should make an HttpRequest', () => {
         spyOn(WebServices.HttpRequest.prototype, 'constructor');
         jasmine.Ajax.stubRequest('http://api.mydomain.com/items/1').andReturn({
           responseText: "{ id: 1000, name: 'Whatever Name' }"

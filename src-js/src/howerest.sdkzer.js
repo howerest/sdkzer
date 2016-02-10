@@ -140,7 +140,7 @@ var Sdkzer = (function () {
         }
         if (typeof (promise === 'undefined')) {
             promise = new Promise(function (resolve, reject) { });
-            promise = request.promise = Promise.reject(false);
+            promise = Promise.reject(false);
         }
         return promise;
     };
