@@ -138,7 +138,7 @@ var Sdkzer = (function () {
                 _this.syncing = false;
             });
         }
-        if (typeof (promise === 'undefined')) {
+        if (typeof (promise) === 'undefined') {
             promise = new Promise(function (resolve, reject) { });
             promise = Promise.reject(false);
         }
