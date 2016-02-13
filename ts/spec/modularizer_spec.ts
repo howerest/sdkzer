@@ -1,4 +1,4 @@
-/// <reference path="../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../typings/jasmine/jasmine.d.ts" />
 
 // declare var MockAjax;
 // var MockAjax = require('/Users/overflow/Sites/howerest/sdkizer/src-js/spec/lib/mock-ajax.js');

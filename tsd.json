@@ -20,9 +20,6 @@
     "requirejs/require.d.ts": {
       "commit": "2d4c4679bc2b509f27435a4f9da5e2de11258571"
     },
-    "underscore/underscore.d.ts": {
-      "commit": "6eebd5e90a1cbd6b47b0705ba72dbcd5baf846f3"
-    },
     "jasmine-ajax/jasmine-ajax.d.ts": {
       "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     }

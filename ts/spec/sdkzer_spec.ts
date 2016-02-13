@@ -1,7 +1,7 @@
-/// <reference path="../typings/jasmine/jasmine.d.ts" />
-/// <reference path="../typings/jasmine-ajax/jasmine-ajax.d.ts" />
-/// <reference path="../typings/underscore/underscore.d.ts" />
-/// <reference path="../src/howerest.sdkzer.ts" />
+/// <reference path="../../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../typings/jasmine-ajax/jasmine-ajax.d.ts" />
+/// <reference path="../../ts/howerest.sdkzer.ts" />
+
 
 // declare var MockAjax;
 // var MockAjax = require('/Users/overflow/Sites/howerest/sdkizer/src-js/spec/lib/mock-ajax.js');
@@ -259,9 +259,9 @@ describe('Sdkzer', () => {
             var parsed = [];
 
             if (Array.isArray(data)) {
-              _.each(data, function(recordData) {
-                parsed.push(this.parseOne(recordData));
-              });
+              for (var i = 0; i < data.length; i++) {
+                parsed.push(this.parseOne(data[i]));
+              }
             } else {
               parsed.push(this.parseOne(data.folder));
             }
