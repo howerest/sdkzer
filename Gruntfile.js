@@ -3,7 +3,7 @@ module.exports = function(grunt) {
   grunt.initConfig({
     watch: {
       files: [
-        './src/**/*.js'
+        './js/**/*.js'
       ],
       tasks: ['default']
     },
@@ -19,11 +19,9 @@ module.exports = function(grunt) {
       release: {
         // the files to concatenate
         src: [
-          //'node_modules/es6-promise/dist/es6-promise.js',
-          'src-js/src/howerest.modularizer.js',
-          'src-js/src/howerest.util.js',
-          'src-js/src/howerest.webservices.js',
-          'src-js/src/howerest.sdkzer.js'
+          //'node_modules/es6-promise/dist/es6-promise.js', // Add to this build if needed
+          'js/howerest.modularizer.js',
+          'js/howerest.sdkzer.js'
         ],
         // the location of the resulting JS file
         dest: 'release/howerest-sdkzer.js'

@@ -1,6 +1,6 @@
 /// <reference path='../typings/node/node.d.ts' />
 /// <reference path='../typings/es6-promise/es6-promise.d.ts' />
-/// <reference path='./howerest.webservices.ts' />
+/// <reference path='../node_modules/js-webservices/ts/web_services.ts' />
 /// <reference path="./howerest.modularizer.ts"/>
 
 /*!
