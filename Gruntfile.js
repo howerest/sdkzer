@@ -19,7 +19,10 @@ module.exports = function(grunt) {
       release: {
         // the files to concatenate
         src: [
-          //'node_modules/es6-promise/dist/es6-promise.js', // Add to this build if needed
+          // Uncomment next line for ES3 support if you don't include any ES6 Promise polifil in a parent build
+          //'node_modules/es6-promise/dist/es6-promise.js',
+          'node_modules/js-webservices/js/util.js',
+          'node_modules/js-webservices/js/web_services.js',
           'js/howerest.modularizer.js',
           'js/howerest.sdkzer.js'
         ],
@@ -34,7 +37,8 @@ module.exports = function(grunt) {
       options: {
         compress: {
           drop_console: true
-        }
+        },
+        banner: "/*! howerest-sdkzer 0.0.22 | howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed */\n"
       },
       release: {
         files: {

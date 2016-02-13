@@ -1,6 +1,9 @@
 declare var angular:any;
 declare var window:Window;
 
+// Implements basic functionality to declare js modules for the most popular systems
+// howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed
+
 class Modularizer {
   public static defineModule(moduleName:string, fromModule:any) {
 

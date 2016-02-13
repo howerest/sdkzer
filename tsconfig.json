@@ -9,7 +9,7 @@
     "noLib": false,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./js",
-    "sourceMap": true
+    "sourceMap": false
   },
   "filesGlob": [
     "./typings/**/*.ts",
