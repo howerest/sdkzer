@@ -14,16 +14,14 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      { pattern: 'spec/lib/mock-ajax.js', included: true },
-
+      { pattern: 'node_modules/jasmine-ajax/lib/mock-ajax.js', included: true },
       { pattern: 'node_modules/es6-promise/dist/es6-promise.min.js', included: true },
+      { pattern: 'node_modules/js-webservices/js/util.js', included: true },
+      { pattern: 'node_modules/js-webservices/js/web_services.js', included: true },
+      { pattern: 'js/howerest.modularizer.js', included: true },
+      { pattern: 'js/howerest.sdkzer.js', included: true },
 
-      { pattern: 'src-js/src/howerest.modularizer.js', included: true },
-      { pattern: 'src-js/src/howerest.webservices.js', included: true },
-      { pattern: 'src-js/src/howerest.util.js', included: true },
-      { pattern: 'src-js/src/howerest.sdkzer.js', included: true },
-
-      { pattern: 'src-js/spec/**/*_spec.js', included: true },
+      { pattern: 'js/spec/**/*_spec.js', included: true },
     ],
 
 

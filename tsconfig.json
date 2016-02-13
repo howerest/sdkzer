@@ -1,37 +1,34 @@
 {
-    "version": "1.5.0-alpha",
-    "compilerOptions": {
-        "target": "es3",
-        "module": "amd",
-        "declaration": false,
-        "noImplicitAny": false,
-        "removeComments": true,
-        "noLib": false,
-        "suppressImplicitAnyIndexErrors": true,
-        "outDir": "./src-js"
-    },
-    "filesGlob": [
-        "./typings/**/*.ts",
-        "./src/**/*.ts",
-        "./spec/**/*.ts",
-        "!./node_modules/**/*.ts"
-    ],
-    "files": [
-        "./typings/es6-promise/es6-promise.d.ts",
-        "./typings/jasmine/jasmine.d.ts",
-        "./typings/jasmine/legacy/jasmine-1.3.d.ts",
-        "./typings/mocha/mocha.d.ts",
-        "./typings/node/node.d.ts",
-        "./typings/requirejs/require.d.ts",
-        "./typings/tsd.d.ts",
-        "./src/howerest.modularizer.ts",        
-        "./src/howerest.sdkzer.ts",
-        "./src/howerest.web_services.ts",
-        "./src/howerest.util.ts",
-        "./spec/sdkzer_spec.ts",
-        "./spec/http_request_spec.ts"
-    ],
-    "atom": {
-        "rewriteTsconfig": false
-    }
+  "version": "1.7.5",
+  "compilerOptions": {
+    "target": "es3",
+    "module": "amd",
+    "declaration": false,
+    "noImplicitAny": false,
+    "removeComments": true,
+    "noLib": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "outDir": "./js",
+    "sourceMap": true
+  },
+  "filesGlob": [
+    "./typings/**/*.ts",
+    "./ts/**/*.ts",
+    "./spec/**/*.ts",
+    "!./node_modules/**/*.ts"
+  ],
+  "files": [
+    "./typings/es6-promise/es6-promise.d.ts",
+    "./typings/jasmine/jasmine.d.ts",
+    "./typings/jasmine/legacy/jasmine-1.3.d.ts",
+    "./typings/mocha/mocha.d.ts",
+    "./typings/node/node.d.ts",
+    "./typings/requirejs/require.d.ts",
+    "./typings/tsd.d.ts",
+    "./ts/howerest.modularizer.ts",
+    "./ts/howerest.sdkzer.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": false
+  }
 }
