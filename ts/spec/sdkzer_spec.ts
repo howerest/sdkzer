@@ -1,5 +1,6 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../typings/jasmine-ajax/jasmine-ajax.d.ts" />
+/// <reference path="../../node_modules/js-webservices/ts/web_services.ts" />
 /// <reference path="../../ts/howerest.sdkzer.ts" />
 /// <reference path="./fixtures.ts" />
 
@@ -7,7 +8,7 @@
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
       Apache 2.0 Licensed
 
-    Unit tests the the critical case uses of Sdkzer.
+    Unit tests the critical case uses of Sdkzer.
     Base functionality is being tested directly through Sdkzer class.
     Model dependent functionality is being tested by extensing Sdkzer class,
     which is how the developer will use Sdkzer
@@ -137,8 +138,6 @@ describe('Sdkzer', () => {
     });
   });
 
-
-
   describe('.setDefaults', () => {
     it('should update the attributes with the default attributes', () => {
       spyOn(Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);
@@ -179,19 +178,26 @@ describe('Sdkzer', () => {
     });
   });
 
-  describe('.resourceEndpoint', () => {
-    it('shouldnt have an empty default resource endpoint defined', () => {
+  describe('.baseEndpoint', () => {
+    it('shouldnt have an empty default base endpoint defined', () => {
       var sdkzer = new Sdkzer({});
-      expect(sdkzer.resourceEndpoint()).toEqual('');
+      expect(sdkzer.baseEndpoint()).toEqual(null);
     });
   });
 
+  describe('.resourceEndpoint', () => {
+    xit('should have a default resourceEndpoint defined for a "restful_crud" HTTP_PATTERN', () => {
+
+    });
+  });
 
   describe('.isNew', () => {
     it("should check if the record exists in the origin", () => {
       var sdkzer = new Sdkzer();
       expect(sdkzer.isNew()).toEqual(true);
       sdkzer.attrs['id'] = 1;
+      expect(sdkzer.isNew()).toEqual(true);
+      sdkzer.lastResponse = {}; // Use HttpResponse
       expect(sdkzer.isNew()).toEqual(false);
     });
   });
@@ -301,7 +307,7 @@ describe('Sdkzer', () => {
         itemInstance.fetch().then(
           // Success
           () => {
-            // should use a http restful url based on .resourceEndpoint() output
+            // should use a http restful url based on .baseEndpoint() output
             // should use a GET http method
             expect(WebServices.HttpRequest.prototype.constructor).toHaveBeenCalledWith('a');
 
@@ -359,7 +365,7 @@ describe('Sdkzer', () => {
 
 
   describe('.parse', () => {
-    it("should parse the data as it comes", () => {
+    xit("should parse the data as it comes", () => {
 
     });
   });
@@ -407,14 +413,14 @@ describe('Sdkzer', () => {
 
 
   describe('.update', () => {
-    it("should update an attribute in the attributes map", () => {
+    xit("should update an attribute in the attributes map", () => {
 
     });
   });
 
 
   describe('.destroy', () => {
-    it("should destroy the record in the origin", () => {
+    xit("should destroy the record in the origin", () => {
 
     });
   });
