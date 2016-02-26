@@ -124,7 +124,12 @@ describe('Sdkzer', () => {
   });
 
   describe('.attr', () => {
-    var sdkzer = new Sdkzer({ pos: 1999 });
+    var sdkzer;
+
+    beforeEach(() => {
+      sdkzer = new Sdkzer();
+      sdkzer.attrs['pos'] = 1999;
+    });
 
     describe('when a value is not specified', () => {
       it('should read the attribute value', () => {
