@@ -63,7 +63,7 @@ describe('Sdkzer', () => {
       });
     });
 
-    describe('with initial attributes', () => {
+    describe('with initial attributes defined', () => {
       var sdkzer, initialAttrs;
       beforeEach(() => {
         initialAttrs = {
@@ -100,7 +100,7 @@ describe('Sdkzer', () => {
         expect(sdkzer.attrs).toEqual(defaultAttributes);
       });
 
-      describe('when initialization attributes are setted', () => {
+      describe('with initial attributes defined', () => {
         var sdkzer;
 
         beforeEach(() => {
@@ -263,7 +263,6 @@ describe('Sdkzer', () => {
 
 
   describe('.fetch', () => {
-
     var Item, itemInstance;
 
     describe('when the record has an id setted', () => {
