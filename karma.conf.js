@@ -7,21 +7,25 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    // frameworks to use
-    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine'],
 
-
-    // list of files / patterns to load in the browser
+    // files && patterns to load in the browser
     files: [
+      // Dependencies
       { pattern: 'node_modules/jasmine-ajax/lib/mock-ajax.js', included: true },
       { pattern: 'node_modules/es6-promise/dist/es6-promise.min.js', included: true },
       { pattern: 'node_modules/js-webservices/js/util.js', included: true },
       { pattern: 'node_modules/js-webservices/js/web_services.js', included: true },
-      { pattern: 'js/howerest.modularizer.js', included: true },
-      { pattern: 'js/howerest.sdkzer.js', included: true },
 
-      { pattern: 'js/spec/**/*_spec.js', included: true },
+      // Sdkzer
+      { pattern: 'js/ts/howerest.modularizer.js', included: true },
+      { pattern: 'js/ts/howerest.sdkzer.js', included: true },
+
+      // Test data
+      { pattern: 'js/ts/spec/fixtures.js', included: true },
+
+      // Specs
+      { pattern: 'js/ts/spec/**/*_spec.js', included: true },
     ],
 
 
@@ -39,7 +43,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // 'dots', 'progress', 'html'
-    reporters: ['progress', 'growl'],// , 'html'],
+    reporters: ['mocha', 'growl'],// , 'html'],
     // jasmine html report at: url/debug.html
 
     // web server port
