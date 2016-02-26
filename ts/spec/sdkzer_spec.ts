@@ -1,12 +1,16 @@
 /// <reference path="../../typings/jasmine/jasmine.d.ts" />
 /// <reference path="../../typings/jasmine-ajax/jasmine-ajax.d.ts" />
 /// <reference path="../../ts/howerest.sdkzer.ts" />
+/// <reference path="./fixtures.ts" />
 
+/*
+    howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed
 
-// declare var MockAjax;
-// var MockAjax = require('/Users/overflow/Sites/howerest/sdkizer/src-js/spec/lib/mock-ajax.js');
-
-// console.log('MockAjax: ', MockAjax);
+    Unit tests the the critical case uses of Sdkzer.
+    Base functionality is being tested directly through Sdkzer class.
+    Model dependent functionality is being tested by extensing Sdkzer class,
+    which is how the developer will use Sdkzer
+ */
 
 describe('Sdkzer', () => {
 
@@ -47,14 +51,43 @@ describe('Sdkzer', () => {
 
   describe('.constructor', () => {
 
-    it("should not initialize with a defined id", () => {
-      var sdkzer = new Sdkzer();
-      expect(sdkzer.attrs['id']).toEqual(null);
+    describe('without initial attributes', () => {
+      it("should not initialize with a defined id", () => {
+        var sdkzer = new Sdkzer();
+        expect(sdkzer.attrs['id']).toEqual(null);
+      });
+
+      it("should not have any attribute defined", () => {
+        var sdkzer = new Sdkzer();
+        expect(Object.keys(sdkzer.attrs).length).toEqual(1);
+      });
     });
 
-    it("should not have any attribute defined", () => {
-      var sdkzer = new Sdkzer();
-      expect(Object.keys(sdkzer.attrs).length).toEqual(1);
+    describe('with initial attributes', () => {
+      var sdkzer, initialAttrs;
+      beforeEach(() => {
+        initialAttrs = {
+          event_id: 101010,
+          comments: []
+        };
+        sdkzer = new Sdkzer(initialAttrs);
+      });
+
+      it('should set the attributes (attr) and previous attributes (pAttrs) using the initial attributes', () => {
+        initialAttrs['id'] = null;
+        expect(sdkzer.attrs).toEqual(initialAttrs);
+        expect(sdkzer.pAttrs).toEqual(initialAttrs);
+      });
+
+      describe('setting an id', () => {
+        beforeEach(() => {
+          sdkzer = new Sdkzer({ id: 1000 });
+        });
+
+        it('should keep the initial id in the resulted attributes', () => {
+          expect(sdkzer.attrs['id']).toEqual(1000);
+        });
+      });
     });
 
     describe('when default attributes are setted', () => {
@@ -218,74 +251,35 @@ describe('Sdkzer', () => {
   });
 
 
-  describe('.previousValue', () => {
-    xit("should retrieve the previous attribute value before last sync from origin", () => {
+  describe('.prevValue', () => {
+    it("should retrieve the previous attribute value before last sync from origin", () => {
       var sdkzer = new Sdkzer({
         name: 'My initial name'
       });
-      // TODO: mock different attributes using jasmine ajax
-      // TODO: sdkzer.fetch();
-      expect(sdkzer.previousValue('name')).toEqual('My initial name');
+      sdkzer.attrs['name'] = "New name";
+      expect(sdkzer.prevValue('name')).toEqual('My initial name');
     });
   });
 
 
   describe('.fetch', () => {
 
-    var sdkzerInstance;
+    var Item, itemInstance;
 
     describe('when the record has an id setted', () => {
       beforeEach(() => {
-
-        class Person extends Sdkzer {
-          public resourceEndpoint() {
-            return 'http://api.mydomain.com/items';
-          }
-
-          public defaults() {
-            return {
-              name: "A good name",
-              items: [1, 100, 1, 60]
-            };
-          }
-
-          public parseOne(data) {
-            // Parse record
-            var json = {
-              id: data.id,
-              name: data.name,
-              items: data.items
-            };
-
-            return json;
-          }
-
-          public parse(data) {
-            var parsed = [];
-
-            if (Array.isArray(data)) {
-              for (var i = 0; i < data.length; i++) {
-                parsed.push(this.parseOne(data[i]));
-              }
-            } else {
-              parsed.push(this.parseOne(data.folder));
-            }
-
-            return parsed;
-          }
-        }
-
-        sdkzerInstance = new Person({ id: 1 });
+        Item = buildSdkzerModelEntity();
+        itemInstance = new Item({ id: 1 });
       });
 
       // TODO: This seems silly. Better cases?
       xit('should make an HttpRequest', () => {
         spyOn(WebServices.HttpRequest.prototype, 'constructor');
-        jasmine.Ajax.stubRequest('http://api.mydomain.com/items/1').andReturn({
+        jasmine.Ajax.stubRequest('http://api.mydomain.com/v1/items/1').andReturn({
           responseText: "{ id: 1000, name: 'Whatever Name' }"
         });
 
-        sdkzerInstance.fetch().then(
+        itemInstance.fetch().then(
           // Success
           (response) => {
             console.log(' -----> success!!', response);
@@ -304,7 +298,7 @@ describe('Sdkzer', () => {
       xit('should use the right HttpRequest parameters', () => {
 
         spyOn(WebServices.HttpRequest.prototype, 'constructor');
-        sdkzerInstance.fetch().then(
+        itemInstance.fetch().then(
           // Success
           () => {
             // should use a http restful url based on .resourceEndpoint() output
@@ -324,8 +318,8 @@ describe('Sdkzer', () => {
       });
 
       xit("should set a property called 'syncing' during syncing with the right state", () => {
-        expect(sdkzerInstance.syncing).toEqual(false);
-        sdkzerInstance.fetch().then(
+        expect(itemInstance.syncing).toEqual(false);
+        itemInstance.fetch().then(
           () => {
 
           }
@@ -347,12 +341,12 @@ describe('Sdkzer', () => {
 
     describe("when the record hasn't an id setted", () => {
       beforeEach(() => {
-        sdkzerInstance = new Sdkzer();
+        itemInstance = new Sdkzer();
       });
 
       it("shouldn't make any request", () => {
         spyOn(WebServices.HttpRequest, 'constructor');
-        sdkzerInstance.fetch();
+        itemInstance.fetch();
         expect(WebServices.HttpRequest.constructor).not.toHaveBeenCalled();
       });
 
@@ -365,7 +359,7 @@ describe('Sdkzer', () => {
 
 
   describe('.parse', () => {
-    xit("should parse the data as it comes", () => {
+    it("should parse the data as it comes", () => {
 
     });
   });

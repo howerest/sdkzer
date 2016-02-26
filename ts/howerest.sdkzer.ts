@@ -158,7 +158,7 @@ class Sdkzer {
    * Checks if the record is not saved on the origin
    */
   public isNew() {
-    return (this.attrs['id'] !== null) ? false : true;
+    return (this.attrs['id'] !== null ? false : true);
   }
 
 
@@ -166,7 +166,7 @@ class Sdkzer {
    * Checks if the record has changed since the last save
    */
   public hasChanged() {
-    return this.changedAttrs().length > 0 ? true : false;
+    return (this.changedAttrs().length > 0 ? true : false);
   }
 
 
@@ -226,15 +226,15 @@ class Sdkzer {
   /*!
    * Retrieves the previous value prior to last save for a specific attribute
    */
-  public previousValue(attrName: String) {
-
+  public prevValue(attrName:string) {
+    return this.prevAttrs()[attrName];
   }
 
 
   /*!
    * Fetches
    */
-  public fetch(origin?: String, camelize: Boolean = true, httpHeaders:WebServices.HttpHeader[] = []) {
+  public fetch(origin?:string, camelize: Boolean = true, httpHeaders:WebServices.HttpHeader[] = []) {
     var _this = this,
         promise;
 
@@ -288,10 +288,15 @@ class Sdkzer {
 
 
   /*!
-   * Parses the data from an incoming HttpResponse
+   * Parses the resources data from an incoming HttpResponse
+   * The idea is to return the resources attributes exclusively
    */
-  public parse(data:Object) {
-    return data;
+  public parse(data:Object, dataPrefixKey?:string) {
+    if (dataPrefixKey !== null && Array.isArray(data[dataPrefixKey])) {
+      return data[dataPrefixKey];
+    } else {
+      return data;
+    }
   }
 
 
