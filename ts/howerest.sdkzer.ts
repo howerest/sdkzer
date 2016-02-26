@@ -76,7 +76,7 @@ class Sdkzer {
    /*!
     * Verifies if Sdkzer is using a restful CRUD http pattern
     */
-   public static usingRestfulCrudHttpPattern() {
+   private static usingRestfulCrudHttpPattern() {
      return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
    }
 
@@ -84,7 +84,7 @@ class Sdkzer {
    /*!
     * Verifies if Sdkzer is using a custom http pattern
     */
-   public static usingCustomHttpPattern() {
+   private static usingCustomHttpPattern() {
      return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
    }
 
@@ -92,7 +92,7 @@ class Sdkzer {
    /*!
     * Verifies if Sdkzer is using any parents fetch strategy
     */
-   public static usingParentsFetchStrategy() {
+   private static usingParentsFetchStrategy() {
      return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
    }
 
@@ -100,7 +100,7 @@ class Sdkzer {
    /*!
     * Retrieves the http guess config for an specific crud operation
     */
-   public static getHttpQueryGuessConfigFor(operation:String) {
+   private static getHttpQueryGuessConfigFor(operation:String) {
      if (Sdkzer.usingRestfulCrudHttpPattern()) {
        return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
      } else {
@@ -150,11 +150,20 @@ class Sdkzer {
 
 
   /*!
-   * Retrieves the resource endpoint url
+   * Retrieves the base resource url
+   */
+  public baseEndpoint() {
+    // You need to define a baseEndpoint method in your entities
+    // in order to be able to sync with a backend endpoint
+    return null;
+  }
+
+
+  /*!
+   * Retrieves the resource url
    */
   public resourceEndpoint() {
-    // TODO: This is the base endpoint, not the resource endpoint
-    // TODO: Guess a resourceEndpoint based on a restful or custom http pattern
+    // TODO: Guess a resource endpoint based on a restful or custom http pattern
     return '';
   }
 
@@ -163,7 +172,7 @@ class Sdkzer {
    * Checks if the record is not saved on the origin
    */
   public isNew() {
-    return (this.attrs['id'] !== null ? false : true);
+    return ((this.attrs['id'] !== null && this.lastResponse !== null) ? false : true);
   }
 
 
@@ -248,7 +257,7 @@ class Sdkzer {
 
       var query = new WebServices.HttpQuery({
         httpMethod: "GET",
-        endpoint:   this.resourceEndpoint() + '/' + this.attrs['id'],
+        endpoint:   this.baseEndpoint() + '/' + this.attrs['id'],
         qsParams:   {},
         headers:    [],
         data:       {}
@@ -259,8 +268,10 @@ class Sdkzer {
       promise.then(
         // Success
         (response) => {
-          console.log('Success!!');
           _this.syncing = false;
+          // TODO: Keep lastResponse
+          console.log('Success!!');
+
           var parsedData = _this.parse(response.data);
 
           if (camelize) {
@@ -354,7 +365,7 @@ class Sdkzer {
     if (this.hasChanged()) {
       query = new WebServices.HttpQuery({
         httpMethod: "PUT",
-        endpoint:   this.resourceEndpoint()+'/'+this.attrs['id'],
+        endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
         headers:    [],
         qsParams:   {},
         data:       {}
@@ -380,7 +391,7 @@ class Sdkzer {
 
     query = new WebServices.HttpQuery({
       httpMethod: "DELETE",
-      endpoint:   this.resourceEndpoint()+'/'+this.attrs['id'],
+      endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
       qsParams:   {},
       headers:    [],
       data:       {}
@@ -400,7 +411,7 @@ class Sdkzer {
 
     query = new WebServices.HttpQuery({
       httpMethod: "GET",
-      endpoint:   (new this().resourceEndpoint()),
+      endpoint:   (new this().baseEndpoint()),
       headers:    [],
       qsParams:   {},
       data:       {}
@@ -422,7 +433,7 @@ class Sdkzer {
     if (typeof(httpQuery) === 'undefined') {
       query = new WebServices.HttpQuery({
         httpMethod: "GET",
-        endpoint:   model.resourceEndpoint()+'/'+id,
+        endpoint:   model.baseEndpoint()+'/'+id,
         qsParams:   {},
         headers:    [],
         data:       {}
