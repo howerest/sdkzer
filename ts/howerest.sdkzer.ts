@@ -3,9 +3,14 @@
 /// <reference path='../node_modules/js-webservices/ts/web_services.ts' />
 /// <reference path="./howerest.modularizer.ts"/>
 
+/* --------------------------------------------------------------------------
 
-// Implements functionality to deal with restful http services
-// howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed
+    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+      Apache 2.0 Licensed
+
+    Implements functionality to deal with restful http CRUD endpoints
+
+ --------------------------------------------------------------------------- */
 
 class Sdkzer {
 

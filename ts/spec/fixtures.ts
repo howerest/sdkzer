@@ -1,7 +1,12 @@
-/**
+/* --------------------------------------------------------------------------
+
+    howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed
+    www.howerest.com
+
     This sdk entity is being used for unit testing to test communication
     between local entity data and origin data-source
- */
+
+ --------------------------------------------------------------------------- */
 
 var buildSdkzerModelEntity = () => {
   class Item extends Sdkzer {

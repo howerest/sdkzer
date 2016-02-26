@@ -4,7 +4,8 @@
 /// <reference path="./fixtures.ts" />
 
 /*
-    howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed
+    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+      Apache 2.0 Licensed
 
     Unit tests the the critical case uses of Sdkzer.
     Base functionality is being tested directly through Sdkzer class.
