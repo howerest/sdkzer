@@ -10,7 +10,7 @@
 
 var buildSdkzerModelEntity = () => {
   class Item extends Sdkzer {
-    public resourceEndpoint() {
+    public baseEndpoint() {
       return 'http://api.mydomain.com/v1/items';
     }
 

@@ -248,7 +248,7 @@ class Sdkzer {
   /*!
    * Fetches
    */
-  public fetch(origin?:string, camelize: Boolean = true, httpHeaders:WebServices.HttpHeader[] = []) {
+  public fetch(origin?:string, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) {
     var _this = this,
         promise;
 
@@ -270,8 +270,6 @@ class Sdkzer {
         (response) => {
           _this.syncing = false;
           // TODO: Keep lastResponse
-          console.log('Success!!');
-
           var parsedData = _this.parse(response.data);
 
           if (camelize) {
@@ -284,11 +282,11 @@ class Sdkzer {
               _this.pAttrs[attrKey] = parsedData[attrKey];
             }
           }
+
           _this.attrs = parsedData;
         },
         // Fail
         (response) => {
-          console.log('failed with: ', response);
           _this.syncing = false;
         }
       );
