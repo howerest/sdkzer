@@ -270,78 +270,103 @@ describe('Sdkzer', () => {
 
 
   describe('.fetch', () => {
-    var Item, itemInstance;
+    var Item, itemInstance, responseJSON, responseText;
 
     describe('when the record has an id setted', () => {
       beforeEach(() => {
+        responseJSON = {
+          id: 1000,
+          name: 'An age group',
+          items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+        };
+        responseText = JSON.stringify(responseJSON);
+
+        jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/1").andReturn({
+          status: 200,
+          statusText: 'HTTP/1.1 200 OK',
+          contentType: 'application/json; charset=utf-8',
+          responseText: responseText
+        });
+
         Item = buildSdkzerModelEntity();
         itemInstance = new Item({ id: 1 });
       });
 
-      // TODO: This seems silly. Better cases?
-      xit('should make an HttpRequest', () => {
-        spyOn(WebServices.HttpRequest.prototype, 'constructor');
-        jasmine.Ajax.stubRequest('http://api.mydomain.com/v1/items/1').andReturn({
-          responseText: "{ id: 1000, name: 'Whatever Name' }"
+      it('should make an http request to the right endpoint', () => {
+        itemInstance.fetch();
+
+        request = jasmine.Ajax.requests.mostRecent();
+        expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
+        expect(request.method).toEqual("GET");
+      });
+
+      it('should return a Promise that resolves into the record data when success', (done) => {
+        var supposedPromise = itemInstance.fetch().then(() => { done() }, () => { done() }),
+            responseData;
+
+        expect(supposedPromise instanceof Promise).toBe(true);
+      });
+
+      describe('in a successful request', () => {
+        // This will be successful since we have the requested mocked up
+
+        it("should fetch data from the origin and resolve it in a Promise", () => {
+          itemInstance.fetch().then((response) => {
+            responseData = response.data;
+            expect(responseData).toEqual(responseJSON);
+            done();
+          });
         });
 
-        itemInstance.fetch().then(
-          // Success
-          (response) => {
-            console.log(' -----> success!!', response);
-            expect(WebServices.HttpRequest.prototype.constructor).toHaveBeenCalled();
-          },
-          // Fail
-          (failure) => {
-            console.log(' -----> fail!!', failure);
-            expect(WebServices.HttpRequest.prototype.constructor).toHaveBeenCalled();
-          }
-        );
+        it("should set a property called 'syncing' during syncing with the right state", (done) => {
+          expect(itemInstance.syncing).toEqual(false);
+          itemInstance.fetch().then(
+            // Success
+            () => {
+              expect(itemInstance.syncing).toEqual(false);
+              done();
+            }
+          );
+          expect(itemInstance.syncing).toEqual(true);
+        });
+
+        // TODO: fix this
+        xit('should update the attributes parsed from the origin', (done) => {
+          itemInstance.fetch().then((response) => {
+            expect(itemInstance.attrs).toEqual(responseJSON);
+            done();
+          });
+        });
+
+        // TODO: Implement
+        xit("should keep track of previous attributes before merging the origin attributes", () => {
+
+        });
       });
 
+      describe('in a failed request', () => {
+        beforeEach(() => {
+          jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/1").andReturn({
+            status: 404,
+            statusText: 'HTTP/1.1 200 OK',
+            contentType: 'application/json; charset=utf-8'
+          });
+        });
 
-      // TODO: This is not testing anything
-      xit('should use the right HttpRequest parameters', () => {
-
-        spyOn(WebServices.HttpRequest.prototype, 'constructor');
-        itemInstance.fetch().then(
-          // Success
-          () => {
-            // should use a http restful url based on .baseEndpoint() output
-            // should use a GET http method
-            expect(WebServices.HttpRequest.prototype.constructor).toHaveBeenCalledWith('a');
-
-// endpoint: string, httpMethod: string, headers?: Object, data?: Object, qsParams?: Object)
-
-          },
-          // Fail
-          () => {
-            expect(WebServices.HttpRequest.prototype.constructor).toHaveBeenCalledWith('a');
-          }
-        );
-
-
-      });
-
-      xit("should set a property called 'syncing' during syncing with the right state", () => {
-        expect(itemInstance.syncing).toEqual(false);
-        itemInstance.fetch().then(
-          () => {
-
-          }
-        );
-      });
-
-      xit('should fetch the data from the origin', () => {
-
-      });
-
-      xit('should update the attributes parsed from the origin', () => {
-
-      });
-
-      xit("should keep track of previous attributes before merging the origin attributes", () => {
-
+        // This will be successful since we have the requested mocked up
+        it("should set a property called 'syncing' during syncing with the right state", (done) => {
+          expect(itemInstance.syncing).toEqual(false);
+          itemInstance.fetch().then(
+            // Success
+            () => {},
+            // Fail
+            () => {
+              expect(itemInstance.syncing).toEqual(false);
+              done();
+            }
+          );
+          expect(itemInstance.syncing).toEqual(true);
+        });
       });
     });
 

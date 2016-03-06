@@ -9,13 +9,13 @@
     "noLib": false,
     "suppressImplicitAnyIndexErrors": true,
     "outDir": "./js",
+    "rootDir": "./ts/",
     "sourceMap": false
   },
   "filesGlob": [
     "./typings/**/*.ts",
     "./ts/**/*.ts",
-    "./spec/**/*.ts",
-    "!./node_modules/**/*.ts"
+    "./spec/**/*.ts"
   ],
   "files": [
     "./typings/es6-promise/es6-promise.d.ts",
