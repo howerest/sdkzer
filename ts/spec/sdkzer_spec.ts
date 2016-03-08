@@ -294,13 +294,13 @@ describe('Sdkzer', () => {
 
       it('should make an http request to the right endpoint', () => {
         itemInstance.fetch();
+        var request = jasmine.Ajax.requests.mostRecent();
 
-        request = jasmine.Ajax.requests.mostRecent();
         expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
         expect(request.method).toEqual("GET");
       });
 
-      it('should return a Promise that resolves into the record data when success', (done) => {
+      it('should return a Promise', (done) => {
         var supposedPromise = itemInstance.fetch().then(() => { done() }, () => { done() }),
             responseData;
 
@@ -311,6 +311,7 @@ describe('Sdkzer', () => {
         // This will be successful since we have the requested mocked up
 
         it("should fetch data from the origin and resolve it in a Promise", () => {
+          var responseData;
           itemInstance.fetch().then((response) => {
             responseData = response.data;
             expect(responseData).toEqual(responseJSON);
@@ -330,17 +331,25 @@ describe('Sdkzer', () => {
           expect(itemInstance.syncing).toEqual(true);
         });
 
-        // TODO: fix this
-        xit('should update the attributes parsed from the origin', (done) => {
+        it('should update the attributes parsed from the origin', (done) => {
           itemInstance.fetch().then((response) => {
+            // The record attributes here must be the ones that came from the stubRequest
             expect(itemInstance.attrs).toEqual(responseJSON);
             done();
           });
         });
 
-        // TODO: Implement
-        xit("should keep track of previous attributes before merging the origin attributes", () => {
-
+        it("should take the parsed attributes from the origin and store them as previous attributes", (done) => {
+          // this.pAttrs is used to compare with this.attrs and determine the attributes that has changed
+          var originalAttrs = {
+            id: 1,
+            name: "A good choice",
+            items: [1, 100, 1, 60]
+          };
+          itemInstance.fetch().then(() => {
+            expect(itemInstance.pAttrs).toEqual(responseJSON);
+            done();
+          });
         });
       });
 
@@ -389,7 +398,7 @@ describe('Sdkzer', () => {
   });
 
 
-  describe('.parse', () => {
+  describe('.$parse', () => {
     xit("should parse the data as it comes", () => {
 
     });
@@ -452,28 +461,81 @@ describe('Sdkzer', () => {
 
 
   describe('#fetchIndex', () => {
-    xit("should retrieve a list of records from the origin", () => {
+    var Item, itemInstance, responseText, responseJSON;
+    beforeEach(() => {
+      responseJSON = [
+        { id: 1, name: "Event 1" },
+        { id: 9, name: "Event 2" },
+        { id: 11, name: "Event 3" }
+      ];
+      responseText = JSON.stringify(responseJSON);
 
+      jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items").andReturn({
+        status: 200,
+        statusText: 'HTTP/1.1 200 OK',
+        contentType: 'application/json; charset=utf-8',
+        responseText: responseText
+      });
+
+      Item = buildSdkzerModelEntity();
+      itemInstance = new Item({ id: 1 });
     });
 
-    xit("should return a promise that resolves into a list of parsed records retrieved from the origin", () => {
+    it('should make an http request to the right endpoint', (done) => {
+      Item = buildSdkzerModelEntity();
+      Item.fetchIndex().then(() => { done() }, () => { done() })
+      var request = jasmine.Ajax.requests.mostRecent();
 
+      expect(request.url).toEqual('http://api.mydomain.com/v1/items');
+      expect(request.method).toEqual("GET");
+    });
+
+    it('should return a Promise', (done) => {
+      var supposedPromise = Item.fetchIndex().then(() => { done() }, () => { done() }),
+          responseData;
+
+      expect(supposedPromise instanceof Promise).toBe(true);
+    });
+
+    describe('in a successful request', () => {
+      // This will be successful since we have the requested mocked up
+
+      it("should fetch a collection of records from the origin and return a Promise resolves into an array of instances of Item", (done) => {
+        // Ensure that $parse gets caller per instance too
+        Item.prototype.$parse = (data) => {
+          var newName = data.name;
+          return {
+            id: data.id,
+            newNameKey: newName
+          };
+        };
+
+        Item.fetchIndex().then((instances) => {
+          expect(instances[0] instanceof Item).toBeTruthy();
+          expect(instances[0].attrs).toEqual({ id: 1, newNameKey: "Event 1" });
+          expect(instances[1] instanceof Item).toBeTruthy();
+          expect(instances[1].attrs).toEqual({ id: 9, newNameKey: "Event 2" });
+          expect(instances[2] instanceof Item).toBeTruthy();
+          expect(instances[2].attrs).toEqual({ id: 11, newNameKey: "Event 3" });
+          done();
+        });
+      });
+    });
+
+    describe('in a failed request', () => {
+      beforeEach(() => {
+        jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items").andReturn({
+          status: 404,
+          statusText: 'HTTP/1.1 200 OK',
+          contentType: 'application/json; charset=utf-8'
+        });
+      });
     });
   });
 
 
   describe('#fetchOne', () => {
-    xit("should retrieve a record from the origin", () => {
-
-    });
-
-    xit("should set the record attributes with parsed records retrieved from the origin", () => {
-
-    });
-
-    xit("should return a promise that resolves into a parsed record retrieved from the origin", () => {
-
-    });
+    // TODO: Implement
   });
 
 });
