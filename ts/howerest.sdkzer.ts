@@ -14,8 +14,8 @@
 
 class Sdkzer {
 
-  public attrs:Object;
-  public pAttrs:Object;
+  private attrs:Object;
+  private pAttrs:Object;
   public syncing:boolean = false;
   public lastResponse:WebServices.HttpResponse = null;
 
@@ -269,20 +269,16 @@ class Sdkzer {
         // Success
         (response) => {
           _this.syncing = false;
+
           // TODO: Keep lastResponse
-          var parsedData = _this.parse(response.data);
+          var parsedData = _this.$parse(response.data);
 
           if (camelize) {
             // parsedData = util.Camel.camelize(parsedData);
           }
-
-          for(var attrKey in parsedData) {
-            if (_this.attrs[attrKey] != parsedData[attrKey]) {
-              // Keep track of previous attributes
-              _this.pAttrs[attrKey] = parsedData[attrKey];
-            }
-          }
-
+          // Keep track of previous attributes
+          _this.pAttrs = parsedData;
+          // Assign the parsed attributes
           _this.attrs = parsedData;
         },
         // Fail
@@ -305,7 +301,7 @@ class Sdkzer {
    * Parses the resources data from an incoming HttpResponse
    * The idea is to return the resources attributes exclusively
    */
-  public parse(data:Object, dataPrefixKey?:string) {
+  public $parse(data:Object, dataPrefixKey?:string) {
     if (dataPrefixKey !== null && Array.isArray(data[dataPrefixKey])) {
       return data[dataPrefixKey];
     } else {
@@ -403,20 +399,38 @@ class Sdkzer {
    */
   public static fetchIndex(httpQuery:WebServices.HttpQuery) {
     var query,
-        request;
+        request,
+        recordData,
+        instancesPromise,
+        instances = [],
+        preParsed,
+        instance;
 
     // TODO: the endpont and verb
 
-    query = new WebServices.HttpQuery({
-      httpMethod: "GET",
-      endpoint:   (new this().baseEndpoint()),
-      headers:    [],
-      qsParams:   {},
-      data:       {}
-    });
-    request = new WebServices.HttpRequest(query);
+    instancesPromise = new Promise((resolve, reject) => {
+      query = new WebServices.HttpQuery({
+        httpMethod: "GET",
+        endpoint:   (new this().baseEndpoint()),
+        headers:    [],
+        qsParams:   {},
+        data:       {}
+      });
+      request = new WebServices.HttpRequest(query);
+      request.promise.then((response) => {
 
-    return request.promise;
+        for(var i in response.data) {
+          instance = new this();
+          instance.attrs = instance.pAttrs = instance.$parse(response.data[i]);
+          instances.push(instance);
+        }
+        resolve(instances);
+      }, (error) => {
+        reject(error);
+      });
+    });
+
+    return instancesPromise;
   }
 
 
