@@ -11,7 +11,7 @@
     Unit tests the critical case uses of Sdkzer.
     Base functionality is being tested directly through Sdkzer class.
     Model dependent functionality is being tested by extensing Sdkzer class,
-    which is how the developer will use Sdkzer
+    which is how the developer will use Sdkzer (check fixtures.ts)
  */
 
 describe('Sdkzer', () => {
@@ -447,8 +447,40 @@ describe('Sdkzer', () => {
 
 
   describe('.update', () => {
-    xit("should update an attribute in the attributes map", () => {
+    var Item, itemInstance, attributes, responseText;
 
+    describe('when the record has an id setted', () => {
+      beforeEach((done) => {
+        // Since we are not testing backend http API, both attributes and response match
+        attributes = {
+          id: 999,
+          name: 'An age group',
+          items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+        };
+        responseText = JSON.stringify(attributes);
+          // TODO: Fix mock not responding to request
+          jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/999", /.*/, "PUT").andReturn({
+          status: 200,
+          statusText: 'HTTP/1.1 200 OK',
+          responseText: responseText,
+          contentType: 'application/json; charset=utf-8'
+        });
+
+        Item = buildSdkzerModelEntity();
+        itemInstance = new Item(attributes);
+      });
+
+      xit("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", (done) => {
+        itemInstance.update().then(() => {
+          var request = jasmine.Ajax.requests.mostRecent();
+          expect(request.url).toEqual('http://api.mydomain.com/v1/items/999');
+          expect(request.method).toEqual("PUT");
+          //expect(request.data()).toEqual(attributes);
+          done();
+        }, () => {
+          done();
+        });
+      });
     });
   });
 
@@ -461,7 +493,7 @@ describe('Sdkzer', () => {
 
 
   describe('#fetchIndex', () => {
-    var Item, itemInstance, responseText, responseJSON;
+    var Item, responseText, responseJSON;
     beforeEach(() => {
       responseJSON = [
         { id: 1, name: "Event 1" },
@@ -478,7 +510,6 @@ describe('Sdkzer', () => {
       });
 
       Item = buildSdkzerModelEntity();
-      itemInstance = new Item({ id: 1 });
     });
 
     it('should make an http request to the right endpoint', (done) => {
@@ -533,9 +564,72 @@ describe('Sdkzer', () => {
     });
   });
 
-
   describe('#fetchOne', () => {
-    // TODO: Implement
+    var Item, responseText, responseJSON;
+    beforeEach(() => {
+      responseJSON = {
+        id: 1010,
+        name: "An awesome choice!",
+        items: [24, 7, 19, 57]
+      };
+      responseText = JSON.stringify(responseJSON);
+      jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/1010").andReturn({
+        status: 200,
+        statusText: 'HTTP/1.1 200 OK',
+        contentType: 'application/json; charset=utf-8',
+        responseText: responseText
+      });
+
+      Item = buildSdkzerModelEntity();
+    });
+
+    it('should make an http request to the right endpoint', (done) => {
+      Item = buildSdkzerModelEntity();
+      Item.fetchOne(1010).then(() => { done() }, () => { done() })
+      var request = jasmine.Ajax.requests.mostRecent();
+
+      expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
+      expect(request.method).toEqual("GET");
+    });
+
+    it('should return a Promise', (done) => {
+      var supposedPromise = Item.fetchOne(1010).then(() => { done() }, () => { done() }),
+          responseData;
+
+      expect(supposedPromise instanceof Promise).toBe(true);
+    });
+
+    describe('in a successful request', () => {
+      // This will be successful since we have the requested mocked up
+
+      it("should fetch a record from the origin and return a Promise resolves an instance of Item", (done) => {
+        // Ensure that $parse gets caller per instance too
+        Item.prototype.$parse = (data) => {
+          var newName = data.name;
+          return {
+            id: data.id,
+            newNameKey: newName,
+            items: data.items
+          };
+        };
+
+        Item.fetchOne(1010).then((instance) => {
+          expect(instance instanceof Item).toBeTruthy();
+          expect(instance.attrs).toEqual({ id: 1010, newNameKey: "An awesome choice!", items: [24, 7, 19, 57] });
+          done();
+        });
+      });
+    });
+
+    describe('in a failed request', () => {
+      beforeEach(() => {
+        jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items").andReturn({
+          status: 404,
+          statusText: 'HTTP/1.1 200 OK',
+          contentType: 'application/json; charset=utf-8'
+        });
+      });
+    });
   });
 
 });

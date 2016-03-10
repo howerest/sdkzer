@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         compress: {
           drop_console: true
         },
-        banner: "/*! howerest-sdkzer 0.0.30 | howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed */\n"
+        banner: "/*! howerest-sdkzer 0.0.35 | howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed */\n"
       },
       release: {
         files: {
@@ -62,7 +62,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-karma');
-  // grunt.loadNpmTasks('grunt-ts');  
+  // grunt.loadNpmTasks('grunt-ts');
 
   grunt.registerTask('default', [/*'ts', */ 'concat', 'uglify']);
 };
