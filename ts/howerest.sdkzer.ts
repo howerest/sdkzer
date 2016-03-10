@@ -289,7 +289,6 @@ class Sdkzer {
     }
 
     if (typeof(promise) === 'undefined') {
-      promise = new Promise((resolve, reject) => { });
       promise = Promise.reject(false);
     }
 
@@ -356,23 +355,21 @@ class Sdkzer {
 
     }
 
-    if (this.hasChanged()) {
-      query = new WebServices.HttpQuery({
-        httpMethod: "PUT",
-        endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
-        headers:    [],
-        qsParams:   {},
-        data:       {}
-      });
-      request = new WebServices.HttpRequest(query);
+    query = new WebServices.HttpQuery({
+      httpMethod: "PUT",
+      endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
+      headers:    [],
+      qsParams:   {},
+      data:       this.toOriginJSON()
+    });
+    request = new WebServices.HttpRequest(query);
 
-      return request.promise.then(
-        // Success
-        function(response) {
-          _this.lastResponse = response;
-        }
-      );
-    }
+    return request.promise.then(
+      // Success
+      function(response) {
+        _this.lastResponse = response;
+      }
+    );
   }
 
 
@@ -400,10 +397,8 @@ class Sdkzer {
   public static fetchIndex(httpQuery:WebServices.HttpQuery) {
     var query,
         request,
-        recordData,
         instancesPromise,
         instances = [],
-        preParsed,
         instance;
 
     // TODO: the endpont and verb
@@ -418,7 +413,6 @@ class Sdkzer {
       });
       request = new WebServices.HttpRequest(query);
       request.promise.then((response) => {
-
         for(var i in response.data) {
           instance = new this();
           instance.attrs = instance.pAttrs = instance.$parse(response.data[i]);
@@ -440,22 +434,33 @@ class Sdkzer {
   public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) {
     var model = new this(),
         query,
-        request;
+        request,
+        instancePromise,
+        instance;
 
-    if (typeof(httpQuery) === 'undefined') {
-      query = new WebServices.HttpQuery({
-        httpMethod: "GET",
-        endpoint:   model.baseEndpoint()+'/'+id,
-        qsParams:   {},
-        headers:    [],
-        data:       {}
+    instancePromise = new Promise((resolve, reject) => {
+      if (typeof(httpQuery) === 'undefined') {
+        query = new WebServices.HttpQuery({
+          httpMethod: "GET",
+          endpoint:   model.baseEndpoint()+'/'+id,
+          qsParams:   {},
+          headers:    [],
+          data:       {}
+        });
+      } else {
+        query = httpQuery;
+      }
+
+      request = new WebServices.HttpRequest(query);
+      request.promise.then((response) => {
+        instance = new this();
+        instance.attrs = instance.pAttrs = instance.$parse(response.data);
+        resolve(instance);
+      }, (error) => {
+        reject(error);
       });
-    } else {
-      query = httpQuery;
-    }
-
-    request = new WebServices.HttpRequest(query);
-    return request.promise;
+    });
+    return instancePromise;
   }
 }
 
