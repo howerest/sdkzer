@@ -38,7 +38,7 @@ module.exports = function(grunt) {
         compress: {
           drop_console: true
         },
-        banner: "/*! howerest-sdkzer 0.0.35 | howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed */\n"
+        banner: "/*! howerest-sdkzer 0.0.40 | howerest 2016 - <davidvalin@howerest.com> | Apache 2.0 Licensed */\n"
       },
       release: {
         files: {
