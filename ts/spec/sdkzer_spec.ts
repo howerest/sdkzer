@@ -450,7 +450,7 @@ describe('Sdkzer', () => {
     var Item, itemInstance, attributes, responseText;
 
     describe('when the record has an id setted', () => {
-      beforeEach((done) => {
+      beforeEach(() => {
         // Since we are not testing backend http API, both attributes and response match
         attributes = {
           id: 999,
@@ -458,8 +458,7 @@ describe('Sdkzer', () => {
           items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
         };
         responseText = JSON.stringify(attributes);
-          // TODO: Fix mock not responding to request
-          jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/999", /.*/, "PUT").andReturn({
+          jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/999", null, "PUT").andReturn({
           status: 200,
           statusText: 'HTTP/1.1 200 OK',
           responseText: responseText,
@@ -470,14 +469,15 @@ describe('Sdkzer', () => {
         itemInstance = new Item(attributes);
       });
 
-      xit("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", (done) => {
+      it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", (done) => {
         itemInstance.update().then(() => {
           var request = jasmine.Ajax.requests.mostRecent();
           expect(request.url).toEqual('http://api.mydomain.com/v1/items/999');
           expect(request.method).toEqual("PUT");
-          //expect(request.data()).toEqual(attributes);
+          expect(request.data()).toEqual(attributes);
           done();
-        }, () => {
+        }, (error) => {
+          console.log('error! ', error);
           done();
         });
       });
@@ -486,9 +486,30 @@ describe('Sdkzer', () => {
 
 
   describe('.destroy', () => {
-    xit("should destroy the record in the origin", () => {
+    var Item, itemInstance;
 
+    beforeEach(() => {
+        jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/9771", null, "DELETE").andReturn({
+        status: 200,
+        statusText: 'HTTP/1.1 200 OK',
+        contentType: 'application/json; charset=utf-8'
+      });
+
+      Item = buildSdkzerModelEntity();
+      itemInstance = new Item({ id : 9771 });
     });
+
+    it("should destroy the record in the origin using the default 'restful_crud' HTTP_PATTERN", (done) => {
+      itemInstance.destroy().then((response) => {
+        var request = jasmine.Ajax.requests.mostRecent();
+        expect(request.method).toEqual('DELETE');
+        expect(request.url).toEqual("http://api.mydomain.com/v1/items/9771");
+        done();
+      }, (error) => {
+        done();
+      });
+    });
+
   });
 
 
