@@ -388,6 +388,7 @@ class Sdkzer {
       data:       {}
     });
     request = new WebServices.HttpRequest(query);
+    return request.promise;
   }
 
 
