@@ -1,0 +1,312 @@
+<!doctype html>
+<html class="default no-js">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>js-webservices</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="assets/css/main.css">
+	<script src="assets/js/modernizr.js"></script>
+</head>
+<body>
+<header>
+	<div class="tsd-page-toolbar">
+		<div class="container">
+			<div class="table-wrap">
+				<div class="table-cell" id="tsd-search" data-index="assets/js/search.js" data-base=".">
+					<div class="field">
+						<label for="tsd-search-field" class="tsd-widget search no-caption">Search</label>
+						<input id="tsd-search-field" type="text" />
+					</div>
+					<ul class="results">
+						<li class="state loading">Preparing search index...</li>
+						<li class="state failure">The search index is not available</li>
+					</ul>
+					<a href="index.html" class="title">js-webservices</a>
+				</div>
+				<div class="table-cell" id="tsd-widgets">
+					<div id="tsd-filter">
+						<a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a>
+						<div class="tsd-filter-group">
+							<div class="tsd-select" id="tsd-filter-visibility">
+								<span class="tsd-select-label">All</span>
+								<ul class="tsd-select-list">
+									<li data-value="public">Public</li>
+									<li data-value="protected">Public/Protected</li>
+									<li data-value="private" class="selected">All</li>
+								</ul>
+							</div>
+							<input type="checkbox" id="tsd-filter-inherited" checked />
+							<label class="tsd-widget" for="tsd-filter-inherited">Inherited</label>
+							<input type="checkbox" id="tsd-filter-externals" checked />
+							<label class="tsd-widget" for="tsd-filter-externals">Externals</label>
+							<input type="checkbox" id="tsd-filter-only-exported" />
+							<label class="tsd-widget" for="tsd-filter-only-exported">Only exported</label>
+						</div>
+					</div>
+					<a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="tsd-page-title">
+		<div class="container">
+			<ul class="tsd-breadcrumb">
+				<li>
+					<a href="globals.html">Globals</a>
+				</li>
+			</ul>
+			<h1> js-webservices</h1>
+		</div>
+	</div>
+</header>
+<div class="container container-main">
+	<div class="row">
+		<div class="col-8 col-content">
+			<div class="tsd-panel tsd-typography">
+				<h2 id="preliminary-version-available-not-ready-for-production-yet-">Preliminary version available (not ready for production yet)</h2>
+				<p>David Valín
+				howerest Labs . <a href="http://www.howerest.com/labs">http://www.howerest.com/labs</a></p>
+				<p>Definitive API almost ready:
+				<a href="https://travis-ci.org/howerest/sdkzer"><img src="https://travis-ci.org/howerest/sdkzer.svg?branch=master" alt="Build Status"></a></p>
+				<h2 id="introduction">Introduction</h2>
+				<p>sdkzer implements a dev-friendly javascript API to interact with http restful resources. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your <a href="http://yourdomain.com/api/v1/users">http://yourdomain.com/api/v1/users</a> endpoint. If you have a restful (CRUD) http api, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.</p>
+				<p>On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. sdkzer makes only the repetitive work for you: communicate with the backend. This is an excelent way to standarize your backend-frontend communication. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.</p>
+				<p>Thanks to Typescript, sdkzer is able to be automatically exported to ES3, ES5 and ES6.</p>
+				<p>sdkzer play nice with any framework: Angular 1.x, Angular 2, React.js... And will help you to have a model layer in your software that you can easily migrate to any javascript framework.</p>
+				<p>With sdkzer you don&#39;t talk low level to your http API, you do it through a javascript API like so:</p>
+				<pre><code>var <span class="hljs-keyword">like</span>;
+<span class="hljs-keyword">like</span> = <span class="hljs-keyword">new</span> Like();
+<span class="hljs-keyword">like</span>.userId = <span class="hljs-number">10</span>
+<span class="hljs-keyword">like</span>.produuctId = <span class="hljs-number">29188</span>
+<span class="hljs-keyword">like</span>.save() <span class="hljs-comment">// We got a Promise</span>
+</code></pre><h2 id="understanding-models">Understanding models</h2>
+				<p>If you want to know about the importance of a model in your software read please read the book Domain-Driven Design: Tackling Complexity in the Heart of Software by Eric Evans.</p>
+				<h2 id="the-reason-of-this">The reason of this</h2>
+				<p>After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. sdkzer helps you to get rid of spagetti code, helps you to understand better your software. All data layer lives now in your SDK, not in your controllers. And this allows you also to migrate it to any framework and inject the entities of your SDK that you need in your application controllers.</p>
+				<p>The idea is to help to create a SDK (Software Development Kit) that contains all your javascript entities mapped to your http API (your model). On top of the sdkzer functionality you will implement your model methods and attributes, and you will have a rich API to interact with your http API from a simple javascript API.</p>
+				<h2 id="typescript">Typescript</h2>
+				<p>sdkzer is developed in Typescript. You can extend Sdkzer class for each of your SDK entities and you are ready to go.</p>
+				<h2 id="1-implementing-your-sdk-with-sdkzer">1. Implementing your sdk with sdkzer</h2>
+				<p>Implementing an SDK with sdkzer First thing you have to ask yourself is: Am I going to user Typescript or raw Javascript?</p>
+				<h3 id="1-1-how-to-construct-your-sdk">1.1. How to construct your sdk</h3>
+				<p>Wrap your SDK into a module. wether you are using Typescript or Javascript you should create a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.</p>
+				<p>Sample code:</p>
+				<p>Typescript:</p>
+				<pre><code>module sdk {
+ <span class="hljs-comment">// Entity definition, here GeoPosition will me mapped to your /geo-position endpoint</span>
+ export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GeoPosition</span> <span class="hljs-keyword"><span class="hljs-keyword">extends</span></span> <span class="hljs-title">Sdkzer</span> {</span>
+    public resourceEndpoint() {
+       <span class="hljs-keyword">return</span> <span class="hljs-symbol">'http</span>:<span class="hljs-comment">//localhost:8000/api/v1/geo-position';</span>
+     }
+
+     public defaults() {
+       <span class="hljs-keyword">return</span> { lat: <span class="hljs-literal">null</span>, lon: <span class="hljs-literal">null</span> };
+     }
+
+     public parse(data:<span class="hljs-type">Object</span>) {
+       <span class="hljs-keyword">return</span> data[<span class="hljs-symbol">'ge</span>o'];
+     }
+
+     public toOriginJSON() {
+       <span class="hljs-keyword">return</span> { <span class="hljs-symbol">'ge</span>o': <span class="hljs-keyword">this</span>.attrs };
+     }
+   }
+}
+</code></pre><h2 id="2-using-your-sdk">2. Using your sdk</h2>
+				<h3 id="2-1-interact-with-resource-collections">2.1. Interact with resource collections</h3>
+				<pre><code><span class="hljs-keyword">var</span> geoPositions;
+
+GeoPosition.fetchIndex().then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(geoPositions)</span> </span>{
+    geoPositions = geoPositions;
+  },
+  <span class="hljs-comment">// Fail</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(reason)</span> </span>{
+
+  }
+);
+</code></pre><h3 id="2-2-creating-model-entity-instances">2.2. Creating model entity instances</h3>
+				<pre><code>var geoPosition = <span class="hljs-keyword">new</span> geoPosition({
+  lat: <span class="hljs-number">52.370216</span>,
+  lon <span class="hljs-number">4.895168</span>
+});
+</code></pre><h3 id="2-3-interact-with-resource-instances">2.3. Interact with resource instances</h3>
+				<p>Once you have a model entity instance created and assigned to a variable, you do it through instance methods:</p>
+				<pre><code><span class="hljs-tag">geoPerson</span><span class="hljs-class">.hasChanged</span>();
+<span class="hljs-tag">geoPerson</span><span class="hljs-class">.fetch</span>();
+<span class="hljs-tag">geoPerson</span><span class="hljs-class">.update</span>();
+<span class="hljs-tag">geoPerson</span><span class="hljs-class">.destroy</span>();
+...
+</code></pre><h2 id="2-4-create-read-update-delete-crud-">2.4. Create / Read / Update / Delete (CRUD)</h2>
+				<h3 id="2-4-1-create-a-record">2.4.1. Create a record</h3>
+				<pre><code><span class="hljs-keyword">var</span> user = <span class="hljs-keyword">new</span> User({ id: <span class="hljs-number">198</span> });
+user.save().then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'awesome! Record was saved in the origin using: '</span>, user.attrs);
+  },
+  <span class="hljs-comment">// Failure</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'error saving the record in the origin'</span>);
+  }
+)
+</code></pre><h3 id="2-4-2-read-a-record">2.4.2. Read a record</h3>
+				<pre><code><span class="hljs-keyword">var</span> user = <span class="hljs-keyword">new</span> User({ id: <span class="hljs-number">19</span> });
+user.fetch().then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Attributes has been updated!'</span>);
+  },
+  <span class="hljs-comment">// Failure</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when syncing the User'</span>)
+  }
+)
+</code></pre><h3 id="2-4-3-read-a-collection">2.4.3. Read a collection</h3>
+				<pre><code><span class="hljs-keyword">var</span> geoPositions;
+
+GeoPosition.fetchIndex(qsParams).then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(geoPositions)</span> </span>{
+    geoPositions = geoPositions;
+  },
+  <span class="hljs-comment">// Fail</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(reason)</span> </span>{
+
+  }
+);
+
+<span class="hljs-comment">// You have a collection of isolated instances containing all your instance methods</span>
+geoPositions[<span class="hljs-number">0</span>].myInstanceMethod();
+</code></pre><h3 id="2-4-4-update-a-record">2.4.4. Update a record</h3>
+				<pre><code>user.update().then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Updated'</span>);
+  },
+  <span class="hljs-comment">// Failure</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when updating'</span>)
+  }
+);
+</code></pre><h3 id="2-4-4-delete-a-record">2.4.4. Delete a record</h3>
+				<pre><code>user.delete().then(
+  <span class="hljs-comment">// Success</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Deleted'</span>);
+  },
+  <span class="hljs-comment">// Failure</span>
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{
+    <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when deleting'</span>)
+  }
+);
+</code></pre><h2 id="contribute">Contribute</h2>
+				<pre><code>npm <span class="hljs-operator"><span class="hljs-keyword">install</span>
+tsd <span class="hljs-keyword">install</span>
+karma <span class="hljs-keyword">start</span> karma.conf</span>
+</code></pre>
+			</div>
+		</div>
+		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
+			<nav class="tsd-navigation primary">
+				<ul>
+					<li class="globals  ">
+						<a href="globals.html"><em>Globals</em></a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Internals</span>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="modules/_ts_howerest_sdkzer_.html">"ts/howerest.sdkzer"</a>
+					</li>
+					<li class="label tsd-is-external">
+						<span>Externals</span>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_node_modules_js_webservices_ts_util_.html">"node_<wbr>modules/js-<wbr>webservices/ts/util"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_node_modules_js_webservices_ts_web_services_.html">"node_<wbr>modules/js-<wbr>webservices/ts/web_<wbr>services"</a>
+					</li>
+					<li class=" tsd-kind-external-module tsd-is-external">
+						<a href="modules/_ts_howerest_modularizer_.html">"ts/howerest.modularizer"</a>
+					</li>
+				</ul>
+			</nav>
+			<nav class="tsd-navigation secondary menu-sticky">
+				<ul class="before-current">
+				</ul>
+			</nav>
+		</div>
+	</div>
+</div>
+<footer class="with-border-bottom">
+	<div class="container">
+		<h2>Legend</h2>
+		<div class="tsd-legend-group">
+			<ul class="tsd-legend">
+				<li class="tsd-kind-module"><span class="tsd-kind-icon">Module</span></li>
+				<li class="tsd-kind-object-literal"><span class="tsd-kind-icon">Object literal</span></li>
+				<li class="tsd-kind-variable"><span class="tsd-kind-icon">Variable</span></li>
+				<li class="tsd-kind-function"><span class="tsd-kind-icon">Function</span></li>
+				<li class="tsd-kind-function tsd-has-type-parameter"><span class="tsd-kind-icon">Function with type parameter</span></li>
+				<li class="tsd-kind-index-signature"><span class="tsd-kind-icon">Index signature</span></li>
+				<li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+				<li class="tsd-kind-enum-member"><span class="tsd-kind-icon">Enumeration member</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-enum"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-enum"><span class="tsd-kind-icon">Method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li>
+				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-interface"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-interface"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-interface"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-interface"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li>
+				<li class="tsd-kind-class tsd-has-type-parameter"><span class="tsd-kind-icon">Class with type parameter</span></li>
+				<li class="tsd-kind-constructor tsd-parent-kind-class"><span class="tsd-kind-icon">Constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class"><span class="tsd-kind-icon">Property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class"><span class="tsd-kind-icon">Accessor</span></li>
+				<li class="tsd-kind-index-signature tsd-parent-kind-class"><span class="tsd-kind-icon">Index signature</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-constructor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited constructor</span></li>
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-inherited"><span class="tsd-kind-icon">Inherited accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+				<li class="tsd-kind-accessor tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private accessor</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static property</span></li>
+				<li class="tsd-kind-call-signature tsd-parent-kind-class tsd-is-static"><span class="tsd-kind-icon">Static method</span></li>
+			</ul>
+		</div>
+	</div>
+</footer>
+<div class="container tsd-generator">
+	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
+</div>
+<div class="overlay"></div>
+<script src="assets/js/main.js"></script>
+<script>if (location.protocol == 'file:') document.write('<script src="assets/js/search.js"><' + '/script>');</script>
+</body>
+</html>
