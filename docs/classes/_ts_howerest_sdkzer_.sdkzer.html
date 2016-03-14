@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Sdkzer | js-webservices</title>
+	<title>Sdkzer | sdkzer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">js-webservices</a>
+					<a href="../index.html" class="title">sdkzer</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -70,6 +70,34 @@
 <div class="container container-main">
 	<div class="row">
 		<div class="col-8 col-content">
+			<section class="tsd-panel tsd-comment">
+				<div class="tsd-comment tsd-typography">
+					<div class="lead">
+						<hr>
+						<p>howerest 2016 - <a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#58;&#x64;&#x61;&#118;&#105;&#100;&#118;&#97;&#x6c;&#x69;&#x6e;&#64;&#104;&#111;&#x77;&#101;&#x72;&#x65;&#115;&#x74;&#46;&#99;&#111;&#109;">&#x64;&#x61;&#118;&#105;&#100;&#118;&#97;&#x6c;&#x69;&#x6e;&#64;&#104;&#111;&#x77;&#101;&#x72;&#x65;&#115;&#x74;&#46;&#99;&#111;&#109;</a> | www.howerest.com</p>
+						<h2 id="apache-2-0-licensed">Apache 2.0 Licensed</h2>
+					</div>
+					<p>Implements a standarized &amp; friendly API to deal with RESTful http resources
+					that implement endpoints to perform the CRUD operations</p>
+					<p>[how to use]:</p>
+					<ol>
+						<li>Define a resource:<pre><code class="lang-ts">Payment extends Sdkzer {
+<span class="hljs-keyword">public</span> baseEndpoint() {           <span class="hljs-comment">// 1.1 ) Define a baseEndpoint</span>
+<span class="hljs-keyword">return</span> <span class="hljs-string">'http://www.an-api.com/payments'</span>;
+}
+<span class="hljs-keyword">public</span> defaults() {               <span class="hljs-comment">// 1.2 ) Define default attributes</span>
+<span class="hljs-keyword">return</span> {
+userId: <span class="hljs-literal">null</span>,
+amountCents: <span class="hljs-literal">null</span>
+}
+}
+}
+</code></pre>
+						</li>
+						<li>Start using your resource</li>
+					</ol>
+				</div>
+			</section>
 			<section class="tsd-panel tsd-hierarchy">
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
@@ -151,13 +179,25 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:44</li>
+									<li>Defined in ts/howerest.sdkzer.ts:62</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Creates an instance of a model entity with an API to communicate with
+									a resource (http RESTful resource)</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> attrs: <span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> =&nbsp;{}</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<div class="lead">
+											<p>The initial attributes for the resource.
+											Those attributes are in force to defaults()</p>
+										</div>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="_ts_howerest_sdkzer_.sdkzer.html" class="tsd-signature-type">Sdkzer</a></h4>
@@ -173,7 +213,7 @@
 					<div class="tsd-signature tsd-kind-icon">attrs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:17</li>
+							<li>Defined in ts/howerest.sdkzer.ts:35</li>
 						</ul>
 					</aside>
 				</section>
@@ -183,7 +223,7 @@
 					<div class="tsd-signature tsd-kind-icon">last<wbr>Response<span class="tsd-signature-symbol">:</span> <a href="_node_modules_js_webservices_ts_web_services_.webservices.httpresponse.html" class="tsd-signature-type">HttpResponse</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:20</li>
+							<li>Defined in ts/howerest.sdkzer.ts:38</li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +233,7 @@
 					<div class="tsd-signature tsd-kind-icon">p<wbr>Attrs<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:18</li>
+							<li>Defined in ts/howerest.sdkzer.ts:36</li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +243,7 @@
 					<div class="tsd-signature tsd-kind-icon">syncing<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:19</li>
+							<li>Defined in ts/howerest.sdkzer.ts:37</li>
 						</ul>
 					</aside>
 				</section>
@@ -213,7 +253,7 @@
 					<div class="tsd-signature tsd-kind-icon">DEFAULT_<wbr>HTTP_<wbr>HEADERS<span class="tsd-signature-symbol">:</span> <a href="_node_modules_js_webservices_ts_web_services_.webservices.httpheader.html" class="tsd-signature-type">HttpHeader</a><span class="tsd-signature-symbol">[]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:23</li>
+							<li>Defined in ts/howerest.sdkzer.ts:41</li>
 						</ul>
 					</aside>
 				</section>
@@ -223,7 +263,7 @@
 					<div class="tsd-signature tsd-kind-icon">HTTP_<wbr>PATTERN<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">String</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:24</li>
+							<li>Defined in ts/howerest.sdkzer.ts:42</li>
 						</ul>
 					</aside>
 				</section>
@@ -233,7 +273,7 @@
 					<div class="tsd-signature tsd-kind-icon">PARENTS_<wbr>FETCH_<wbr>STRATEGY<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">String</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:25</li>
+							<li>Defined in ts/howerest.sdkzer.ts:43</li>
 						</ul>
 					</aside>
 				</section>
@@ -244,15 +284,21 @@
 					<a name="_parse" class="tsd-anchor"></a>
 					<h3>$parse</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">$parse<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span>, dataPrefixKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">$parse<span class="tsd-signature-symbol">(</span>data<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span>, dataPrefixKey<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:303</li>
+									<li>Defined in ts/howerest.sdkzer.ts:351</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Parses the resources data from an incoming HttpResponse
+									The idea is to return the resources attributes exclusively</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -262,7 +308,7 @@
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> dataPrefixKey: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -270,25 +316,48 @@
 					<a name="attr" class="tsd-anchor"></a>
 					<h3>attr</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">attr<span class="tsd-signature-symbol">(</span>attrName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">attr<span class="tsd-signature-symbol">(</span>attrName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, value<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:136</li>
+									<li>Defined in ts/howerest.sdkzer.ts:176</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>This method can do 3 different things:</p>
+								</div>
+								<ul>
+									<li>1) Reads all attributes. When called as instance.attr()</li>
+									<li>2) Read one attribute. When called as instance.attr(&#39;name&#39;)</li>
+									<li>3) Set one attribute. When called as instance.attr(&#39;name&#39;, &#39;Bruce Lee&#39;)</li>
+								</ul>
+								<p>It&#39;s recommended to use this method instead of accessing to attr attribute
+									directly. This allows you to execute logic before and after setting or
+									reading attributes. Also, instead of creating 100 setters and getters,
+								we use a single attr() method</p>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> attrName: <span class="tsd-signature-type">string</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The attribute name that we want to read or set</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> value: <span class="tsd-signature-type">any</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The attribute value that we want to set for &quot;attrName&quot;</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">void</span>
+							</h4>
 						</li>
 					</ul>
 				</section>
@@ -296,16 +365,26 @@
 					<a name="baseendpoint" class="tsd-anchor"></a>
 					<h3>base<wbr>Endpoint</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">base<wbr>Endpoint<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">base<wbr>Endpoint<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:155</li>
+									<li>Defined in ts/howerest.sdkzer.ts:201</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the base resource url. Override it using your base endpoint
+									for your resource.</p>
+								</div>
+								<p>NOTE: You need to define a baseEndpoint method in your entities
+									in order to be able to sync with a backend endpoint
+									A base endpoint for a RESTful endpoint look like:
+								return &quot;<a href="https://www.an-api.com/v1/users">https://www.an-api.com/v1/users</a>&quot;</p>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -313,16 +392,21 @@
 					<a name="changedattrs" class="tsd-anchor"></a>
 					<h3>changed<wbr>Attrs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">changed<wbr>Attrs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
+						<li class="tsd-signature tsd-kind-icon">changed<wbr>Attrs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:206</li>
+									<li>Defined in ts/howerest.sdkzer.ts:254</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the name of the changed attributes since the last save</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -330,18 +414,22 @@
 					<a name="defaults" class="tsd-anchor"></a>
 					<h3>defaults</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">defaults<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+						<li class="tsd-signature tsd-kind-icon">defaults<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:128</li>
+									<li>Defined in ts/howerest.sdkzer.ts:156</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
-							<ul class="tsd-parameters">
-							</ul>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the defaults for the entity. Override it using your default
+									attributes if you need any</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -349,16 +437,21 @@
 					<a name="destroy" class="tsd-anchor"></a>
 					<h3>destroy</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">destroy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">destroy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:379</li>
+									<li>Defined in ts/howerest.sdkzer.ts:428</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Destroys the current record in the origin</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -366,25 +459,27 @@
 					<a name="fetch" class="tsd-anchor"></a>
 					<h3>fetch</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">fetch<span class="tsd-signature-symbol">(</span>origin<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span>, camelize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<span class="tsd-signature-symbol">(</span>camelize<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Boolean</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpresponse.html" class="tsd-signature-type">HttpResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:251</li>
+									<li>Defined in ts/howerest.sdkzer.ts:299</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Fetches the newest attributes from the origin.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> origin: <span class="tsd-signature-type">string</span></h5>
-								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> camelize: <span class="tsd-signature-type">Boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpresponse.html" class="tsd-signature-type">HttpResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -392,22 +487,27 @@
 					<a name="hasattrchanged" class="tsd-anchor"></a>
 					<h3>has<wbr>Attr<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">has<wbr>Attr<wbr>Changed<span class="tsd-signature-symbol">(</span>attrName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">has<wbr>Attr<wbr>Changed<span class="tsd-signature-symbol">(</span>attrName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:190</li>
+									<li>Defined in ts/howerest.sdkzer.ts:238</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if an attribute has changed from the origin</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>attrName: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -415,16 +515,21 @@
 					<a name="haschanged" class="tsd-anchor"></a>
 					<h3>has<wbr>Changed</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">has<wbr>Changed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">has<wbr>Changed<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:182</li>
+									<li>Defined in ts/howerest.sdkzer.ts:230</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if the record has changed since the last save</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -432,16 +537,23 @@
 					<a name="isnew" class="tsd-anchor"></a>
 					<h3>is<wbr>New</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>New<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">is<wbr>New<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:174</li>
+									<li>Defined in ts/howerest.sdkzer.ts:222</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if the record is not saved in the origin. An record will be
+										consiered new when it has an &quot;id&quot; attribute set to null and it lacks of
+									a &quot;lastResponse&quot; attribute value</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -449,18 +561,21 @@
 					<a name="prevattrs" class="tsd-anchor"></a>
 					<h3>prev<wbr>Attrs</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">prev<wbr>Attrs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">object</span></li>
+						<li class="tsd-signature tsd-kind-icon">prev<wbr>Attrs<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:228</li>
+									<li>Defined in ts/howerest.sdkzer.ts:276</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">object</span></h4>
-							<ul class="tsd-parameters">
-							</ul>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the previous attributes</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -474,9 +589,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:243</li>
+									<li>Defined in ts/howerest.sdkzer.ts:291</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the previous value prior to last save for a specific attribute</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
@@ -491,16 +611,23 @@
 					<a name="resourceendpoint" class="tsd-anchor"></a>
 					<h3>resource<wbr>Endpoint</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">resource<wbr>Endpoint<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span></li>
+						<li class="tsd-signature tsd-kind-icon">resource<wbr>Endpoint<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:165</li>
+									<li>Defined in ts/howerest.sdkzer.ts:212</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">string</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the resource url
+										NOTE: This method will become the interface to connect using different
+									http patterns</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -514,9 +641,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:115</li>
+									<li>Defined in ts/howerest.sdkzer.ts:142</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Sets the defaults() values in the instance attributes</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
@@ -525,22 +657,30 @@
 					<a name="toorigin" class="tsd-anchor"></a>
 					<h3>to<wbr>Origin</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>Origin<span class="tsd-signature-symbol">(</span>format<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>Origin<span class="tsd-signature-symbol">(</span>format<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">String</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:331</li>
+									<li>Defined in ts/howerest.sdkzer.ts:380</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transforms the local attributes to be processed by the origin in a specific format</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>format: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span>
+								<span class="tsd-signature-symbol"> | </span>
+								<span class="tsd-signature-type">String</span>
+							</h4>
 						</li>
 					</ul>
 				</section>
@@ -554,9 +694,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:315</li>
+									<li>Defined in ts/howerest.sdkzer.ts:363</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transforms the local attributes to be processed by the origin in JSON format</p>
+								</div>
+							</div>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
 						</li>
 					</ul>
@@ -565,16 +710,21 @@
 					<a name="tooriginxml" class="tsd-anchor"></a>
 					<h3>to<wbr>OriginXML</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">to<wbr>OriginXML<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+						<li class="tsd-signature tsd-kind-icon">to<wbr>OriginXML<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:323</li>
+									<li>Defined in ts/howerest.sdkzer.ts:371</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Transforms the local attributes to be processed by the origin in XML format</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -582,22 +732,27 @@
 					<a name="update" class="tsd-anchor"></a>
 					<h3>update</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>httpHeaders<span class="tsd-signature-symbol">?: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpheader.html" class="tsd-signature-type">HttpHeader</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">update<span class="tsd-signature-symbol">(</span>httpHeaders<span class="tsd-signature-symbol">?: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpheader.html" class="tsd-signature-type">HttpHeader</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpresponse.html" class="tsd-signature-type">HttpResponse</a><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:348</li>
+									<li>Defined in ts/howerest.sdkzer.ts:397</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Updates the local object into the origin</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5><span class="tsd-flag ts-flagDefault value">Default value</span> httpHeaders: <a href="_node_modules_js_webservices_ts_web_services_.webservices.httpheader.html" class="tsd-signature-type">HttpHeader</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[]</span></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpresponse.html" class="tsd-signature-type">HttpResponse</a><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -611,13 +766,22 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:63</li>
+									<li>Defined in ts/howerest.sdkzer.ts:89</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Configures Sdkzer constants that determine the behaviour of Sdkzer in all
+									classes that extend from Sdkzer in the current scope.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>options: <a href="../interfaces/_ts_howerest_sdkzer_.isdkzerconfigoptions.html" class="tsd-signature-type">ISdkzerConfigOptions</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The configuration options</p>
+									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
@@ -628,22 +792,27 @@
 					<a name="fetchindex" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> fetch<wbr>Index</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Index<span class="tsd-signature-symbol">(</span>httpQuery<span class="tsd-signature-symbol">: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<wbr>Index<span class="tsd-signature-symbol">(</span>httpQuery<span class="tsd-signature-symbol">: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:398</li>
+									<li>Defined in ts/howerest.sdkzer.ts:447</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves a collection of records from the origin</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>httpQuery: <a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Array</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -651,25 +820,36 @@
 					<a name="fetchone" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> fetch<wbr>One</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">fetch<wbr>One<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Number</span>, httpQuery<span class="tsd-signature-symbol">?: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">fetch<wbr>One<span class="tsd-signature-symbol">(</span>id<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Number</span>, httpQuery<span class="tsd-signature-symbol">?: </span><a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:435</li>
+									<li>Defined in ts/howerest.sdkzer.ts:486</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves a single record from the origin</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>id: <span class="tsd-signature-type">Number</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>The record id that we want to fetch by</p>
+									</div>
 								</li>
 								<li>
 									<h5><span class="tsd-flag ts-flagOptional">Optional</span> httpQuery: <a href="_node_modules_js_webservices_ts_web_services_.webservices.httpquery.html" class="tsd-signature-type">HttpQuery</a></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Use a HttpQuery instance to override the default query</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">&gt;</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -677,22 +857,30 @@
 					<a name="gethttpqueryguessconfigfor" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> get<wbr>Http<wbr>Query<wbr>Guess<wbr>Config<wbr>For</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Http<wbr>Query<wbr>Guess<wbr>Config<wbr>For<span class="tsd-signature-symbol">(</span>operation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Http<wbr>Query<wbr>Guess<wbr>Config<wbr>For<span class="tsd-signature-symbol">(</span>operation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Object</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:103</li>
+									<li>Defined in ts/howerest.sdkzer.ts:130</li>
 								</ul>
 							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Retrieves the http guess config for an specific CRUD operation.</p>
+								</div>
+							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>operation: <span class="tsd-signature-type">String</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>Accepts &quot;create&quot;, &quot;read&quot;, &quot;update&quot; and &quot;delete&quot;</p>
+									</div>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Object</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -700,16 +888,21 @@
 					<a name="usingcustomhttppattern" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> using<wbr>Custom<wbr>Http<wbr>Pattern</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">using<wbr>Custom<wbr>Http<wbr>Pattern<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">using<wbr>Custom<wbr>Http<wbr>Pattern<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:87</li>
+									<li>Defined in ts/howerest.sdkzer.ts:113</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if Sdkzer has been configured to communicate using custom CRUD endpoints</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -717,16 +910,21 @@
 					<a name="usingparentsfetchstrategy" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> using<wbr>Parents<wbr>Fetch<wbr>Strategy</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">using<wbr>Parents<wbr>Fetch<wbr>Strategy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">using<wbr>Parents<wbr>Fetch<wbr>Strategy<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:95</li>
+									<li>Defined in ts/howerest.sdkzer.ts:121</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if Sdkzer is using any fetch strategy once received parent ids</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -734,16 +932,21 @@
 					<a name="usingrestfulcrudhttppattern" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagStatic">Static</span> <span class="tsd-flag ts-flagPrivate">Private</span> using<wbr>Restful<wbr>Crud<wbr>Http<wbr>Pattern</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-static tsd-is-not-exported">
-						<li class="tsd-signature tsd-kind-icon">using<wbr>Restful<wbr>Crud<wbr>Http<wbr>Pattern<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+						<li class="tsd-signature tsd-kind-icon">using<wbr>Restful<wbr>Crud<wbr>Http<wbr>Pattern<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Boolean</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:79</li>
+									<li>Defined in ts/howerest.sdkzer.ts:105</li>
 								</ul>
 							</aside>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Checks if Sdkzer has been configured to communicate to RESTful resources</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Boolean</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -756,7 +959,7 @@
 					<div class="tsd-signature tsd-kind-icon">HTTP_<wbr>QUERY_<wbr>GUESS_<wbr>CONFIG<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in ts/howerest.sdkzer.ts:26</li>
+							<li>Defined in ts/howerest.sdkzer.ts:44</li>
 						</ul>
 					</aside>
 					<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -765,7 +968,7 @@
 						<div class="tsd-signature tsd-kind-icon">restful_<wbr>crud<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 						<aside class="tsd-sources">
 							<ul>
-								<li>Defined in ts/howerest.sdkzer.ts:27</li>
+								<li>Defined in ts/howerest.sdkzer.ts:45</li>
 							</ul>
 						</aside>
 						<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -774,7 +977,7 @@
 							<div class="tsd-signature tsd-kind-icon">create_<wbr>record<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:34</li>
+									<li>Defined in ts/howerest.sdkzer.ts:52</li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -783,7 +986,7 @@
 								<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:36</li>
+										<li>Defined in ts/howerest.sdkzer.ts:54</li>
 									</ul>
 								</aside>
 							</section>
@@ -793,7 +996,7 @@
 								<div class="tsd-signature tsd-kind-icon">verb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:35</li>
+										<li>Defined in ts/howerest.sdkzer.ts:53</li>
 									</ul>
 								</aside>
 							</section>
@@ -804,7 +1007,7 @@
 							<div class="tsd-signature tsd-kind-icon">delete_<wbr>record<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:40</li>
+									<li>Defined in ts/howerest.sdkzer.ts:58</li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -813,7 +1016,7 @@
 								<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:42</li>
+										<li>Defined in ts/howerest.sdkzer.ts:60</li>
 									</ul>
 								</aside>
 							</section>
@@ -823,7 +1026,7 @@
 								<div class="tsd-signature tsd-kind-icon">verb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:41</li>
+										<li>Defined in ts/howerest.sdkzer.ts:59</li>
 									</ul>
 								</aside>
 							</section>
@@ -834,7 +1037,7 @@
 							<div class="tsd-signature tsd-kind-icon">read_<wbr>collection<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:28</li>
+									<li>Defined in ts/howerest.sdkzer.ts:46</li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -843,7 +1046,7 @@
 								<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:30</li>
+										<li>Defined in ts/howerest.sdkzer.ts:48</li>
 									</ul>
 								</aside>
 							</section>
@@ -853,7 +1056,7 @@
 								<div class="tsd-signature tsd-kind-icon">verb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:29</li>
+										<li>Defined in ts/howerest.sdkzer.ts:47</li>
 									</ul>
 								</aside>
 							</section>
@@ -864,7 +1067,7 @@
 							<div class="tsd-signature tsd-kind-icon">read_<wbr>record<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:31</li>
+									<li>Defined in ts/howerest.sdkzer.ts:49</li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -873,7 +1076,7 @@
 								<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:33</li>
+										<li>Defined in ts/howerest.sdkzer.ts:51</li>
 									</ul>
 								</aside>
 							</section>
@@ -883,7 +1086,7 @@
 								<div class="tsd-signature tsd-kind-icon">verb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:32</li>
+										<li>Defined in ts/howerest.sdkzer.ts:50</li>
 									</ul>
 								</aside>
 							</section>
@@ -894,7 +1097,7 @@
 							<div class="tsd-signature tsd-kind-icon">update_<wbr>record<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in ts/howerest.sdkzer.ts:37</li>
+									<li>Defined in ts/howerest.sdkzer.ts:55</li>
 								</ul>
 							</aside>
 							<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-not-exported">
@@ -903,7 +1106,7 @@
 								<div class="tsd-signature tsd-kind-icon">endpoint<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:39</li>
+										<li>Defined in ts/howerest.sdkzer.ts:57</li>
 									</ul>
 								</aside>
 							</section>
@@ -913,7 +1116,7 @@
 								<div class="tsd-signature tsd-kind-icon">verb<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 								<aside class="tsd-sources">
 									<ul>
-										<li>Defined in ts/howerest.sdkzer.ts:38</li>
+										<li>Defined in ts/howerest.sdkzer.ts:56</li>
 									</ul>
 								</aside>
 							</section>
@@ -931,8 +1134,23 @@
 					<li class="label tsd-is-external">
 						<span>Internals</span>
 					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_ts_howerest_modularizer_.html">"ts/howerest.modularizer"</a>
+					</li>
 					<li class="current tsd-kind-external-module">
 						<a href="../modules/_ts_howerest_sdkzer_.html">"ts/howerest.sdkzer"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_ts_spec_fixtures_.html">"ts/spec/fixtures"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_ts_spec_modularizer_spec_.html">"ts/spec/modularizer_<wbr>spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_ts_spec_sdkzer_spec_.html">"ts/spec/sdkzer_<wbr>spec"</a>
+					</li>
+					<li class=" tsd-kind-external-module">
+						<a href="../modules/_ts_spec_spec_helper_.html">"ts/spec/spec_<wbr>helper"</a>
 					</li>
 					<li class="label tsd-is-external">
 						<span>Externals</span>
@@ -942,9 +1160,6 @@
 					</li>
 					<li class=" tsd-kind-external-module tsd-is-external">
 						<a href="../modules/_node_modules_js_webservices_ts_web_services_.html">"node_<wbr>modules/js-<wbr>webservices/ts/web_<wbr>services"</a>
-					</li>
-					<li class=" tsd-kind-external-module tsd-is-external">
-						<a href="../modules/_ts_howerest_modularizer_.html">"ts/howerest.modularizer"</a>
 					</li>
 				</ul>
 			</nav>
@@ -1072,7 +1287,7 @@
 		</div>
 	</div>
 </div>
-<footer class="with-border-bottom">
+<footer>
 	<div class="container">
 		<h2>Legend</h2>
 		<div class="tsd-legend-group">
@@ -1131,11 +1346,18 @@
 		</div>
 	</div>
 </footer>
-<div class="container tsd-generator">
-	<p>Generated using <a href="http://typedoc.io" target="_blank">TypeDoc</a></p>
-</div>
 <div class="overlay"></div>
 <script src="../assets/js/main.js"></script>
 <script>if (location.protocol == 'file:') document.write('<script src="../assets/js/search.js"><' + '/script>');</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-75123123-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </body>
 </html>

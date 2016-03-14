@@ -1,10 +1,15 @@
 ## Preliminary version available (not ready for production yet) ##
 
+I'm working on it
+
 David Valín
   howerest Labs . http://www.howerest.com/labs
 
 Definitive API almost ready:
   [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
+
+# Full API docs
+Current v0.1.0 - http://howerest.com/sdkzer/docs/0.1.0/index.html
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http restful resources. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint. If you have a restful (CRUD) http api, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
@@ -13,7 +18,7 @@ On top of that communication layer that sdkzer does for you out of the box you w
 
 Thanks to Typescript, sdkzer is able to be automatically exported to ES3, ES5 and ES6.
 
-sdkzer play nice with any framework: Angular 1.x, Angular 2, React.js... And will help you to have a model layer in your software that you can easily migrate to any javascript framework.
+sdkzer play nice with any framework: Angular 1.x, Angular 2, Riot, React.js... And will help you to have a model layer in your software that you can easily migrate to any javascript framework.
 
 With sdkzer you don't talk low level to your http API, you do it through a javascript API like so:
 
