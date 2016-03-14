@@ -9,7 +9,7 @@ Definitive API almost ready:
   [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.1.0 - http://howerest.com/sdkzer/docs/0.1.0/index.html
+Current v0.1.0 - http://howerest.com/sdkzer/docs/0.1.0/classes/_ts_howerest_sdkzer_.sdkzer.html
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http restful resources. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint. If you have a restful (CRUD) http api, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
