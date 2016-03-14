@@ -3,15 +3,33 @@
 /// <reference path='../node_modules/js-webservices/ts/web_services.ts' />
 /// <reference path="./howerest.modularizer.ts"/>
 
-/* --------------------------------------------------------------------------
-
+/**
+   ________________________________________________________________________
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
       Apache 2.0 Licensed
+      -------------------
 
-    Implements functionality to deal with restful http CRUD endpoints
+    Implements a standarized & friendly API to deal with RESTful http resources
+    that implement endpoints to perform the CRUD operations
 
- --------------------------------------------------------------------------- */
+    [how to use]:
 
+   	  1. Define a resource:
+      ```ts
+   	    Payment extends Sdkzer {
+          public baseEndpoint() {           // 1.1 ) Define a baseEndpoint
+            return 'http://www.an-api.com/payments';
+          }
+          public defaults() {               // 1.2 ) Define default attributes
+            return {
+              userId: null,
+              amountCents: null
+            }
+          }
+        }
+      ```
+      2. Start using your resource
+ */
 class Sdkzer {
 
   private attrs:Object;
@@ -44,6 +62,12 @@ class Sdkzer {
   }
 
 
+  /**
+   * Creates an instance of a model entity with an API to communicate with
+   * a resource (http RESTful resource)
+   * @param  {Object}   attrs   The initial attributes for the resource.
+   *                            Those attributes are in force to defaults()
+   */
   public constructor(attrs:Object = {}) {
     this.attrs = { id: null };
     this.pAttrs = { id: null };
@@ -57,10 +81,12 @@ class Sdkzer {
     }
   }
 
-  /*!
-   * Configure Sdkzer
+  /**
+   * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
+   * classes that extend from Sdkzer in the current scope.
+   * @param options {ISdkzerConfigOptions} The configuration options
    */
-   public static configure(options:ISdkzerConfigOptions) {
+   public static configure(options:ISdkzerConfigOptions) : void {
      if (options['defaultHttpHeaders']) {
        Sdkzer['DEFAULT_HTTP_HEADERS'] = [];
        for (var i = 0; i < options['defaultHttpHeaders'].length; i++) {
@@ -73,34 +99,35 @@ class Sdkzer {
    }
 
 
-   /*!
-    * Verifies if Sdkzer is using a restful CRUD http pattern
+   /**
+    * Checks if Sdkzer has been configured to communicate to RESTful resources
     */
-   private static usingRestfulCrudHttpPattern() {
+   private static usingRestfulCrudHttpPattern() : Boolean {
      return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
    }
 
 
-   /*!
-    * Verifies if Sdkzer is using a custom http pattern
+   /**
+    * Checks if Sdkzer has been configured to communicate using custom CRUD endpoints
     */
-   private static usingCustomHttpPattern() {
+   private static usingCustomHttpPattern() : Boolean {
      return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
    }
 
 
-   /*!
-    * Verifies if Sdkzer is using any parents fetch strategy
+   /**
+    * Checks if Sdkzer is using any fetch strategy once received parent ids
     */
-   private static usingParentsFetchStrategy() {
+   private static usingParentsFetchStrategy() : Boolean {
      return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
    }
 
 
-   /*!
-    * Retrieves the http guess config for an specific crud operation
+   /**
+    * Retrieves the http guess config for an specific CRUD operation.
+    * @param {String} operation  Accepts "create", "read", "update" and "delete"
     */
-   private static getHttpQueryGuessConfigFor(operation:String) {
+   private static getHttpQueryGuessConfigFor(operation:String) : Object {
      if (Sdkzer.usingRestfulCrudHttpPattern()) {
        return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
      } else {
@@ -109,10 +136,10 @@ class Sdkzer {
    }
 
 
-  /*!
-   * Sets the defaults for the entity
+  /**
+   * Sets the defaults() values in the instance attributes
    */
-  public setDefaults() {
+  public setDefaults() : void {
     if (this.defaults()) {
       var defaults = this.defaults();
       for (var attrKey in defaults) {
@@ -122,18 +149,31 @@ class Sdkzer {
   }
 
 
-  /*!
-   * Retrieves the defaults for the entity
+  /**
+   * Retrieves the defaults for the entity. Override it using your default
+   * attributes if you need any
    */
-  public defaults() {
+  public defaults() : Object {
     return {};
   }
 
 
-  /*!
-   * Retrieves the defaults for the entity
+  /**
+   * This method can do 3 different things:
+   *
+   * - 1) Reads all attributes. When called as instance.attr()
+   * - 2) Read one attribute. When called as instance.attr('name')
+   * - 3) Set one attribute. When called as instance.attr('name', 'Bruce Lee')
+   *
+   * It's recommended to use this method instead of accessing to attr attribute
+   * directly. This allows you to execute logic before and after setting or
+   * reading attributes. Also, instead of creating 100 setters and getters,
+   * we use a single attr() method
+   *
+   * @param attrName  The attribute name that we want to read or set
+   * @param value     The attribute value that we want to set for "attrName"
    */
-   public attr(attrName?: string, value?: any) {
+   public attr(attrName?: string, value?: any) : Object|void {
      // Setting an attribute?
      if (attrName !== undefined && value !== undefined) {
        // TODO: Add before&after-callbacks
@@ -149,45 +189,53 @@ class Sdkzer {
    }
 
 
-  /*!
-   * Retrieves the base resource url
+  /**
+   * Retrieves the base resource url. Override it using your base endpoint
+   * for your resource.
+   *
+   * NOTE: You need to define a baseEndpoint method in your entities
+   *  in order to be able to sync with a backend endpoint
+   *  A base endpoint for a RESTful endpoint look like:
+   *    return "https://www.an-api.com/v1/users"
    */
-  public baseEndpoint() {
-    // You need to define a baseEndpoint method in your entities
-    // in order to be able to sync with a backend endpoint
+  public baseEndpoint() : String {
+
     return null;
   }
 
 
-  /*!
+  /**
    * Retrieves the resource url
+   * NOTE: This method will become the interface to connect using different
+   * http patterns
    */
-  public resourceEndpoint() {
-    // TODO: Guess a resource endpoint based on a restful or custom http pattern
+  public resourceEndpoint() : String {
     return '';
   }
 
 
-  /*!
-   * Checks if the record is not saved on the origin
+  /**
+   * Checks if the record is not saved in the origin. An record will be
+   * consiered new when it has an "id" attribute set to null and it lacks of
+   * a "lastResponse" attribute value
    */
-  public isNew() {
+  public isNew() : Boolean {
     return ((this.attrs['id'] !== null && this.lastResponse !== null) ? false : true);
   }
 
 
-  /*!
+  /**
    * Checks if the record has changed since the last save
    */
-  public hasChanged() {
+  public hasChanged() : Boolean {
     return (this.changedAttrs().length > 0 ? true : false);
   }
 
 
-  /*!
+  /**
    * Checks if an attribute has changed from the origin
    */
-  public hasAttrChanged(attrName:string) {
+  public hasAttrChanged(attrName:string) : Boolean {
     var i, changedAttrs = this.changedAttrs();
 
     for (i = 0; i < changedAttrs.length; i++) {
@@ -200,10 +248,10 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Retrieves the name of the changed attributes since the last save
    */
-  public changedAttrs() {
+  public changedAttrs() : Array<String> {
     var changedAttrs = [],
         currAttrs = Object.keys(this['attrs']),
         prevAttrs = Object.keys(this['pAttrs']),
@@ -222,10 +270,10 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Retrieves the previous attributes
    */
-  public prevAttrs() {
+  public prevAttrs() : Object {
     var previousAttrs = {};
     for (var attrKey in this.attrs) {
       if (this.pAttrs[attrKey] !== this.attrs[attrKey]) {
@@ -237,18 +285,18 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Retrieves the previous value prior to last save for a specific attribute
    */
-  public prevValue(attrName:string) {
+  public prevValue(attrName:string) : any {
     return this.prevAttrs()[attrName];
   }
 
 
-  /*!
-   * Fetches
+  /**
+   * Fetches the newest attributes from the origin.
    */
-  public fetch(origin?:string, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) {
+  public fetch(camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
     var _this = this,
         promise;
 
@@ -296,11 +344,11 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Parses the resources data from an incoming HttpResponse
    * The idea is to return the resources attributes exclusively
    */
-  public $parse(data:Object, dataPrefixKey?:string) {
+  public $parse(data:Object, dataPrefixKey?:string) : Object {
     if (dataPrefixKey !== null && Array.isArray(data[dataPrefixKey])) {
       return data[dataPrefixKey];
     } else {
@@ -309,26 +357,27 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Transforms the local attributes to be processed by the origin in JSON format
    */
-  public toOriginJSON() {
+  public toOriginJSON() : Object {
     return this.attrs;
   }
 
 
-  /*!
+  /**
    * Transforms the local attributes to be processed by the origin in XML format
    */
-  public toOriginXML() {
+  public toOriginXML() : String {
     // TODO: Implement
+    return '';
   }
 
 
-  /*!
+  /**
    * Transforms the local attributes to be processed by the origin in a specific format
    */
-  public toOrigin(format:string) {
+  public toOrigin(format:string) : Object|String {
     switch(format) {
       case 'json':
         this.toOriginJSON();
@@ -342,10 +391,10 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Updates the local object into the origin
    */
-  public update(httpHeaders:WebServices.HttpHeader[] = []) {
+  public update(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
     var _this =  this,
         query,
         request;
@@ -373,10 +422,10 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Destroys the current record in the origin
    */
-  public destroy() {
+  public destroy() : Promise<any> {
     var query,
         request;
 
@@ -392,17 +441,17 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Retrieves a collection of records from the origin
    */
-  public static fetchIndex(httpQuery:WebServices.HttpQuery) {
+  public static fetchIndex(httpQuery:WebServices.HttpQuery) : Promise<Array<any>> {
     var query,
         request,
         instancesPromise,
         instances = [],
         instance;
 
-    // TODO: the endpont and verb
+    // TODO: guess endpont and verb based on custom http pattern
 
     instancesPromise = new Promise((resolve, reject) => {
       query = new WebServices.HttpQuery({
@@ -429,10 +478,12 @@ class Sdkzer {
   }
 
 
-  /*!
+  /**
    * Retrieves a single record from the origin
+   * @param id          The record id that we want to fetch by
+   * @param httpQuery   Use a HttpQuery instance to override the default query
    */
-  public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) {
+  public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) : Promise<any>  {
     var model = new this(),
         query,
         request,
@@ -464,7 +515,6 @@ class Sdkzer {
     return instancePromise;
   }
 }
-
 
 interface ISdkzerConfigOptions {
   defaultHttpHeaders:String;
