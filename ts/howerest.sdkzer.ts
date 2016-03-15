@@ -349,7 +349,7 @@ class Sdkzer {
    * The idea is to return the resources attributes exclusively
    */
   public $parse(data:Object, dataPrefixKey?:string) : Object {
-    if (dataPrefixKey !== null && Array.isArray(data[dataPrefixKey])) {
+    if (dataPrefixKey !== null && data[dataPrefixKey]) {
       return data[dataPrefixKey];
     } else {
       return data;
