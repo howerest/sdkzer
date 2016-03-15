@@ -25,7 +25,7 @@ module.exports = function(config) {
       { pattern: 'js/ts/spec/fixtures.js', included: true },
 
       // Specs
-      { pattern: 'js/ts/spec/**/*_spec.js', included: true },
+      { pattern: 'js/ts/spec/**/sdkzer_spec.js', included: true },
     ],
 
 

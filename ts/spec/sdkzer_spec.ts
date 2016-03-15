@@ -132,11 +132,15 @@ describe('Sdkzer', () => {
     });
   });
 
-  describe('.configure', () => {
-    xit('should configure Sdkzer', () => {
+  /*
+   * NOTE: This is not being used yet
+   *
+    describe('.configure', () => {
+      it('should configure Sdkzer', () => {
 
+      });
     });
-  });
+  */
 
   describe('.setDefaults', () => {
     it('should update the attributes with the default attributes', () => {
@@ -144,7 +148,7 @@ describe('Sdkzer', () => {
       var sdkzer = new Sdkzer({ name: 'Chuck Norris' });
       // Defaults should be overriten
       sdkzer.setDefaults();
-      expect(sdkzer.attrs).toEqual(defaultAttributes);
+      expect(sdkzer['attrs']).toEqual(defaultAttributes);
     });
   });
 
@@ -186,8 +190,9 @@ describe('Sdkzer', () => {
   });
 
   describe('.resourceEndpoint', () => {
-    xit('should have a default resourceEndpoint defined for a "restful_crud" HTTP_PATTERN', () => {
-
+    it('should have a default resourceEndpoint defined for a "restful_crud" HTTP_PATTERN', () => {
+      var sdkzer = new Sdkzer();
+      expect(typeof(sdkzer.resourceEndpoint)).toEqual('function');
     });
   });
 
@@ -207,8 +212,8 @@ describe('Sdkzer', () => {
     it("should check if the record attributes has changed from the origin", () => {
       var sdkzer = new Sdkzer({ id: 1 });
       expect(sdkzer.hasChanged()).toEqual(false);
-      sdkzer.pAttrs = { name: 'Previous name' };
-      sdkzer.attrs = { name: 'New name' };
+      sdkzer['pAttrs'] = { name: 'Previous name' };
+      sdkzer['attrs'] = { name: 'New name' };
       expect(sdkzer.hasChanged()).toEqual(true);
     });
   });
@@ -218,9 +223,9 @@ describe('Sdkzer', () => {
     it("should check if the record has any specific attribute that differs from the origin", () => {
       var sdkzer = new Sdkzer();
       sdkzer['pAttrs'] = { name: 'First Name' };
-      sdkzer.attrs = { name: 'First Name' };
+      sdkzer['attrs'] = { name: 'First Name' };
       expect(sdkzer.hasAttrChanged('name')).toEqual(false);
-      sdkzer.attrs['name'] = 'Oh yes';
+      sdkzer['attrs']['name'] = 'Oh yes';
       expect(sdkzer.hasAttrChanged('name')).toEqual(true);
     });
   });
@@ -230,8 +235,8 @@ describe('Sdkzer', () => {
     it("should retrieve a list of attributes different from the origin", () => {
       var sdkzer = new Sdkzer();
       expect(sdkzer.changedAttrs()).toEqual([]);
-      sdkzer.attrs['age'] = 29;
-      sdkzer.pAttrs = {
+      sdkzer['attrs']['age'] = 29;
+      sdkzer['pAttrs'] = {
         age: null
       };
       expect(sdkzer.changedAttrs()).toEqual(['age']);
@@ -246,7 +251,7 @@ describe('Sdkzer', () => {
       });
       sdkzer['pAttrs'] = { id: null, name: 'My other name' }; // This is like a sync with origin
       expect(sdkzer.prevAttrs()).toEqual({ name: 'My other name' });
-      sdkzer.attrs = {
+      sdkzer['attrs'] = {
         name: "A Special Name",
         age: 97
       };
@@ -263,7 +268,7 @@ describe('Sdkzer', () => {
       var sdkzer = new Sdkzer({
         name: 'My initial name'
       });
-      sdkzer.attrs['name'] = "New name";
+      sdkzer['attrs']['name'] = "New name";
       expect(sdkzer.prevValue('name')).toEqual('My initial name');
     });
   });
@@ -389,18 +394,43 @@ describe('Sdkzer', () => {
         itemInstance.fetch();
         expect(WebServices.HttpRequest.constructor).not.toHaveBeenCalled();
       });
-
-      xit("shouldn't change the record attributes", () => {
-
-      });
     });
-
   });
 
 
   describe('.$parse', () => {
-    xit("should parse the data as it comes", () => {
+    var Item, itemInstance, json, expectedParsedJson;
 
+    beforeEach(() => {
+      Item = buildSdkzerModelEntity();
+      itemInstance = new Item({ id: 1 });
+    });
+
+    it("should parse the data as it comes", () => {
+      json = {
+        id: 1001,
+        name: "Bruce Lee"
+      };
+      expect(itemInstance.$parse(json)).toEqual(json);
+    });
+
+    it("should parse the data that is on a specific key when a prefix attribute is specified", () => {
+      json = {
+        metadata: {
+          protocol: 'https',
+          response_time: '60ms'
+        },
+        data: {
+          id: 1001,
+          name: "Bruce Lee"
+        }
+      };
+      expectedParsedJson = {
+        id: 1001,
+        name: "Bruce Lee"
+      };
+
+      expect(itemInstance.$parse(json, 'data')).toEqual(expectedParsedJson);
     });
   });
 
@@ -408,7 +438,7 @@ describe('Sdkzer', () => {
   describe('.toOriginJSON', () => {
     it("should return the record attributes as they are", () => {
       var sdkzer = new Sdkzer();
-      sdkzer.attrs = {
+      sdkzer['attrs'] = {
         id: 1,
         name: "Steve Jobs"
       };
@@ -420,11 +450,15 @@ describe('Sdkzer', () => {
   });
 
 
-  describe('.toOriginXML', () => {
-    xit("should return the record attributes in xml format", () => {
+  /*
+   *  NOTE: This is not being used yet
+   *
+    describe('.toOriginXML', () => {
+       xit("should return the record attributes in xml format", () => {
 
+      // });
     });
-  });
+   */
 
 
   describe('.toOrigin', () => {
@@ -433,7 +467,7 @@ describe('Sdkzer', () => {
       spyOn(Sdkzer.prototype, "toOriginJSON");
       sdkzer.toOrigin('json');
       expect(sdkzer.toOriginJSON).toHaveBeenCalled();
-      expect(sdkzer.attrs).toEqual(sdkzer.toOrigin('json'));
+      expect(sdkzer['attrs']).toEqual(sdkzer.toOrigin('json'));
     });
 
     it("should retrieve the attributes in xml format when 'xml' format is specified", () => {
@@ -441,7 +475,7 @@ describe('Sdkzer', () => {
       spyOn(Sdkzer.prototype, "toOriginXML");
       sdkzer.toOrigin('xml');
       expect(sdkzer.toOriginXML).toHaveBeenCalled();
-      expect(sdkzer.attrs).toEqual(sdkzer.toOrigin('xml'));
+      expect(sdkzer['attrs']).toEqual(sdkzer.toOrigin('xml'));
     });
   });
 
