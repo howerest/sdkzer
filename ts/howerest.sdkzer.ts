@@ -306,8 +306,8 @@ class Sdkzer {
       var query = new WebServices.HttpQuery({
         httpMethod: "GET",
         endpoint:   this.baseEndpoint() + '/' + this.attrs['id'],
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
         qsParams:   {},
-        headers:    [],
         data:       {}
       });
 
@@ -407,7 +407,7 @@ class Sdkzer {
     query = new WebServices.HttpQuery({
       httpMethod: "PUT",
       endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
-      headers:    [],
+      headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
       qsParams:   {},
       data:       this.toOriginJSON()
     });
@@ -432,8 +432,8 @@ class Sdkzer {
     query = new WebServices.HttpQuery({
       httpMethod: "DELETE",
       endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
+      headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
       qsParams:   {},
-      headers:    [],
       data:       {}
     });
     request = new WebServices.HttpRequest(query);
@@ -457,7 +457,7 @@ class Sdkzer {
       query = new WebServices.HttpQuery({
         httpMethod: "GET",
         endpoint:   (new this().baseEndpoint()),
-        headers:    [],
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
         qsParams:   {},
         data:       {}
       });
@@ -495,8 +495,8 @@ class Sdkzer {
         query = new WebServices.HttpQuery({
           httpMethod: "GET",
           endpoint:   model.baseEndpoint()+'/'+id,
+          headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
           qsParams:   {},
-          headers:    [],
           data:       {}
         });
       } else {
