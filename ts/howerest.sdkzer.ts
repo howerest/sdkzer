@@ -205,7 +205,7 @@ class Sdkzer {
    *  A base endpoint for a RESTful endpoint look like:
    *    return "https://www.an-api.com/v1/users"
    */
-  public baseEndpoint() : String {
+  public baseEndpoint() : string {
 
     return null;
   }
@@ -303,7 +303,7 @@ class Sdkzer {
   /**
    * Fetches the newest attributes from the origin.
    */
-  public fetch(camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
+  public fetch(httpQuery:WebServices.HttpQuery, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
     var _this = this,
         promise;
 
@@ -317,6 +317,10 @@ class Sdkzer {
         qsParams:   {},
         data:       {}
       });
+
+      if (typeof(httpQuery) !== 'undefined') {
+        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
+      }
 
       var request = new WebServices.HttpRequest(query);
       promise = request.promise;
@@ -468,6 +472,11 @@ class Sdkzer {
         qsParams:   {},
         data:       {}
       });
+
+      if (typeof(httpQuery) !== 'undefined') {
+        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
+      }
+
       request = new WebServices.HttpRequest(query);
       request.promise.then((response) => {
         for(var i in response.data) {
@@ -498,16 +507,16 @@ class Sdkzer {
         instance;
 
     instancePromise = new Promise((resolve, reject) => {
-      if (typeof(httpQuery) === 'undefined') {
-        query = new WebServices.HttpQuery({
-          httpMethod: "GET",
-          endpoint:   model.baseEndpoint()+'/'+id,
-          headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-          qsParams:   {},
-          data:       {}
-        });
-      } else {
-        query = httpQuery;
+      query = new WebServices.HttpQuery({
+        httpMethod: "GET",
+        endpoint:   model.baseEndpoint()+'/'+id,
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+        qsParams:   {},
+        data:       {}
+      });
+
+      if (typeof(httpQuery) !== 'undefined') {
+        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
       }
 
       request = new WebServices.HttpRequest(query);
