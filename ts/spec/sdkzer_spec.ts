@@ -56,12 +56,12 @@ describe('Sdkzer', () => {
     describe('without initial attributes', () => {
       it("should not initialize with a defined id", () => {
         var sdkzer = new Sdkzer();
-        expect(sdkzer.attrs['id']).toEqual(null);
+        expect(sdkzer['attrs']['id']).toEqual(null);
       });
 
       it("should not have any attribute defined", () => {
         var sdkzer = new Sdkzer();
-        expect(Object.keys(sdkzer.attrs).length).toEqual(1);
+        expect(Object.keys(sdkzer['attrs']).length).toEqual(1);
       });
     });
 
@@ -99,7 +99,7 @@ describe('Sdkzer', () => {
 
       it('should set the default attributes', () => {
         var sdkzer = new Sdkzer();
-        expect(sdkzer.attrs).toEqual(defaultAttributes);
+        expect(sdkzer['attrs']).toEqual(defaultAttributes);
       });
 
       describe('with initial attributes defined', () => {
@@ -223,7 +223,7 @@ describe('Sdkzer', () => {
     it("should check if the record exists in the origin", () => {
       var sdkzer = new Sdkzer();
       expect(sdkzer.isNew()).toEqual(true);
-      sdkzer.attrs['id'] = 1;
+      sdkzer['attrs']['id'] = 1;
       expect(sdkzer.isNew()).toEqual(true);
       sdkzer.lastResponse = {}; // Use HttpResponse
       expect(sdkzer.isNew()).toEqual(false);
@@ -320,12 +320,24 @@ describe('Sdkzer', () => {
         itemInstance = new Item({ id: 1 });
       });
 
-      it('should make an http request to the right endpoint', () => {
-        itemInstance.fetch();
-        var request = jasmine.Ajax.requests.mostRecent();
+      describe('when not using custom HttpQuery', () => {
+        it('should make an http request to the right endpoint', () => {
+          itemInstance.fetch();
+          var request = jasmine.Ajax.requests.mostRecent();
 
-        expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
-        expect(request.method).toEqual("GET");
+          expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
+          expect(request.method).toEqual("GET");
+        });
+      });
+
+      describe('when passing a custom HttpQuery', () => {
+        xit("should merge the HttpQuery with the default HttpQuery", (done) => {
+          var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
+
+          Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
+
+          // TODO: Implement assertions
+        });
       });
 
       it('should return a Promise', (done) => {
@@ -338,7 +350,7 @@ describe('Sdkzer', () => {
       describe('in a successful request', () => {
         // This will be successful since we have the requested mocked up
 
-        it("should fetch data from the origin and resolve it in a Promise", () => {
+        it("should fetch data from the origin and resolve it in a Promise", (done) => {
           var responseData;
           itemInstance.fetch().then((response) => {
             responseData = response.data;
@@ -590,13 +602,25 @@ describe('Sdkzer', () => {
       Item = buildSdkzerModelEntity();
     });
 
-    it('should make an http request to the right endpoint', (done) => {
-      Item = buildSdkzerModelEntity();
-      Item.fetchIndex().then(() => { done() }, () => { done() })
-      var request = jasmine.Ajax.requests.mostRecent();
+    describe('when not using custom HttpQuery', () => {
+      it('should make an http request to the right endpoint', (done) => {
+        Item = buildSdkzerModelEntity();
+        Item.fetchIndex().then(() => { done() }, () => { done() })
+        var request = jasmine.Ajax.requests.mostRecent();
 
-      expect(request.url).toEqual('http://api.mydomain.com/v1/items');
-      expect(request.method).toEqual("GET");
+        expect(request.url).toEqual('http://api.mydomain.com/v1/items');
+        expect(request.method).toEqual("GET");
+      });
+    });
+
+    describe('when passing a custom HttpQuery', () => {
+      xit("should merge the HttpQuery with the default HttpQuery", (done) => {
+        var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
+
+        Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
+
+        // TODO: Implement assertions
+      });
     });
 
     it('should return a Promise', (done) => {
@@ -661,13 +685,25 @@ describe('Sdkzer', () => {
       Item = buildSdkzerModelEntity();
     });
 
-    it('should make an http request to the right endpoint', (done) => {
-      Item = buildSdkzerModelEntity();
-      Item.fetchOne(1010).then(() => { done() }, () => { done() })
-      var request = jasmine.Ajax.requests.mostRecent();
+    describe('when not using custom HttpQuery', () => {
+      it('should make an http request to the right endpoint', (done) => {
+        Item = buildSdkzerModelEntity();
+        Item.fetchOne(1010).then(() => { done() }, () => { done() })
+        var request = jasmine.Ajax.requests.mostRecent();
 
-      expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
-      expect(request.method).toEqual("GET");
+        expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
+        expect(request.method).toEqual("GET");
+      });
+    });
+
+    describe('when passing a custom HttpQuery', () => {
+      xit("should merge the HttpQuery with the default HttpQuery", (done) => {
+        var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
+
+        Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
+
+        // TODO: Implement assertions
+      });
     });
 
     it('should return a Promise', (done) => {
