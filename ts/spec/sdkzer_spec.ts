@@ -172,12 +172,35 @@ describe('Sdkzer', () => {
       it('should read the attribute value', () => {
         expect(sdkzer.attr("pos")).toEqual(1999);
       });
+
+      describe('when the value uses dots notation', () => {
+        beforeEach(() => {
+          sdkzer.attrs['personalData'] = {};
+          sdkzer.attrs['personalData']['name'] = 'Whatever Name';
+        });
+
+        it("should read the attribute by accessing to the json keys between each dot", () => {
+          expect(sdkzer.attr('personalData.name')).toEqual('Whatever Name');
+        });
+      });
     });
 
     describe('when a value as second parameter is specified', () => {
       it("should set the value for the attribute name specified in the first parameter", () => {
         sdkzer.attr('pos', 2000);
         expect(sdkzer.attrs['pos']).toEqual(2000);
+      });
+
+      describe('when the value uses dots notation', () => {
+        beforeEach(() => {
+          sdkzer.attrs['personalData'] = {};
+          sdkzer.attrs['personalData']['name'] = 'Whatever Name';
+        });
+
+        it("should set the right attribute by accessing to the json keys between each dot", () => {
+          sdkzer.attr('personalData.name', 'Another Name');
+          expect(sdkzer.attrs['personalData']['name']).toEqual('Another Name');
+        });
       });
     });
   });
