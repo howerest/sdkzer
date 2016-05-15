@@ -176,11 +176,18 @@ class Sdkzer {
    public attr(attrName?: string, value?: any) : Object|void {
      // Setting an attribute?
      if (attrName !== undefined && value !== undefined) {
-       // TODO: Add before&after-callbacks
-       this.attrs[attrName] = value;
+       // TODO: Add before&after-callback
+       var attrKeys = attrName.split('.');
+       var attrKeyName = '';
+       eval("this.attrs['"+attrKeys.join("']['")+"'] = " + (typeof(value) === 'string' ? "'"+value+"'" : value));
      } else if (attrName !== undefined && value === undefined) {
        // Reading an attribute?
-       return this.attrs[attrName];
+       var attrKeys = attrName.split('.');
+       var attrValue = this.attrs[attrName.split('.')[0]];
+       for (let i = 1; i < attrKeys.length; i++) {
+         attrValue = attrValue[attrKeys[i]];
+       }
+       return attrValue;
      } else {
        // Reading all attributes?
        // TODO: Add before&after-callbacks
