@@ -173,7 +173,7 @@ describe('Sdkzer', () => {
         expect(sdkzer.attr("pos")).toEqual(1999);
       });
 
-      describe('when the value uses dots notation', () => {
+      describe('when the attribute key value uses dots notation', () => {
         beforeEach(() => {
           sdkzer.attrs['personalData'] = {};
           sdkzer.attrs['personalData']['name'] = 'Whatever Name';
@@ -191,7 +191,7 @@ describe('Sdkzer', () => {
         expect(sdkzer.attrs['pos']).toEqual(2000);
       });
 
-      describe('when the value uses dots notation', () => {
+      describe('when the attribute key value uses dots notation', () => {
         beforeEach(() => {
           sdkzer.attrs['personalData'] = {};
           sdkzer.attrs['personalData']['name'] = 'Whatever Name';
