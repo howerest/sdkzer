@@ -23,8 +23,8 @@ module.exports = function(grunt) {
           //'node_modules/es6-promise/dist/es6-promise.js',
           'node_modules/js-webservices/js/util.js',
           'node_modules/js-webservices/js/web_services.js',
-          'js/howerest.modularizer.js',
-          'js/howerest.sdkzer.js'
+          'js/ts/howerest.modularizer.js',
+          'js/ts/howerest.sdkzer.js'
         ],
         // the location of the resulting JS file
         dest: 'release/howerest-sdkzer.js'
