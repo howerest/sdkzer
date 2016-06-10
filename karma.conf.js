@@ -43,7 +43,7 @@ module.exports = function(config) {
 
     // test results reporter to use
     // 'dots', 'progress', 'html'
-    reporters: ['mocha', 'growl'],// , 'html'],
+    reporters: ['mocha'],// , 'html'],
     // jasmine html report at: url/debug.html
 
     // web server port
