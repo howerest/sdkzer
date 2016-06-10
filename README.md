@@ -9,10 +9,12 @@ Definitive API almost ready:
   [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.1.0 - http://howerest.com/sdkzer/docs/0.1.0/classes/_ts_howerest_sdkzer_.sdkzer.html
+Current v0.1.0 - [Read full API docs](http://howerest.com/sdkzer/docs/0.1.0/classes/_ts_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
-sdkzer implements a dev-friendly javascript API to interact with http restful resources. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint. If you have a restful (CRUD) http api, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
+sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
+
+If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
 
 On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. sdkzer makes only the repetitive work for you: communicate with the backend. This is an excelent way to standarize your backend-frontend communication. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.
 
@@ -26,178 +28,186 @@ With sdkzer you don't talk low level to your http API, you do it through a javas
 var like;
 like = new Like();
 like.userId = 10
-like.produuctId = 29188
+like.productId = 29188
 like.save() // We got a Promise
 ```
 
-
 ## Understanding models ##
 
-If you want to know about the importance of a model in your software read please read the book Domain-Driven Design: Tackling Complexity in the Heart of Software by Eric Evans.
+If you want to know about the importance of a model in your software take a look at this book: Domain-Driven Design: Tackling Complexity in the Heart of Software by Eric Evans.
 
 ## The reason of this ##
 
-After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. sdkzer helps you to get rid of spagetti code, helps you to understand better your software. All data layer lives now in your SDK, not in your controllers. And this allows you also to migrate it to any framework and inject the entities of your SDK that you need in your application controllers.
+After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. sdkzer helps you to get rid of spagetti code by centralizing your business logic into your model layer.
 
-The idea is to help to create a SDK (Software Development Kit) that contains all your javascript entities mapped to your http API (your model). On top of the sdkzer functionality you will implement your model methods and attributes, and you will have a rich API to interact with your http API from a simple javascript API.
+This is inspired in "[angular-activerecord](https://github.com/bfanger/angular-activerecord)". I've being loving angular-activerecord but it was depending on Angular 1.x code, this didn't fix my requirement of cross-framework and environment. A deeper layer of objects (without dependencies) to handle XHR, HttpRequest, HttpResponse, HttpQuery... was a potential improvement.
+
+The use of TypeScript would help to organize the code, the tests, and understand it better.
+
+Finally I separated those low level classes into WebServices. Sdkzer is on top of WebServices, helping to build models around CRUD operations.
 
 ## Typescript ##
 
 sdkzer is developed in Typescript. You can extend Sdkzer class for each of your SDK entities and you are ready to go.
 
-## 1. Implementing your sdk with sdkzer ##
+## 1. Implementing your SDK with sdkzer ##
 
-Implementing an SDK with sdkzer First thing you have to ask yourself is: Am I going to user Typescript or raw Javascript?
+- Setup TypeScript compiler
 
-### 1.1. How to construct your sdk ###
+### 1.1. How to construct your SDK ###
 
-Wrap your SDK into a module. wether you are using Typescript or Javascript you should create a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
+Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
 
-Sample code:
+#### Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called "http://localhost:8000/api/v1/events".
 
 Typescript:
 ```
-module sdk {
- // Entity definition, here GeoPosition will me mapped to your /geo-position endpoint
- export class GeoPosition extends Sdkzer {
-    public resourceEndpoint() {
-       return 'http://localhost:8000/api/v1/geo-position';
+module SDK {
+ /**
+  * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
+  * Event is mapped to "http://localhost:8000/api/v1/events" endpoint
+  */
+ export class Event extends Sdkzer {
+    public baseEndpoint() {
+       return "http://localhost:8000/api/v1/events";
      }
 
      public defaults() {
-       return { lat: null, lon: null };
+       return {
+         name: null,
+         geo: {
+           lat: null,
+           lon: null
+         },
+         start_date: null,
+         end_date: null
+       };
      }
 
-     public parse(data:Object) {
-       return data['geo'];
+     /*
+      * This parses the data received from the origin endpoint
+      */
+     public $parse(data:Object) {
+       return data['event'];
      }
 
+     /*
+      * This converts local state into data understandable by the origin endpoint
+      */
      public toOriginJSON() {
-       return { 'geo': this.attrs };
+       return { 'event': this.attr() };
      }
+
+     /*
+      * Your instance methods hold your business logic
+      */
+     public isHappening() {
+       return (this.attr("start_date") === new Date().toISOString().slice(0, 10));
+     }
+
+     public howLongAgo() {
+       // ...
+     }
+
+     // [...]
+
+     /*
+      * Your static methods to retrieve collections
+      */
+      public static fetchIndexByCityName(cityName) {
+        // This query will merged on top of the default Event.fetchIndex() HttpQuery
+        var indexByCityNameHttpQuery = new WebServices.HttpQuery({
+            qsParams: {
+              'city_name': cityName
+            }
+        });
+
+        // Always use the default fetchIndex() passing your custom HttpQuery
+        // to retrieve collections. if you need to override it do it
+        return Event.fetchIndex(indexByCityNameHttpQuery);
+      }
+     // [...]
    }
 }
 ```
 
-## 2. Using your sdk
+## 2. Using your SDK
 
-### 2.1. Interact with resource collections ###
+You can use your an sdkzer SDK in the browser or Node.js environments.
+
+### 2.1. Read (retrieve) collections from a resource ###
 
 ```
-var geoPositions;
+var events;
 
-GeoPosition.fetchIndex().then(
+SDK.Event.fetchIndexByCityName("New York").then(
   // Success
-  function(geoPositions) {
-    geoPositions = geoPositions;
+  function(eventInstances) {
+    events = eventInstances;
   },
   // Fail
-  function(reason) {
-
-  }
+  function() { }
 );
 ```
 
-### 2.2. Creating model entity instances ###
+## 2.2. Create / Read / Update / Delete (CRUD) ##
 
+### 2.2.1. Create a record and save ###
 ```
-var geoPosition = new geoPosition({
-  lat: 52.370216,
-  lon 4.895168
+var myEvent = new SDK.EventEvent({
+  name: "Salsa event",
+  geo: {
+    lat: 52.370216,
+    lon 4.895168
+  },
+  start_date: "2016/06/01",
+  end_date: "2016/06/02"
 });
 
+myEvent.update();
 ```
 
-### 2.3. Interact with resource instances ###
+### 2.2.2. Read (retrieve) a record ###
 
-Once you have a model entity instance created and assigned to a variable, you do it through instance methods:
-
+##### Option A. When you have an instance already
 ```
-geoPerson.hasChanged();
-geoPerson.fetch();
-geoPerson.update();
-geoPerson.destroy();
-...
-```
-
-## 2.4. Create / Read / Update / Delete (CRUD) ##
-
-### 2.4.1. Create a record ###
-```
-var user = new User({ id: 198 });
-user.save().then(
-  // Success
-  function() {
-    console.log('awesome! Record was saved in the origin using: ', user.attrs);
-  },
-  // Failure
-  function() {
-    console.log('error saving the record in the origin');
-  }
-)
-
-```
-### 2.4.2. Read a record ###
-```
-var user = new User({ id: 19 });
-user.fetch().then(
-  // Success
-  function(response) {
-    console.log('Attributes has been updated!');
-  },
-  // Failure
-  function(response) {
-    console.log('Failed when syncing the User')
-  }
-)
-```
-
-### 2.4.3. Read a collection ###
-
-```
-var geoPositions;
-
-GeoPosition.fetchIndex(qsParams).then(
-  // Success
-  function(geoPositions) {
-    geoPositions = geoPositions;
-  },
-  // Fail
-  function(reason) {
-
-  }
-);
-
-// You have a collection of isolated instances containing all your instance methods
-geoPositions[0].myInstanceMethod();
-```
-
-### 2.4.4. Update a record ###
-```
-user.update().then(
-  // Success
-  function(response) {
-    console.log('Updated');
-  },
-  // Failure
-  function(response) {
-    console.log('Failed when updating')
-  }
+// Your instance needs an id in order to be fetched from the origin
+var event = new SDK.Event({ id: 19 });
+// [...]
+event.fetch().then(
+  function(response) { console.log('Attributes has been updated!'); },
+  function() { console.log('Failed when fetching the User') }
 );
 ```
-### 2.4.4. Delete a record ###
+##### Option B. When you don't have an instance already
 ```
-user.delete().then(
-  // Success
-  function(response) {
-    console.log('Deleted');
-  },
-  // Failure
-  function(response) {
-    console.log('Failed when deleting')
-  }
+var event;
+SDK.Event.fetchOne(19).then(
+  function(eventInstance) { event = eventInstance },
+  function(response) { console.log('Failed when syncing the Event') }
 );
 ```
+
+### 2.2.3. Update a record ###
+```
+event.update().then(
+  function(response) { console.log('Updated'); },
+  function() { console.log('Failed when updating'); }
+);
+```
+
+### 2.2.4. Delete a record ###
+```
+event.destroy().then(
+  function(response) { console.log('Deleted'); },
+  function() { console.log('Failed when deleting') }
+);
+```
+
+#### TO-DO
+
+- Write about integration with Riot.js & Angular 2
+- Make easier integration with non RESTful services
 
 ## Contribute ##
 
@@ -206,3 +216,6 @@ npm install
 tsd install
 karma start karma.conf
 ```
+
+Write your tests, previous tests should pass, then make a pull request.
+We looking for
