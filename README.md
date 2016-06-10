@@ -206,6 +206,7 @@ event.destroy().then(
 
 #### TO-DO
 
+- Describe and Implement .create() and .save(), which calls create() or update()  
 - Write about integration with Riot.js & Angular 2
 - Make easier integration with non RESTful services
 
