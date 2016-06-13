@@ -131,6 +131,19 @@ module SDK {
 }
 ```
 
+### 1.2. Default headers
+
+You can set default headers that will be applied to all requests.
+Useful to send an authorization token. Http headers travel encrypted only through https.
+
+```
+Sdkzer.configure({
+  defaultHttpHeaders: [
+    { 'Auth-Token': "9a8811c02d9aeqdc12928sscua199e3e1" }
+  ]
+});
+```
+
 ## 2. Using your SDK
 
 You can use your an sdkzer SDK in the browser or Node.js environments.
