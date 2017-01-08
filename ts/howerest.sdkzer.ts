@@ -1,36 +1,23 @@
-/// <reference path='../typings/node/node.d.ts' />
-/// <reference path='../typings/es6-promise/es6-promise.d.ts' />
-/// <reference path='../node_modules/js-webservices/ts/web_services.ts' />
 /// <reference path="./howerest.modularizer.ts"/>
+
+import { Promise } from "es6-promise";
+import { Modularizer } from "./howerest.modularizer";
+import { WebServices } from "js-webservices/ts/web_services";
 
 /**
    ________________________________________________________________________
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
-      Apache 2.0 Licensed
-      -------------------
+
+    Apache 2.0 Licensed
+    -------------------
 
     Implements a standarized & friendly API to deal with RESTful http resources
     that implement endpoints to perform the CRUD operations
 
-    [how to use]:
-
-   	  1. Define a resource:
-      ```ts
-   	    Payment extends Sdkzer {
-          public baseEndpoint() {           // 1.1 ) Define a baseEndpoint
-            return 'http://www.an-api.com/payments';
-          }
-          public defaults() {               // 1.2 ) Define default attributes
-            return {
-              userId: null,
-              amountCents: null
-            }
-          }
-        }
-      ```
-      2. Start using your resource
+    1. Define a resource:
+    2. Start consuming your resource
  */
-class Sdkzer {
+export class Sdkzer {
 
   private attrs:Object;
   private pAttrs:Object;
@@ -80,6 +67,7 @@ class Sdkzer {
       this.pAttrs[attrKey] = attrs[attrKey];
     }
   }
+
 
   /**
    * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
