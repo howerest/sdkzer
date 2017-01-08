@@ -11,7 +11,11 @@ declare var window:Window;
 
  --------------------------------------------------------------------------- */
 
-class Modularizer {
+declare var process : () => void;
+declare var global : () => void;
+declare var define : {};
+
+export class Modularizer {
   public static defineModule(moduleName:string, fromModule:any) {
 
     if (typeof angular !== 'undefined' && typeof angular.module !== 'undefined')
@@ -24,7 +28,7 @@ class Modularizer {
 
         if (isBrowser) {
           // RequireJS loaded?
-          if (typeof(define) === 'function' && define.amd) {
+          if (typeof(define) === 'function' && define['amd']) {
             // TODO: Implement
           } else if (typeof(window) !== 'undefined') {
             window[moduleName] = fromModule;
