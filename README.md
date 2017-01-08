@@ -1,15 +1,12 @@
-## Preliminary version available (not ready for production yet) ##
-
-I'm working on it
+## 0.1.0 Release candidate available ##
 
 David Valín
   howerest Labs . http://www.howerest.com/labs
 
-Definitive API almost ready:
-  [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
+[![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.1.0 - [Read full API docs](http://howerest.com/sdkzer/docs/0.1.0/classes/_ts_howerest_sdkzer_.sdkzer.html)
+Current v0.1.0-rc.1 - [Read full API docs](http://howerest.com/sdkzer/docs/v0.1.0-rc.1/classes/_sdkzer_ts_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
@@ -25,10 +22,11 @@ sdkzer play nice with any framework: Angular 1.x, Angular 2, Riot, React.js... A
 With sdkzer you don't talk low level to your http API, you do it through a javascript API like so:
 
 ```
-var like;
-like = new Like();
-like.userId = 10
-like.productId = 29188
+let like = new Like({
+  userId: 10,
+  productId: 29188
+});
+
 like.save() // We got a Promise
 ```
 
@@ -62,7 +60,7 @@ Wrap your SDK into a module that contain all your model instances. You can optio
 
 Typescript:
 ```
-module SDK {
+export module SDK {
  /**
   * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
   * Event is mapped to "http://localhost:8000/api/v1/events" endpoint
