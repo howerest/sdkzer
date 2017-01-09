@@ -12,24 +12,29 @@ module.exports = function(config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['jasmine', 'karma-typescript'],
 
+
     // list of files / patterns to load in the browser
     files: [
       { pattern: "node_modules/babel-polyfill/dist/polyfill.js"},
       { pattern: "node_modules/jasmine-ajax/lib/mock-ajax.js"},
       { pattern: "node_modules/js-webservices/ts/*.ts" },
-      { pattern: "ts/**/*.ts" }
+      { pattern: "src/**/*.ts" }
     ],
+
 
     preprocessors: {
       "node_modules/js-webservices/ts/*.ts": ["karma-typescript"],
-      "ts/**/*.ts" : ["karma-typescript"]
+      "src/**/*.ts" : ["karma-typescript"]
     },
+
 
     karmaTypescriptConfig: {
       compilerOptions: {
-        lib: ["dom", "es5"]
+        lib: ["dom", "es5"],
+        moduleResolution: "node"
       }
     },
+
 
     captureTimeout: 60000,
     browserDisconnectTimeout : 10000,
@@ -42,6 +47,7 @@ module.exports = function(config) {
         bail: false
       }
     },
+
 
     // list of files to exclude
     exclude: [

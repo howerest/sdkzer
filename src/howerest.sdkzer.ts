@@ -3,10 +3,10 @@
 
 import { Promise } from "es6-promise";
 import { Modularizer } from "./howerest.modularizer";
-import { WebServices } from "../node_modules/js-webservices/ts/web_services";
+import { WebServices } from "js-webservices/ts/web_services";
 
-/**
-   ________________________________________________________________________
+/* --------------------------------------------------------------------------
+
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
 
     Apache 2.0 Licensed
@@ -17,7 +17,9 @@ import { WebServices } from "../node_modules/js-webservices/ts/web_services";
 
     1. Define a resource:
     2. Start consuming your resource
- */
+
+--------------------------------------------------------------------------- */
+
 export class Sdkzer {
 
   private attrs:Object;

@@ -41,7 +41,7 @@
 			"email": "davidvalin@howerest.com"
 		}
 	],
-	"main": "ts/howrest.sdkzer.ts",
+	"main": "src/howrest.sdkzer.ts",
 	"dependencies": {
 		"es6-promise": "4.0.5",
 		"js-webservices": "git+https://github.com/howerest/js-webservices.git"
@@ -79,7 +79,7 @@
 		"mocha": "^3.2.0",
 		"ts-node": "^2.0.0",
 		"tslint": "^4.3.1",
-		"typescript": "^2.1.4",
+		"typescript": "~2.0.3",
 		"typings": "^2.1.0",
 		"utf8": "2.1.0"
 	},
