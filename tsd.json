@@ -17,9 +17,6 @@
     "jasmine/jasmine.d.ts": {
       "commit": "2d4c4679bc2b509f27435a4f9da5e2de11258571"
     },
-    "requirejs/require.d.ts": {
-      "commit": "2d4c4679bc2b509f27435a4f9da5e2de11258571"
-    },
     "jasmine-ajax/jasmine-ajax.d.ts": {
       "commit": "717a5fdb079f8dd7c19f1b22f7f656dd990f0ccf"
     }

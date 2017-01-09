@@ -1,8 +1,9 @@
 /// <reference path="./howerest.modularizer.ts"/>
+/// <reference path="../node_modules/js-webservices/ts/web_services.ts"/>
 
 import { Promise } from "es6-promise";
 import { Modularizer } from "./howerest.modularizer";
-import { WebServices } from "js-webservices/ts/web_services";
+import { WebServices } from "../node_modules/js-webservices/ts/web_services";
 
 /**
    ________________________________________________________________________
