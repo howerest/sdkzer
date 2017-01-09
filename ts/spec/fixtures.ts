@@ -8,7 +8,9 @@
 
  --------------------------------------------------------------------------- */
 
-var buildSdkzerModelEntity = () => {
+import { Sdkzer } from "../howerest.sdkzer";
+
+export function buildSdkzerModelEntity() {
   class Item extends Sdkzer {
     public baseEndpoint() {
       return 'http://api.mydomain.com/v1/items';

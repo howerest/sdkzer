@@ -1,5 +1,5 @@
 // Karma configuration
-// Generated on Sun Apr 19 2015 02:03:27 GMT+0200 (CEST)
+// Generated on Sun Jan 08 2017 05:49:52 GMT+0100 (CET)
 
 module.exports = function(config) {
   config.set({
@@ -7,32 +7,35 @@ module.exports = function(config) {
     // base path that will be used to resolve all patterns (eg. files, exclude)
     basePath: '',
 
-    frameworks: ['jasmine'],
 
-    // files && patterns to load in the browser
+    // frameworks to use
+    // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
+    frameworks: ['jasmine', 'karma-typescript'],
+
+    // list of files / patterns to load in the browser
     files: [
-      // Dependencies
-      { pattern: 'node_modules/jasmine-ajax/lib/mock-ajax.js', included: true },
-      { pattern: 'node_modules/es6-promise/dist/es6-promise.min.js', included: true },
-      { pattern: 'node_modules/js-webservices/js/util.js', included: true },
-      { pattern: 'node_modules/js-webservices/js/web_services.js', included: true },
-
-      // Sdkzer
-      { pattern: 'js/ts/howerest.modularizer.js', included: true },
-      { pattern: 'js/ts/howerest.sdkzer.js', included: true },
-
-      // Test data
-      { pattern: 'js/ts/spec/fixtures.js', included: true },
-
-      // Specs
-      { pattern: 'js/ts/spec/**/sdkzer_spec.js', included: true },
+      { pattern: "node_modules/babel-polyfill/dist/polyfill.js"},
+      { pattern: "node_modules/jasmine-ajax/lib/mock-ajax.js"},
+      { pattern: "node_modules/js-webservices/ts/*.ts" },
+      { pattern: "ts/**/*.ts" }
     ],
 
+    preprocessors: {
+      "node_modules/js-webservices/ts/*.ts": ["karma-typescript"],
+      "ts/**/*.ts" : ["karma-typescript"]
+    },
 
-    // list of files to exclude
-    exclude: [
+    karmaTypescriptConfig: {
+      compilerOptions: {
+        lib: ["dom", "es5"]
+      },
+      exclude: ["typings/"]
+    },
 
-    ],
+    captureTimeout: 60000,
+    browserDisconnectTimeout : 10000,
+    browserDisconnectTolerance : 1,
+    browserNoActivityTimeout : 60000,
 
     client: {
       captureConsole: true,
@@ -41,15 +44,19 @@ module.exports = function(config) {
       }
     },
 
+    // list of files to exclude
+    exclude: [
+    ],
+
+
     // test results reporter to use
-    // 'dots', 'progress', 'html'
-    reporters: ['mocha'],// , 'html'],
-    // jasmine html report at: url/debug.html
+    // possible values: 'dots', 'progress'
+    // available reporters: https://npmjs.org/browse/keyword/karma-reporter
+    reporters: ['mocha', 'karma-typescript'],
+
 
     // web server port
     port: 9876,
-
-    usePolling: true,
 
 
     // enable / disable colors in the output (reporters and logs)
@@ -64,6 +71,7 @@ module.exports = function(config) {
     // enable / disable watching file and executing tests whenever any file changes
     autoWatch: true,
 
+    usePolling: true,
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
@@ -72,6 +80,10 @@ module.exports = function(config) {
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
-    singleRun: false
-  });
-};
+    singleRun: false,
+
+    // Concurrency level
+    // how many browser should be started simultaneous
+    concurrency: Infinity
+  })
+}
