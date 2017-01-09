@@ -1,23 +1,21 @@
+/* --------------------------------------------------------------------------
+
+    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+      Apache 2.0 Licensed
+
+    Base functionality is being tested directly through Sdkzer class.
+    Model dependent functionality must be tested in the extended class from
+    Sdkzer, which is how the developer will use Sdkzer (check fixtures.ts)
+--------------------------------------------------------------------------- */
+
 /// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 /// <reference path="../../node_modules/@types/jasmine-ajax/index.d.ts" />
 /// <reference path="../../node_modules/@types/es6-promise/index.d.ts" />
 /// <reference path="../../node_modules/js-webservices/ts/web_services.ts" />
-/// <reference path="../../ts/howerest.sdkzer.ts" />
-/// <reference path="./fixtures.ts" />
 
-import { WebServices } from "../../node_modules/js-webservices/ts/web_services";
+import { WebServices } from "js-webservices/ts/web_services";
 import { Sdkzer } from "../howerest.sdkzer";
 import { buildSdkzerModelEntity } from "./fixtures";
-
-/*
-    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
-      Apache 2.0 Licensed
-
-    Unit tests the critical case uses of Sdkzer.
-    Base functionality is being tested directly through Sdkzer class.
-    Model dependent functionality is being tested by extensing Sdkzer class,
-    which is how the developer will use Sdkzer (check fixtures.ts)
- */
 
 describe('Sdkzer', () => {
 

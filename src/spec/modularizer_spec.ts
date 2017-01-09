@@ -1,4 +1,9 @@
-/// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
+/* --------------------------------------------------------------------------
+
+    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+      Apache 2.0 Licensed
+
+ --------------------------------------------------------------------------- */
 
 describe('Modularizer', () => {
   describe('.constructor', () => {
