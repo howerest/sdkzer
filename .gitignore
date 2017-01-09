@@ -1,5 +1,6 @@
 node_modules/
 bower_components/
+coverage/
 typings/
 .DS_Store
 .baseDir.ts
