@@ -1,4 +1,4 @@
-/// <reference path="../../typings/jasmine/jasmine.d.ts" />
+/// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 
 describe('Modularizer', () => {
   describe('.constructor', () => {

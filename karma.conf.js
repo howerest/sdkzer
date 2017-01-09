@@ -28,8 +28,7 @@ module.exports = function(config) {
     karmaTypescriptConfig: {
       compilerOptions: {
         lib: ["dom", "es5"]
-      },
-      exclude: ["typings/"]
+      }
     },
 
     captureTimeout: 60000,

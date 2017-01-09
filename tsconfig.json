@@ -14,12 +14,10 @@
   },
   "compileOnSave": true,
   "filesGlob": [
-    "./typings/**/*.ts",
     "./ts/**/*.ts",
     "./spec/**/*.ts"
   ],
   "files": [
-    "./typings/es6-promise/es6-promise.d.ts",
     "./ts/howerest.modularizer.ts",
     "./ts/howerest.sdkzer.ts"
   ],
