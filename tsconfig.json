@@ -8,18 +8,14 @@
     "removeComments": true,
     "noLib": false,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "./js/",
-    "rootDir": "./ts/",
-    "sourceMap": false
+    "outDir": "./compiled/",
+    "rootDir": "./src/",
+    "sourceMap": false,
+    "moduleResolution": "node"
   },
   "compileOnSave": true,
-  "filesGlob": [
-    "./ts/**/*.ts",
-    "./spec/**/*.ts"
-  ],
   "files": [
-    "./ts/howerest.modularizer.ts",
-    "./ts/howerest.sdkzer.ts"
+    "./src/howerest.sdkzer.ts"
   ],
   "atom": {
     "rewriteTsconfig": false

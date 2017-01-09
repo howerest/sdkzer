@@ -1,6 +1,3 @@
-declare var angular:any;
-declare var window:Window;
-
 /* --------------------------------------------------------------------------
 
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
@@ -11,6 +8,8 @@ declare var window:Window;
 
  --------------------------------------------------------------------------- */
 
+declare var angular:any;
+declare var window:Window;
 declare var process : () => void;
 declare var global : () => void;
 declare var define : {};
