@@ -41,7 +41,7 @@
 			"email": "davidvalin@howerest.com"
 		}
 	],
-	"main": "built/src/howerest.sdkzer.js",
+	"main": "built/howerest.sdkzer.js",
 	"dependencies": {
 		"es6-promise": "4.0.5",
 		"js-webservices": "git+https://github.com/howerest/js-webservices.git"
@@ -84,5 +84,5 @@
 		"utf8": "2.1.0"
 	},
 	"optionalDependencies": {},
-	"typings": "built/src/howerest.sdkzer.d.ts"
+	"typings": "built/howerest.sdkzer.d.ts"
 }

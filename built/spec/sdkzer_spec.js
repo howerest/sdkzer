@@ -6,13 +6,13 @@
     Base functionality is being tested directly through Sdkzer class.
     Model dependent functionality must be tested in the extended class from
     Sdkzer, which is how the developer will use Sdkzer (check fixtures.ts)
+
 --------------------------------------------------------------------------- */
 "use strict";
 /// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 /// <reference path="../../node_modules/@types/jasmine-ajax/index.d.ts" />
 /// <reference path="../../node_modules/@types/es6-promise/index.d.ts" />
-/// <reference path="../../node_modules/js-webservices/ts/web_services.ts" />
-var web_services_1 = require("js-webservices/ts/web_services");
+var js_webservices_1 = require("js-webservices");
 var howerest_sdkzer_1 = require("../howerest.sdkzer");
 var fixtures_1 = require("./fixtures");
 describe('Sdkzer', function () {
@@ -195,7 +195,7 @@ describe('Sdkzer', function () {
             sdkzer['lastResponse'] = null;
             expect(sdkzer.isNew()).toEqual(true);
             // Since we have a lastResponse, the entity was synced
-            sdkzer.lastResponse = new web_services_1.WebServices.HttpResponse("", {}, "");
+            sdkzer.lastResponse = new js_webservices_1.WebServices.HttpResponse("", {}, "");
             expect(sdkzer.isNew()).toEqual(false);
         });
     });
@@ -284,7 +284,7 @@ describe('Sdkzer', function () {
             });
             describe('when passing a custom HttpQuery', function () {
                 xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                    var customHttpQuery = new web_services_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
+                    var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
                     Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
                     // TODO: Implement assertions
                 });
@@ -357,9 +357,9 @@ describe('Sdkzer', function () {
                 itemInstance = new howerest_sdkzer_1.Sdkzer();
             });
             it("shouldn't make any request", function () {
-                spyOn(web_services_1.WebServices.HttpRequest, 'constructor');
+                spyOn(js_webservices_1.WebServices.HttpRequest, 'constructor');
                 itemInstance.fetch();
-                expect(web_services_1.WebServices.HttpRequest.constructor).not.toHaveBeenCalled();
+                expect(js_webservices_1.WebServices.HttpRequest.constructor).not.toHaveBeenCalled();
             });
         });
     });
@@ -516,7 +516,7 @@ describe('Sdkzer', function () {
         });
         describe('when passing a custom HttpQuery', function () {
             xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                var customHttpQuery = new web_services_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
+                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
                 Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
                 // TODO: Implement assertions
             });
@@ -581,7 +581,7 @@ describe('Sdkzer', function () {
         });
         describe('when passing a custom HttpQuery', function () {
             xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                var customHttpQuery = new web_services_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
+                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
                 Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
                 // TODO: Implement assertions
             });
