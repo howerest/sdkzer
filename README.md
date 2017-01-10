@@ -229,5 +229,10 @@ tsd install
 karma start karma.conf
 ```
 
-Write your tests, previous tests should pass, then make a pull request.
-We looking for
+1. Write important test cases for every public function
+2. Previous tests should pass
+3. Implement your code until your tests pass
+4. Once you are done, make a pull request
+
+## Inspired from
+ActiveRecord, angular-activerecord, Doctrine, Hibernate, soci
