@@ -17,7 +17,6 @@ module.exports = function(config) {
     files: [
       { pattern: "node_modules/babel-polyfill/dist/polyfill.js"},
       { pattern: "node_modules/jasmine-ajax/lib/mock-ajax.js"},
-      { pattern: "node_modules/js-webservices/src/*.ts" },
       { pattern: "src/**/*.ts" }
     ],
 
