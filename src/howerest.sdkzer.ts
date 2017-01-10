@@ -1,9 +1,6 @@
-/// <reference path="./howerest.modularizer.ts"/>
-/// <reference path="../node_modules/js-webservices/ts/web_services.ts"/>
-
 import { Promise } from "es6-promise";
 import { Modularizer } from "./howerest.modularizer";
-import { WebServices } from "js-webservices/ts/web_services";
+import { WebServices } from "js-webservices";
 
 /* --------------------------------------------------------------------------
 
@@ -523,14 +520,14 @@ export class Sdkzer {
   }
 }
 
-interface ISdkzerConfigOptions {
+export interface ISdkzerConfigOptions {
   defaultHttpHeaders:String;
   httpPattern:String;
   parentsFetchStrategy:String;
   httpQueryGuessConfig:IHttpQueryGuessConfig;
 }
 
-interface IHttpQueryGuessConfig {
+export interface IHttpQueryGuessConfig {
   restful:Object;
 }
 

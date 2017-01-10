@@ -2,20 +2,22 @@
   "version": "2.1.4",
   "compilerOptions": {
     "target": "es5",
-    "module": "amd",
-    "declaration": false,
+    "module": "commonjs",
+    "declaration": true,
     "noImplicitAny": false,
-    "removeComments": true,
-    "noLib": false,
+    "removeComments": false,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "./compiled/",
-    "rootDir": "./src/",
+    "outDir": "built/",
     "sourceMap": false,
     "moduleResolution": "node"
   },
   "compileOnSave": true,
-  "files": [
-    "./src/howerest.sdkzer.ts"
+  "filesGlob": [
+    "./src/**/*.ts"
+  ],
+  "exclude": [
+    "typings",
+    "node_modules"
   ],
   "atom": {
     "rewriteTsconfig": false
