@@ -6,14 +6,14 @@
     Base functionality is being tested directly through Sdkzer class.
     Model dependent functionality must be tested in the extended class from
     Sdkzer, which is how the developer will use Sdkzer (check fixtures.ts)
+
 --------------------------------------------------------------------------- */
 
 /// <reference path="../../node_modules/@types/jasmine/index.d.ts" />
 /// <reference path="../../node_modules/@types/jasmine-ajax/index.d.ts" />
 /// <reference path="../../node_modules/@types/es6-promise/index.d.ts" />
-/// <reference path="../../node_modules/js-webservices/ts/web_services.ts" />
 
-import { WebServices } from "js-webservices/ts/web_services";
+import { WebServices } from "js-webservices";
 import { Sdkzer } from "../howerest.sdkzer";
 import { buildSdkzerModelEntity } from "./fixtures";
 

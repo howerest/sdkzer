@@ -17,13 +17,13 @@ module.exports = function(config) {
     files: [
       { pattern: "node_modules/babel-polyfill/dist/polyfill.js"},
       { pattern: "node_modules/jasmine-ajax/lib/mock-ajax.js"},
-      { pattern: "node_modules/js-webservices/ts/*.ts" },
+      { pattern: "node_modules/js-webservices/src/*.ts" },
       { pattern: "src/**/*.ts" }
     ],
 
 
     preprocessors: {
-      "node_modules/js-webservices/ts/*.ts": ["karma-typescript"],
+      "node_modules/js-webservices/src/*.ts": ["karma-typescript"],
       "src/**/*.ts" : ["karma-typescript"]
     },
 
