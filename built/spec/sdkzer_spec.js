@@ -116,13 +116,11 @@ describe('Sdkzer', function () {
     });
     /*
      * NOTE: This is not being used yet
-     *
-      describe('.configure', () => {
-        it('should configure Sdkzer', () => {
-  
+     */
+    describe('.configure', function () {
+        it('should configure the default http headers', function () {
         });
-      });
-    */
+    });
     describe('.setDefaults', function () {
         it('should update the attributes with the default attributes', function () {
             spyOn(howerest_sdkzer_1.Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);

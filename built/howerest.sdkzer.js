@@ -1,6 +1,5 @@
 "use strict";
 var es6_promise_1 = require("es6-promise");
-var howerest_modularizer_1 = require("./howerest.modularizer");
 var js_webservices_1 = require("js-webservices");
 /* --------------------------------------------------------------------------
 
@@ -48,9 +47,9 @@ var Sdkzer = (function () {
                 Sdkzer['DEFAULT_HTTP_HEADERS'].push(new js_webservices_1.WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
             }
         }
-        Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
-        Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-        Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
+        // Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+        // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
+        // Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
     };
     /**
      * Checks if Sdkzer has been configured to communicate to RESTful resources
@@ -430,4 +429,3 @@ Sdkzer.HTTP_QUERY_GUESS_CONFIG = {
     }
 };
 exports.Sdkzer = Sdkzer;
-howerest_modularizer_1.Modularizer.defineModule('Sdkzer', Sdkzer);
