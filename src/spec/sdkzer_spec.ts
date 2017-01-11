@@ -19,8 +19,8 @@ import { buildSdkzerModelEntity } from "./fixtures";
 
 describe('Sdkzer', () => {
 
-  var defaultAttributes;
-  var initialAttributes;
+  let defaultAttributes;
+  let initialAttributes;
 
   beforeEach(() => {
     jasmine.Ajax.install();
@@ -58,18 +58,18 @@ describe('Sdkzer', () => {
 
     describe('without initial attributes', () => {
       it("should not initialize with a defined id", () => {
-        var sdkzer = new Sdkzer();
+        let sdkzer = new Sdkzer();
         expect(sdkzer['attrs']['id']).toEqual(null);
       });
 
       it("should not have any attribute defined", () => {
-        var sdkzer = new Sdkzer();
+        let sdkzer = new Sdkzer();
         expect(Object.keys(sdkzer['attrs']).length).toEqual(1);
       });
     });
 
     describe('with initial attributes defined', () => {
-      var sdkzer, initialAttrs;
+      let sdkzer, initialAttrs;
       beforeEach(() => {
         initialAttrs = {
           event_id: 101010,
@@ -101,12 +101,12 @@ describe('Sdkzer', () => {
       });
 
       it('should set the default attributes', () => {
-        var sdkzer = new Sdkzer();
+        let sdkzer = new Sdkzer();
         expect(sdkzer['attrs']).toEqual(defaultAttributes);
       });
 
       describe('with initial attributes defined', () => {
-        var sdkzer;
+        let sdkzer;
 
         beforeEach(() => {
           sdkzer = new Sdkzer(initialAttributes)
@@ -148,7 +148,7 @@ describe('Sdkzer', () => {
   describe('.setDefaults', () => {
     it('should update the attributes with the default attributes', () => {
       spyOn(Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);
-      var sdkzer = new Sdkzer({ name: 'Chuck Norris' });
+      let sdkzer = new Sdkzer({ name: 'Chuck Norris' });
       // Defaults should be overriten
       sdkzer.setDefaults();
       expect(sdkzer['attrs']).toEqual(defaultAttributes);
@@ -158,13 +158,13 @@ describe('Sdkzer', () => {
 
   describe('.defaults', () => {
     it('shouldnt have defaults', () => {
-      var sdkzer = new Sdkzer({});
+      let sdkzer = new Sdkzer({});
       expect(sdkzer.defaults()).toEqual({});
     });
   });
 
   describe('.attr', () => {
-    var sdkzer;
+    let sdkzer;
 
     beforeEach(() => {
       sdkzer = new Sdkzer();
@@ -210,21 +210,21 @@ describe('Sdkzer', () => {
 
   describe('.baseEndpoint', () => {
     it('shouldnt have an empty default base endpoint defined', () => {
-      var sdkzer = new Sdkzer({});
+      let sdkzer = new Sdkzer({});
       expect(sdkzer.baseEndpoint()).toEqual(null);
     });
   });
 
   describe('.resourceEndpoint', () => {
     it('should have a default resourceEndpoint defined for a "restful_crud" HTTP_PATTERN', () => {
-      var sdkzer = new Sdkzer();
+      let sdkzer = new Sdkzer();
       expect(typeof(sdkzer.resourceEndpoint)).toEqual('function');
     });
   });
 
   describe('.isNew', () => {
     it("should check if the record exists in the origin", () => {
-      var sdkzer = new Sdkzer();
+      let sdkzer = new Sdkzer();
       expect(sdkzer.isNew()).toEqual(true);
       sdkzer['attrs']['id'] = 1;
       sdkzer['lastResponse'] = null;
@@ -238,7 +238,7 @@ describe('Sdkzer', () => {
 
   describe('.hasChanged', () => {
     it("should check if the record attributes has changed from the origin", () => {
-      var sdkzer = new Sdkzer({ id: 1 });
+      let sdkzer = new Sdkzer({ id: 1 });
       expect(sdkzer.hasChanged()).toEqual(false);
       sdkzer['pAttrs'] = { name: 'Previous name' };
       sdkzer['attrs'] = { name: 'New name' };
@@ -249,7 +249,7 @@ describe('Sdkzer', () => {
 
   describe('.hasAttrChanged', () => {
     it("should check if the record has any specific attribute that differs from the origin", () => {
-      var sdkzer = new Sdkzer();
+      let sdkzer = new Sdkzer();
       sdkzer['pAttrs'] = { name: 'First Name' };
       sdkzer['attrs'] = { name: 'First Name' };
       expect(sdkzer.hasAttrChanged('name')).toEqual(false);
@@ -261,7 +261,7 @@ describe('Sdkzer', () => {
 
   describe('.changedAttrs', () => {
     it("should retrieve a list of attributes different from the origin", () => {
-      var sdkzer = new Sdkzer();
+      let sdkzer = new Sdkzer();
       expect(sdkzer.changedAttrs()).toEqual([]);
       sdkzer['attrs']['age'] = 29;
       sdkzer['pAttrs'] = {
@@ -274,7 +274,7 @@ describe('Sdkzer', () => {
 
   describe('.prevAttrs', () => {
     it("should retrieve a list of the previous values for the attributes changed from the origin", () => {
-      var sdkzer = new Sdkzer({
+      let sdkzer = new Sdkzer({
         name: 'My initial name'
       });
       sdkzer['pAttrs'] = { id: null, name: 'My other name' }; // This is like a sync with origin
@@ -293,7 +293,7 @@ describe('Sdkzer', () => {
 
   describe('.prevValue', () => {
     it("should retrieve the previous attribute value before last sync from origin", () => {
-      var sdkzer = new Sdkzer({
+      let sdkzer = new Sdkzer({
         name: 'My initial name'
       });
       sdkzer['attrs']['name'] = "New name";
@@ -303,7 +303,7 @@ describe('Sdkzer', () => {
 
 
   describe('.fetch', () => {
-    var Item, itemInstance, responseJSON, responseText;
+    let Item, itemInstance, responseJSON, responseText;
 
     describe('when the record has an id setted', () => {
       beforeEach(() => {
@@ -328,7 +328,7 @@ describe('Sdkzer', () => {
       describe('when not using custom HttpQuery', () => {
         it('should make an http request to the right endpoint', () => {
           itemInstance.fetch();
-          var request = jasmine.Ajax.requests.mostRecent();
+          let request = jasmine.Ajax.requests.mostRecent();
 
           expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
           expect(request.method).toEqual("GET");
@@ -336,12 +336,14 @@ describe('Sdkzer', () => {
       });
 
       describe('when passing a custom HttpQuery', () => {
-        xit("should merge the HttpQuery with the default HttpQuery", (done) => {
-          var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
+        it("should merge the HttpQuery with the default HttpQuery", () => {
+          let customHttpQuery = new WebServices.HttpQuery({ headers: [new WebServices.HttpHeader({ 'Auth-Token': 'MyMegaScretToken' })] });
+          itemInstance.fetch(customHttpQuery);
+          let request = jasmine.Ajax.requests.mostRecent();
 
-          Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
-
-          // TODO: Implement assertions
+          expect(request.requestHeaders['Auth-Token']).toEqual('MyMegaScretToken');
+          expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
+          expect(request.method).toEqual("GET");
         });
       });
 
@@ -349,7 +351,7 @@ describe('Sdkzer', () => {
         // This will be successful since we have the requested mocked up
 
         it("should fetch data from the origin and resolve it in a Promise", (done) => {
-          var responseData;
+          let responseData;
           itemInstance.fetch().then((response) => {
             responseData = response.data;
             expect(responseData).toEqual(responseJSON);
@@ -379,7 +381,7 @@ describe('Sdkzer', () => {
 
         it("should take the parsed attributes from the origin and store them as previous attributes", (done) => {
           // this.pAttrs is used to compare with this.attrs and determine the attributes that has changed
-          var originalAttrs = {
+          let originalAttrs = {
             id: 1,
             name: "A good choice",
             items: [1, 100, 1, 60]
@@ -432,7 +434,7 @@ describe('Sdkzer', () => {
 
 
   describe('.$parse', () => {
-    var Item, itemInstance, json, expectedParsedJson;
+    let Item, itemInstance, json, expectedParsedJson;
 
     beforeEach(() => {
       Item = buildSdkzerModelEntity();
@@ -470,7 +472,7 @@ describe('Sdkzer', () => {
 
   describe('.toOriginJSON', () => {
     it("should return the record attributes as they are", () => {
-      var sdkzer = new Sdkzer();
+      let sdkzer = new Sdkzer();
       sdkzer['attrs'] = {
         id: 1,
         name: "Steve Jobs"
@@ -496,7 +498,7 @@ describe('Sdkzer', () => {
 
   describe('.toOrigin', () => {
     it("should retrieve the attributes in xml format when 'json' format is specified", () => {
-      var sdkzer = new Sdkzer(initialAttributes);
+      let sdkzer = new Sdkzer(initialAttributes);
       spyOn(Sdkzer.prototype, "toOriginJSON");
       sdkzer.toOrigin('json');
       expect(sdkzer.toOriginJSON).toHaveBeenCalled();
@@ -504,7 +506,7 @@ describe('Sdkzer', () => {
     });
 
     it("should retrieve the attributes in xml format when 'xml' format is specified", () => {
-      var sdkzer = new Sdkzer(initialAttributes);
+      let sdkzer = new Sdkzer(initialAttributes);
       spyOn(Sdkzer.prototype, "toOriginXML");
       sdkzer.toOrigin('xml');
       expect(sdkzer.toOriginXML).toHaveBeenCalled();
@@ -514,7 +516,7 @@ describe('Sdkzer', () => {
 
 
   describe('.update', () => {
-    var Item, itemInstance, attributes, responseText;
+    let Item, itemInstance, attributes, responseText;
 
     describe('when the record has an id setted', () => {
       beforeEach(() => {
@@ -538,7 +540,7 @@ describe('Sdkzer', () => {
 
       it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", (done) => {
         itemInstance.update().then(() => {
-          var request = jasmine.Ajax.requests.mostRecent();
+          let request = jasmine.Ajax.requests.mostRecent();
           expect(request.url).toEqual('http://api.mydomain.com/v1/items/999');
           expect(request.method).toEqual("PUT");
           // expect(request.data.toEqual(attributes);
@@ -553,7 +555,7 @@ describe('Sdkzer', () => {
 
 
   describe('.destroy', () => {
-    var Item, itemInstance;
+    let Item, itemInstance;
 
     beforeEach(() => {
         jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items/9771", null, "DELETE").andReturn({
@@ -568,7 +570,7 @@ describe('Sdkzer', () => {
 
     it("should destroy the record in the origin using the default 'restful_crud' HTTP_PATTERN", (done) => {
       itemInstance.destroy().then((response) => {
-        var request = jasmine.Ajax.requests.mostRecent();
+        let request = jasmine.Ajax.requests.mostRecent();
         expect(request.method).toEqual('DELETE');
         expect(request.url).toEqual("http://api.mydomain.com/v1/items/9771");
         done();
@@ -581,7 +583,7 @@ describe('Sdkzer', () => {
 
 
   describe('#fetchIndex', () => {
-    var Item, responseText, responseJSON;
+    let Item, responseText, responseJSON;
     beforeEach(() => {
       responseJSON = [
         { id: 1, name: "Event 1" },
@@ -603,8 +605,8 @@ describe('Sdkzer', () => {
     describe('when not using custom HttpQuery', () => {
       it('should make an http request to the right endpoint', (done) => {
         Item = buildSdkzerModelEntity();
-        Item.fetchIndex().then(() => { done() }, () => { done() })
-        var request = jasmine.Ajax.requests.mostRecent();
+        Item.fetchIndex().then(() => { done() }, () => { done() });
+        let request = jasmine.Ajax.requests.mostRecent();
 
         expect(request.url).toEqual('http://api.mydomain.com/v1/items');
         expect(request.method).toEqual("GET");
@@ -612,12 +614,13 @@ describe('Sdkzer', () => {
     });
 
     describe('when passing a custom HttpQuery', () => {
-      xit("should merge the HttpQuery with the default HttpQuery", (done) => {
-        var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
-
+      it("should merge the HttpQuery with the default HttpQuery", (done) => {
+        Item = buildSdkzerModelEntity();
+        let customHttpQuery = new WebServices.HttpQuery({ httpMethod: 'POST'});
         Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
+        let request = jasmine.Ajax.requests.mostRecent();
 
-        // TODO: Implement assertions
+        expect(request.method).toEqual("POST");
       });
     });
 
@@ -627,7 +630,7 @@ describe('Sdkzer', () => {
       it("should fetch a collection of records from the origin and return a Promise resolves into an array of instances of Item", (done) => {
         // Ensure that $parse gets caller per instance too
         Item.prototype.$parse = (data) => {
-          var newName = data.name;
+          let newName = data.name;
           return {
             id: data.id,
             newNameKey: newName
@@ -658,7 +661,7 @@ describe('Sdkzer', () => {
   });
 
   describe('#fetchOne', () => {
-    var Item, responseText, responseJSON;
+    let Item, responseText, responseJSON;
     beforeEach(() => {
       responseJSON = {
         id: 1010,
@@ -680,7 +683,7 @@ describe('Sdkzer', () => {
       it('should make an http request to the right endpoint', (done) => {
         Item = buildSdkzerModelEntity();
         Item.fetchOne(1010).then(() => { done() }, () => { done() })
-        var request = jasmine.Ajax.requests.mostRecent();
+        let request = jasmine.Ajax.requests.mostRecent();
 
         expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
         expect(request.method).toEqual("GET");
@@ -688,12 +691,14 @@ describe('Sdkzer', () => {
     });
 
     describe('when passing a custom HttpQuery', () => {
-      xit("should merge the HttpQuery with the default HttpQuery", (done) => {
-        var customHttpQuery = new WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 }});
+      it("should merge the HttpQuery with the default HttpQuery", (done) => {
+        let customHttpQuery = new WebServices.HttpQuery({ headers: [new WebServices.HttpHeader({ 'Auth-Token': 'MyMegaScretToken' })] });
+        Item.fetchOne(1010, customHttpQuery).then(() => { done() }, () => { done() });
+        let request = jasmine.Ajax.requests.mostRecent();
 
-        Item.fetchIndex(customHttpQuery).then(() => { done() }, () => { done() });
-
-        // TODO: Implement assertions
+        expect(request.requestHeaders['Auth-Token']).toEqual('MyMegaScretToken');
+        expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
+        expect(request.method).toEqual("GET");
       });
     });
 
@@ -703,7 +708,7 @@ describe('Sdkzer', () => {
       it("should fetch a record from the origin and return a Promise resolves an instance of Item", (done) => {
         // Ensure that $parse gets caller per instance too
         Item.prototype.$parse = (data) => {
-          var newName = data.name;
+          let newName = data.name;
           return {
             id: data.id,
             newNameKey: newName,
