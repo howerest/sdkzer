@@ -109,7 +109,7 @@ export declare class Sdkzer {
     /**
      * Fetches the newest attributes from the origin.
      */
-    fetch(httpQuery: WebServices.HttpQuery, camelize?: Boolean): Promise<WebServices.HttpResponse>;
+    fetch(httpQuery?: WebServices.HttpQuery, camelize?: Boolean): Promise<WebServices.HttpResponse>;
     /**
      * Parses the resources data from an incoming HttpResponse
      * The idea is to return the resources attributes exclusively
@@ -138,7 +138,7 @@ export declare class Sdkzer {
     /**
      * Retrieves a collection of records from the origin
      */
-    static fetchIndex(httpQuery: WebServices.HttpQuery): Promise<Array<any>>;
+    static fetchIndex(httpQuery?: WebServices.HttpQuery): Promise<Array<any>>;
     /**
      * Retrieves a single record from the origin
      * @param id          The record id that we want to fetch by
