@@ -147,10 +147,7 @@ export declare class Sdkzer {
     static fetchOne(id: Number, httpQuery?: WebServices.HttpQuery): Promise<any>;
 }
 export interface ISdkzerConfigOptions {
-    defaultHttpHeaders: String;
-    httpPattern: String;
-    parentsFetchStrategy: String;
-    httpQueryGuessConfig: IHttpQueryGuessConfig;
+    defaultHttpHeaders: string;
 }
 export interface IHttpQueryGuessConfig {
     restful: Object;

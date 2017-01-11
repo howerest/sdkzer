@@ -1,5 +1,4 @@
 import { Promise } from "es6-promise";
-import { Modularizer } from "./howerest.modularizer";
 import { WebServices } from "js-webservices";
 
 /* --------------------------------------------------------------------------
@@ -81,9 +80,9 @@ export class Sdkzer {
          Sdkzer['DEFAULT_HTTP_HEADERS'].push(new WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
        }
      }
-     Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
-     Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-     Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
+     // Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
+     // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
+     // Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
    }
 
 
@@ -521,14 +520,12 @@ export class Sdkzer {
 }
 
 export interface ISdkzerConfigOptions {
-  defaultHttpHeaders:String;
-  httpPattern:String;
-  parentsFetchStrategy:String;
-  httpQueryGuessConfig:IHttpQueryGuessConfig;
+  defaultHttpHeaders:string;
+  // httpPattern?:String;
+  // parentsFetchStrategy?:String;
+  // httpQueryGuessConfig?:IHttpQueryGuessConfig;
 }
 
 export interface IHttpQueryGuessConfig {
   restful:Object;
 }
-
-Modularizer.defineModule('Sdkzer', Sdkzer);

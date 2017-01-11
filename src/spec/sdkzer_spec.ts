@@ -137,13 +137,12 @@ describe('Sdkzer', () => {
 
   /*
    * NOTE: This is not being used yet
-   *
-    describe('.configure', () => {
-      it('should configure Sdkzer', () => {
-
-      });
+   */
+  describe('.configure', () => {
+    it('should configure the default http headers', () => {
+      
     });
-  */
+  });
 
   describe('.setDefaults', () => {
     it('should update the attributes with the default attributes', () => {
