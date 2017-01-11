@@ -283,10 +283,13 @@ describe('Sdkzer', function () {
                 });
             });
             describe('when passing a custom HttpQuery', function () {
-                xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                    var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
-                    Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
-                    // TODO: Implement assertions
+                it("should merge the HttpQuery with the default HttpQuery", function () {
+                    var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ headers: [new js_webservices_1.WebServices.HttpHeader({ 'Auth-Token': 'MyMegaScretToken' })] });
+                    itemInstance.fetch(customHttpQuery);
+                    var request = jasmine.Ajax.requests.mostRecent();
+                    expect(request.requestHeaders['Auth-Token']).toEqual('MyMegaScretToken');
+                    expect(request.url).toEqual('http://api.mydomain.com/v1/items/1');
+                    expect(request.method).toEqual("GET");
                 });
             });
             describe('in a successful request', function () {
@@ -515,10 +518,12 @@ describe('Sdkzer', function () {
             });
         });
         describe('when passing a custom HttpQuery', function () {
-            xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
+            it("should merge the HttpQuery with the default HttpQuery", function (done) {
+                Item = fixtures_1.buildSdkzerModelEntity();
+                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ httpMethod: 'POST' });
                 Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
-                // TODO: Implement assertions
+                var request = jasmine.Ajax.requests.mostRecent();
+                expect(request.method).toEqual("POST");
             });
         });
         describe('in a successful request', function () {
@@ -580,10 +585,13 @@ describe('Sdkzer', function () {
             });
         });
         describe('when passing a custom HttpQuery', function () {
-            xit("should merge the HttpQuery with the default HttpQuery", function (done) {
-                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ qsParams: { 'offset': '5983', 'limit': 5 } });
-                Item.fetchIndex(customHttpQuery).then(function () { done(); }, function () { done(); });
-                // TODO: Implement assertions
+            it("should merge the HttpQuery with the default HttpQuery", function (done) {
+                var customHttpQuery = new js_webservices_1.WebServices.HttpQuery({ headers: [new js_webservices_1.WebServices.HttpHeader({ 'Auth-Token': 'MyMegaScretToken' })] });
+                Item.fetchOne(1010, customHttpQuery).then(function () { done(); }, function () { done(); });
+                var request = jasmine.Ajax.requests.mostRecent();
+                expect(request.requestHeaders['Auth-Token']).toEqual('MyMegaScretToken');
+                expect(request.url).toEqual('http://api.mydomain.com/v1/items/1010');
+                expect(request.method).toEqual("GET");
             });
         });
         describe('in a successful request', function () {

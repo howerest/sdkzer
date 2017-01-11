@@ -61,7 +61,7 @@ export class Sdkzer {
 
     this.setDefaults();
 
-    for (var attrKey in attrs) {
+    for (let attrKey in attrs) {
       // Object initialization parameters are in force to default parameters
       this.attrs[attrKey] = attrs[attrKey];
       this.pAttrs[attrKey] = attrs[attrKey];
@@ -77,7 +77,7 @@ export class Sdkzer {
    public static configure(options:ISdkzerConfigOptions) : void {
      if (options['defaultHttpHeaders']) {
        Sdkzer['DEFAULT_HTTP_HEADERS'] = [];
-       for (var i = 0; i < options['defaultHttpHeaders'].length; i++) {
+       for (let i = 0; i < options['defaultHttpHeaders'].length; i++) {
          Sdkzer['DEFAULT_HTTP_HEADERS'].push(new WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
        }
      }
@@ -129,8 +129,8 @@ export class Sdkzer {
    */
   public setDefaults() : void {
     if (this.defaults()) {
-      var defaults = this.defaults();
-      for (var attrKey in defaults) {
+      let defaults = this.defaults();
+      for (let attrKey in defaults) {
         this.attrs[attrKey] = defaults[attrKey];
       }
     }
@@ -165,13 +165,13 @@ export class Sdkzer {
      // Setting an attribute?
      if (attrName !== undefined && value !== undefined) {
        // TODO: Add before&after-callback
-       var attrKeys = attrName.split('.');
-       var attrKeyName = '';
+       let attrKeys = attrName.split('.');
+       let attrKeyName = '';
        eval("this.attrs['"+attrKeys.join("']['")+"'] = " + (typeof(value) === 'string' ? "'"+value+"'" : value));
      } else if (attrName !== undefined && value === undefined) {
        // Reading an attribute?
-       var attrKeys = attrName.split('.');
-       var attrValue = this.attrs[attrName.split('.')[0]];
+       let attrKeys = attrName.split('.');
+       let attrValue = this.attrs[attrName.split('.')[0]];
        for (let i = 1; i < attrKeys.length; i++) {
          attrValue = attrValue[attrKeys[i]];
        }
@@ -231,7 +231,7 @@ export class Sdkzer {
    * Checks if an attribute has changed from the origin
    */
   public hasAttrChanged(attrName:string) : Boolean {
-    var i, changedAttrs = this.changedAttrs();
+    let i, changedAttrs = this.changedAttrs();
 
     for (i = 0; i < changedAttrs.length; i++) {
       if (changedAttrs[i] === attrName) {
@@ -247,7 +247,7 @@ export class Sdkzer {
    * Retrieves the name of the changed attributes since the last save
    */
   public changedAttrs() : Array<String> {
-    var changedAttrs = [],
+    let changedAttrs = [],
         currAttrs = Object.keys(this['attrs']),
         prevAttrs = Object.keys(this['pAttrs']),
         i, i2;
@@ -269,8 +269,8 @@ export class Sdkzer {
    * Retrieves the previous attributes
    */
   public prevAttrs() : Object {
-    var previousAttrs = {};
-    for (var attrKey in this.attrs) {
+    let previousAttrs = {};
+    for (let attrKey in this.attrs) {
       if (this.pAttrs[attrKey] !== this.attrs[attrKey]) {
         previousAttrs[attrKey] = (this.pAttrs[attrKey] ? this.pAttrs[attrKey] : null);
       }
@@ -291,14 +291,14 @@ export class Sdkzer {
   /**
    * Fetches the newest attributes from the origin.
    */
-  public fetch(httpQuery:WebServices.HttpQuery, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
-    var _this = this,
+  public fetch(httpQuery?:WebServices.HttpQuery, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
+    let _this = this,
         promise;
 
     if (this.attrs['id']) {
       this.syncing = true;
 
-      var query = new WebServices.HttpQuery({
+      let query = new WebServices.HttpQuery({
         httpMethod: "GET",
         endpoint:   this.baseEndpoint() + '/' + this.attrs['id'],
         headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
@@ -310,7 +310,7 @@ export class Sdkzer {
         query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
       }
 
-      var request = new WebServices.HttpRequest(query);
+      let request = new WebServices.HttpRequest(query);
       promise = request.promise;
       promise.then(
         // Success
@@ -318,7 +318,7 @@ export class Sdkzer {
           _this.syncing = false;
 
           // TODO: Keep lastResponse
-          var parsedData = _this.$parse(response.data);
+          let parsedData = _this.$parse(response.data);
 
           if (camelize) {
             // parsedData = util.Camel.camelize(parsedData);
@@ -394,7 +394,7 @@ export class Sdkzer {
    * Updates the local object into the origin
    */
   public update(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
-    var _this =  this,
+    let _this =  this,
         query,
         request;
 
@@ -425,7 +425,7 @@ export class Sdkzer {
    * Destroys the current record in the origin
    */
   public destroy() : Promise<any> {
-    var query,
+    let query,
         request;
 
     query = new WebServices.HttpQuery({
@@ -443,8 +443,8 @@ export class Sdkzer {
   /**
    * Retrieves a collection of records from the origin
    */
-  public static fetchIndex(httpQuery:WebServices.HttpQuery) : Promise<Array<any>> {
-    var query,
+  public static fetchIndex(httpQuery?:WebServices.HttpQuery) : Promise<Array<any>> {
+    let query,
         request,
         instancesPromise,
         instances = [],
@@ -467,7 +467,7 @@ export class Sdkzer {
 
       request = new WebServices.HttpRequest(query);
       request.promise.then((response) => {
-        for(var i in response.data) {
+        for(let i in response.data) {
           instance = new this();
           instance.attrs = instance.pAttrs = instance.$parse(response.data[i]);
           instances.push(instance);
@@ -488,7 +488,7 @@ export class Sdkzer {
    * @param httpQuery   Use a HttpQuery instance to override the default query
    */
   public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) : Promise<any>  {
-    var model = new this(),
+    let model = new this(),
         query,
         request,
         instancePromise,
