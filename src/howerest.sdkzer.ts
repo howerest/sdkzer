@@ -290,7 +290,7 @@ export class Sdkzer {
   /**
    * Fetches the newest attributes from the origin.
    */
-  public fetch(httpQuery?:WebServices.HttpQuery, camelize: Boolean = true/* TODO: give and merge a HttpQuery optionally */) : Promise<WebServices.HttpResponse> {
+  public fetch(httpQuery?:WebServices.HttpQuery, camelize: Boolean = true) : Promise<WebServices.HttpResponse> {
     let _this = this,
         promise;
 
@@ -390,27 +390,35 @@ export class Sdkzer {
 
 
   /**
-   * Updates the local object into the origin
+   * Saves the local object into the origin
    */
-  public update(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
+  public save(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
     let _this =  this,
         query,
         request;
 
-    // TODO: Adapt tests to test at least restful HTTP_QUERY_GUESS_CONFIG applied to verb and endpoint
-    if (Sdkzer.HTTP_PATTERN === 'restful-crud') {
+    // New record in the origin?
+    if (this.attr('id') == null) {
+      query = new WebServices.HttpQuery({
+        httpMethod: "POST",
+        endpoint:   this.baseEndpoint(),
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+        qsParams:   {},
+        data:       this.toOriginJSON()
+      });
 
+    // Existing record in the origin?
+    } else {
+      query = new WebServices.HttpQuery({
+        httpMethod: "PUT",
+        endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+        qsParams:   {},
+        data:       this.toOriginJSON()
+      });
     }
 
-    query = new WebServices.HttpQuery({
-      httpMethod: "PUT",
-      endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
-      headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-      qsParams:   {},
-      data:       this.toOriginJSON()
-    });
     request = new WebServices.HttpRequest(query);
-
     return request.promise.then(
       // Success
       function(response) {
@@ -448,8 +456,6 @@ export class Sdkzer {
         instancesPromise,
         instances = [],
         instance;
-
-    // TODO: guess endpont and verb based on custom http pattern
 
     instancesPromise = new Promise((resolve, reject) => {
       query = new WebServices.HttpQuery({

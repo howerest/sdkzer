@@ -6,7 +6,7 @@ David Valín
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.1.0-rc.7 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_sdkzer_ts_howerest_sdkzer_.sdkzer.html)
+Current v0.1.0-rc.8 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_sdkzer_ts_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
@@ -56,10 +56,20 @@ sdkzer is developed in Typescript. You can extend Sdkzer class for each of your 
 
 Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
 
+### Install Sdkzer in your SDK repository
+
+`npm install sdkzer --save`
+
+### Import Sdkzer in your SDK repository
+
+`import { Sdkzer } from 'sdkzer'`
+
 #### Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called "http://localhost:8000/api/v1/events".
 
 Typescript:
 ```
+import { Sdkzer } from 'sdkzer'
+
 export module SDK {
  /**
   * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
@@ -146,9 +156,12 @@ Sdkzer.configure({
 
 You can use your an sdkzer SDK in the browser or Node.js environments.
 
+
 ### 2.1. Read (retrieve) collections from a resource ###
 
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 var events;
 
 SDK.Event.fetchIndexByCityName("New York").then(
@@ -165,6 +178,8 @@ SDK.Event.fetchIndexByCityName("New York").then(
 
 ### 2.2.1. Create a record and save ###
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 var myEvent = new SDK.EventEvent({
   name: "Salsa event",
   geo: {
@@ -182,6 +197,8 @@ myEvent.update();
 
 ##### Option A. When you have an instance already
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 // Your instance needs an id in order to be fetched from the origin
 var event = new SDK.Event({ id: 19 });
 // [...]
@@ -192,6 +209,8 @@ event.fetch().then(
 ```
 ##### Option B. When you don't have an instance already
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 var event;
 SDK.Event.fetchOne(19).then(
   function(eventInstance) { event = eventInstance },
@@ -201,6 +220,8 @@ SDK.Event.fetchOne(19).then(
 
 ### 2.2.3. Update a record ###
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 event.update().then(
   function(response) { console.log('Updated'); },
   function() { console.log('Failed when updating'); }
@@ -209,16 +230,19 @@ event.update().then(
 
 ### 2.2.4. Delete a record ###
 ```
+import * as SDK from 'my-sdkzer-sdk';
+
 event.destroy().then(
   function(response) { console.log('Deleted'); },
   function() { console.log('Failed when deleting') }
 );
 ```
 
-#### TO-DO
+#### Next steps
 
-- Describe and Implement .create() and .save(), which calls create() or update()  
-- Write about integration with Riot.js & Angular 2
+- Write about integration with Angular 2
+- Write about integration with Angular 1.x
+- Write about integration with Riot.js
 - Make easier integration with non RESTful services
 
 ## Contribute ##

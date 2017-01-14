@@ -70,7 +70,7 @@
 				howerest Labs . <a href="http://www.howerest.com/labs">http://www.howerest.com/labs</a></p>
 				<p><a href="https://travis-ci.org/howerest/sdkzer"><img src="https://travis-ci.org/howerest/sdkzer.svg?branch=master" alt="Build Status"></a></p>
 				<h1 id="full-api-docs">Full API docs</h1>
-				<p>Current v0.1.0-rc.7 - <a href="http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_sdkzer_ts_howerest_sdkzer_.sdkzer.html">Read full API docs</a></p>
+				<p>Current v0.1.0-rc.8 - <a href="http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_sdkzer_ts_howerest_sdkzer_.sdkzer.html">Read full API docs</a></p>
 				<h2 id="introduction">Introduction</h2>
 				<p>sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your <a href="http://yourdomain.com/api/v1/users">http://yourdomain.com/api/v1/users</a> endpoint.</p>
 				<p>If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.</p>
@@ -99,9 +99,15 @@
 				</ul>
 				<h3 id="1-1-how-to-construct-your-sdk">1.1. How to construct your SDK</h3>
 				<p>Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.</p>
+				<h3 id="install-sdkzer-in-your-sdk-repository">Install Sdkzer in your SDK repository</h3>
+				<p><code>npm install sdkzer --save</code></p>
+				<h3 id="import-sdkzer-in-your-sdk-repository">Import Sdkzer in your SDK repository</h3>
+				<p><code>import { Sdkzer } from &#39;sdkzer&#39;</code></p>
 				<h4 id="sample-code-in-this-case-we-want-a-model-called-event-that-will-be-mapped-to-a-restful-endpoint-that-implements-the-crud-operations-called-http-localhost-8000-api-v1-events-">Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called &quot;<a href="http://localhost:8000/api/v1/events">http://localhost:8000/api/v1/events</a>&quot;.</h4>
 				<p>Typescript:</p>
-				<pre><code>export module SDK {
+				<pre><code><span class="hljs-keyword">import</span> { Sdkzer } from <span class="hljs-string">'sdkzer'</span>
+
+export module SDK {
  <span class="hljs-comment">/**
   * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
   * Event is mapped to "http://localhost:8000/api/v1/events" endpoint
@@ -179,19 +185,23 @@
 </code></pre><h2 id="2-using-your-sdk">2. Using your SDK</h2>
 				<p>You can use your an sdkzer SDK in the browser or Node.js environments.</p>
 				<h3 id="2-1-read-retrieve-collections-from-a-resource">2.1. Read (retrieve) collections from a resource</h3>
-				<pre><code><span class="hljs-keyword">var</span> events;
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+<span class="hljs-keyword">var</span> events;
 
 SDK.Event.fetchIndexByCityName(<span class="hljs-string">"New York"</span>).then(
   <span class="hljs-comment">// Success</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(eventInstances)</span> </span>{
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInstances</span>) </span>{
     events = eventInstances;
   },
   <span class="hljs-comment">// Fail</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span> </span>{ }
+  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ }
 );
 </code></pre><h2 id="2-2-create-read-update-delete-crud-">2.2. Create / Read / Update / Delete (CRUD)</h2>
 				<h3 id="2-2-1-create-a-record-and-save">2.2.1. Create a record and save</h3>
-				<pre><code>var myEvent = <span class="hljs-keyword">new</span> SDK.EventEvent({
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+<span class="hljs-keyword">var</span> myEvent = <span class="hljs-keyword">new</span> SDK.EventEvent({
   name: <span class="hljs-string">"Salsa event"</span>,
   geo: {
     lat: <span class="hljs-number">52.370216</span>,
@@ -204,7 +214,9 @@ SDK.Event.fetchIndexByCityName(<span class="hljs-string">"New York"</span>).then
 myEvent.update();
 </code></pre><h3 id="2-2-2-read-retrieve-a-record">2.2.2. Read (retrieve) a record</h3>
 				<h5 id="option-a-when-you-have-an-instance-already">Option A. When you have an instance already</h5>
-				<pre><code><span class="hljs-comment">// Your instance needs an id in order to be fetched from the origin</span>
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+<span class="hljs-comment">// Your instance needs an id in order to be fetched from the origin</span>
 <span class="hljs-keyword">var</span> event = <span class="hljs-keyword">new</span> SDK.Event({ id: <span class="hljs-number">19</span> });
 <span class="hljs-comment">// [...]</span>
 event.fetch().then(
@@ -212,25 +224,32 @@ event.fetch().then(
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when fetching the User'</span>) }
 );
 </code></pre><h5 id="option-b-when-you-don-t-have-an-instance-already">Option B. When you don&#39;t have an instance already</h5>
-				<pre><code><span class="hljs-keyword">var</span> event;
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+<span class="hljs-keyword">var</span> event;
 SDK.Event.fetchOne(<span class="hljs-number">19</span>).then(
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInstance</span>) </span>{ event = eventInstance },
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when syncing the Event'</span>) }
 );
 </code></pre><h3 id="2-2-3-update-a-record">2.2.3. Update a record</h3>
-				<pre><code>event.update().then(
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+event.update().then(
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Updated'</span>); },
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when updating'</span>); }
 );
 </code></pre><h3 id="2-2-4-delete-a-record">2.2.4. Delete a record</h3>
-				<pre><code>event.destroy().then(
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+
+event.destroy().then(
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Deleted'</span>); },
   <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when deleting'</span>) }
 );
-</code></pre><h4 id="to-do">TO-DO</h4>
+</code></pre><h4 id="next-steps">Next steps</h4>
 				<ul>
-					<li>Describe and Implement .create() and .save(), which calls create() or update()  </li>
-					<li>Write about integration with Riot.js &amp; Angular 2</li>
+					<li>Write about integration with Angular 2</li>
+					<li>Write about integration with Angular 1.x</li>
+					<li>Write about integration with Riot.js</li>
 					<li>Make easier integration with non RESTful services</li>
 				</ul>
 				<h2 id="contribute">Contribute</h2>

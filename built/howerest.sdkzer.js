@@ -219,8 +219,8 @@ var Sdkzer = (function () {
     /**
      * Fetches the newest attributes from the origin.
      */
-    Sdkzer.prototype.fetch = function (httpQuery, camelize /* TODO: give and merge a HttpQuery optionally */) {
-        if (camelize === void 0) { camelize = true; } /* TODO: give and merge a HttpQuery optionally */
+    Sdkzer.prototype.fetch = function (httpQuery, camelize) {
+        if (camelize === void 0) { camelize = true; }
         var _this = this, promise;
         if (this.attrs['id']) {
             this.syncing = true;
@@ -299,21 +299,30 @@ var Sdkzer = (function () {
         return this.attrs;
     };
     /**
-     * Updates the local object into the origin
+     * Saves the local object into the origin
      */
-    Sdkzer.prototype.update = function (httpHeaders) {
+    Sdkzer.prototype.save = function (httpHeaders) {
         if (httpHeaders === void 0) { httpHeaders = []; }
         var _this = this, query, request;
-        // TODO: Adapt tests to test at least restful HTTP_QUERY_GUESS_CONFIG applied to verb and endpoint
-        if (Sdkzer.HTTP_PATTERN === 'restful-crud') {
+        // New record in the origin?
+        if (this.attr('id') == null) {
+            query = new js_webservices_1.WebServices.HttpQuery({
+                httpMethod: "POST",
+                endpoint: this.baseEndpoint(),
+                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+                qsParams: {},
+                data: this.toOriginJSON()
+            });
         }
-        query = new js_webservices_1.WebServices.HttpQuery({
-            httpMethod: "PUT",
-            endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
-            headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-            qsParams: {},
-            data: this.toOriginJSON()
-        });
+        else {
+            query = new js_webservices_1.WebServices.HttpQuery({
+                httpMethod: "PUT",
+                endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
+                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+                qsParams: {},
+                data: this.toOriginJSON()
+            });
+        }
         request = new js_webservices_1.WebServices.HttpRequest(query);
         return request.promise.then(
         // Success
@@ -342,7 +351,6 @@ var Sdkzer = (function () {
     Sdkzer.fetchIndex = function (httpQuery) {
         var _this = this;
         var query, request, instancesPromise, instances = [], instance;
-        // TODO: guess endpont and verb based on custom http pattern
         instancesPromise = new es6_promise_1.Promise(function (resolve, reject) {
             query = new js_webservices_1.WebServices.HttpQuery({
                 httpMethod: "GET",
