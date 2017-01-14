@@ -128,9 +128,9 @@ export declare class Sdkzer {
      */
     toOrigin(format: string): Object | String;
     /**
-     * Updates the local object into the origin
+     * Saves the local object into the origin
      */
-    update(httpHeaders?: WebServices.HttpHeader[]): Promise<WebServices.HttpResponse>;
+    save(httpHeaders?: WebServices.HttpHeader[]): Promise<WebServices.HttpResponse>;
     /**
      * Destroys the current record in the origin
      */
