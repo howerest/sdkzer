@@ -433,9 +433,9 @@ describe('Sdkzer', function () {
             expect(sdkzer['attrs']).toEqual(sdkzer.toOrigin('xml'));
         });
     });
-    describe('.update', function () {
+    describe('.save', function () {
         var Item, itemInstance, attributes, responseText;
-        describe('when the record has an id setted', function () {
+        describe("when the record does't have an id setted (its a new record in the origin)", function () {
             beforeEach(function () {
                 // Since we are not testing backend http API, both attributes and response match
                 attributes = {
@@ -454,10 +454,40 @@ describe('Sdkzer', function () {
                 itemInstance = new Item(attributes);
             });
             it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", function (done) {
-                itemInstance.update().then(function () {
+                itemInstance.save().then(function () {
                     var request = jasmine.Ajax.requests.mostRecent();
                     expect(request.url).toEqual('http://api.mydomain.com/v1/items/999');
                     expect(request.method).toEqual("PUT");
+                    // expect(request.data.toEqual(attributes);
+                    done();
+                }, function (error) {
+                    console.log('error! ', error);
+                    done();
+                });
+            });
+        });
+        describe('when the record has an id setted (existing record in the origin)', function () {
+            beforeEach(function () {
+                // Since we are not testing backend http API, both attributes and response match
+                attributes = {
+                    name: 'A new age group',
+                    items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+                };
+                responseText = JSON.stringify(attributes);
+                jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items", null, "POST").andReturn({
+                    status: 200,
+                    // statusText: 'HTTP/1.1 200 OK',
+                    responseText: responseText,
+                    contentType: 'application/json; charset=utf-8'
+                });
+                Item = fixtures_1.buildSdkzerModelEntity();
+                itemInstance = new Item(attributes);
+            });
+            it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", function (done) {
+                itemInstance.save().then(function () {
+                    var request = jasmine.Ajax.requests.mostRecent();
+                    expect(request.url).toEqual('http://api.mydomain.com/v1/items');
+                    expect(request.method).toEqual("POST");
                     // expect(request.data.toEqual(attributes);
                     done();
                 }, function (error) {
