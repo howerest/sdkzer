@@ -1,6 +1,3 @@
-import { Promise } from "es6-promise";
-import { WebServices } from "js-webservices";
-
 /* --------------------------------------------------------------------------
 
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
@@ -16,10 +13,16 @@ import { WebServices } from "js-webservices";
 
 --------------------------------------------------------------------------- */
 
+import { Promise } from "es6-promise";
+import { WebServices } from "js-webservices";
+import { ValidationRule } from "./validation_rule";
+
 export class Sdkzer {
 
   private attrs:Object;
   private pAttrs:Object;
+  private validationRules:Object;
+  private invalidMessages:Object = {};
   public syncing:boolean = false;
   public lastResponse:WebServices.HttpResponse = null;
 
@@ -144,6 +147,41 @@ export class Sdkzer {
     return {};
   }
 
+  /**
+   * Checks wether an entity is a valid entity.
+   * It doesn't perform validation (check validate())
+   */
+  public isValid() : boolean {
+    const attrs = Object.keys(this.invalidMessages);
+    for(const attrName of attrs) {
+      if (this.invalidMessages[attrName] && this.invalidMessages[attrName].length > 0) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  /**
+   * Checks wether an entity is a valid entity
+   */
+  public validate() : void {
+    let isValid = true, toValidateAttr, validationRule;
+    const toValidateAttrs = Object.keys(this.validationRules);
+
+    // Validate attribute's ValidationRules
+    for(toValidateAttr of toValidateAttrs) {
+      for(validationRule of this.validationRules[toValidateAttr]) {
+        if (!validationRule.isValid(this.pAttrs[toValidateAttr], this.attrs[toValidateAttr])) {
+          if (!this.invalidMessages[toValidateAttr]) {
+            this.invalidMessages[toValidateAttr] = [];
+          }
+          this.invalidMessages[toValidateAttr].push(validationRule.invalidMessage);
+        } else {
+          this.invalidMessages[toValidateAttr] = [];
+        }
+      }
+    }
+  }
 
   /**
    * This method can do 3 different things:
