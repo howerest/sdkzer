@@ -3,6 +3,8 @@ import { WebServices } from "js-webservices";
 export declare class Sdkzer {
     private attrs;
     private pAttrs;
+    private validationRules;
+    private invalidMessages;
     syncing: boolean;
     lastResponse: WebServices.HttpResponse;
     private static DEFAULT_HTTP_HEADERS;
@@ -48,6 +50,15 @@ export declare class Sdkzer {
      * attributes if you need any
      */
     defaults(): Object;
+    /**
+     * Checks wether an entity is a valid entity.
+     * It doesn't perform validation (check validate())
+     */
+    isValid(): boolean;
+    /**
+     * Checks wether an entity is a valid entity
+     */
+    validate(): void;
     /**
      * This method can do 3 different things:
      *

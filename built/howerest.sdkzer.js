@@ -1,6 +1,3 @@
-"use strict";
-var es6_promise_1 = require("es6-promise");
-var js_webservices_1 = require("js-webservices");
 /* --------------------------------------------------------------------------
 
     howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
@@ -15,6 +12,9 @@ var js_webservices_1 = require("js-webservices");
     2. Start consuming your resource
 
 --------------------------------------------------------------------------- */
+"use strict";
+var es6_promise_1 = require("es6-promise");
+var js_webservices_1 = require("js-webservices");
 var Sdkzer = (function () {
     /**
      * Creates an instance of a model entity with an API to communicate with
@@ -24,6 +24,7 @@ var Sdkzer = (function () {
      */
     function Sdkzer(attrs) {
         if (attrs === void 0) { attrs = {}; }
+        this.invalidMessages = {};
         this.syncing = false;
         this.lastResponse = null;
         this.attrs = { id: null };
@@ -98,6 +99,43 @@ var Sdkzer = (function () {
      */
     Sdkzer.prototype.defaults = function () {
         return {};
+    };
+    /**
+     * Checks wether an entity is a valid entity.
+     * It doesn't perform validation (check validate())
+     */
+    Sdkzer.prototype.isValid = function () {
+        var attrs = Object.keys(this.invalidMessages);
+        for (var _i = 0, attrs_1 = attrs; _i < attrs_1.length; _i++) {
+            var attrName = attrs_1[_i];
+            if (this.invalidMessages[attrName] && this.invalidMessages[attrName].length > 0) {
+                return false;
+            }
+        }
+        return true;
+    };
+    /**
+     * Checks wether an entity is a valid entity
+     */
+    Sdkzer.prototype.validate = function () {
+        var isValid = true, toValidateAttr, validationRule;
+        var toValidateAttrs = Object.keys(this.validationRules);
+        // Validate attribute's ValidationRules
+        for (var _i = 0, toValidateAttrs_1 = toValidateAttrs; _i < toValidateAttrs_1.length; _i++) {
+            toValidateAttr = toValidateAttrs_1[_i];
+            for (var _a = 0, _b = this.validationRules[toValidateAttr]; _a < _b.length; _a++) {
+                validationRule = _b[_a];
+                if (!validationRule.isValid(this.pAttrs[toValidateAttr], this.attrs[toValidateAttr])) {
+                    if (!this.invalidMessages[toValidateAttr]) {
+                        this.invalidMessages[toValidateAttr] = [];
+                    }
+                    this.invalidMessages[toValidateAttr].push(validationRule.invalidMessage);
+                }
+                else {
+                    this.invalidMessages[toValidateAttr] = [];
+                }
+            }
+        }
     };
     /**
      * This method can do 3 different things:
