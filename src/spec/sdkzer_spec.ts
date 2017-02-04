@@ -15,7 +15,7 @@
 
 import { WebServices } from "js-webservices";
 import { Sdkzer } from "../howerest.sdkzer";
-import { buildSdkzerModelEntity } from "./fixtures";
+import { buildSdkzerModelEntity, SampleValidationRuleFixture, SampleValidationRuleFixture2, SampleGlobalValidationRuleFixture } from "./fixtures";
 
 describe('Sdkzer', () => {
 
@@ -139,7 +139,7 @@ describe('Sdkzer', () => {
    * NOTE: This is not being used yet
    */
   describe('.configure', () => {
-    it('should configure the default http headers', () => {
+    xit('should configure the default http headers', () => {
 
     });
   });
@@ -159,6 +159,108 @@ describe('Sdkzer', () => {
     it('shouldnt have defaults', () => {
       let sdkzer = new Sdkzer({});
       expect(sdkzer.defaults()).toEqual({});
+    });
+  });
+
+  describe('.isValid()', () => {
+    describe("when the entity has at least one invalid message in it", () => {
+      let Item, itemInstance;
+      beforeEach(() => {
+        Item = buildSdkzerModelEntity();
+        itemInstance = new Item({ id: 1 });
+        itemInstance['invalidMessages'] = {
+          name: ["name is invalid"],
+          items: []
+        };
+      });
+
+      it("should be invalid", () => {
+        expect(itemInstance.isValid()).toEqual(false);
+      });
+    });
+
+    describe("when the entity has not any invalid message in it", () => {
+      let Item, itemInstance;
+      beforeEach(() => {
+        Item = buildSdkzerModelEntity();
+        Item['invalidMessages'] = {
+          name: [],
+          items: []
+        };
+        itemInstance = new Item({ id: 1 });
+      });
+
+      it("should be valid", () => {
+        expect(itemInstance.isValid()).toEqual(true);
+      });
+    });
+  });
+
+  describe(".validate()", () => {
+    let Item, itemInstance;
+    describe("without any ValidationRule", () => {
+      beforeEach(() => {
+        Item = buildSdkzerModelEntity();
+        itemInstance = new Item({ id: 1 });
+        itemInstance['validationRules'] = {
+          name: [],
+          items: []
+        };
+      });
+
+      it("should not generate invalid errors", () => {
+        itemInstance.validate();
+        expect(itemInstance['invalidMessages']).toEqual({});
+      });
+    });
+
+    describe("with ValidationRules", () => {
+      describe("when at least one ValidationRule doesn't pass", () => {
+        beforeEach(() => {
+          Item = buildSdkzerModelEntity();
+          itemInstance = new Item({ id: 1 });
+          itemInstance['validationRules'] = {
+            name: [new SampleValidationRuleFixture2()], // This will fail
+            items: [new SampleValidationRuleFixture()]  //  This will pass
+          };
+        });
+
+        it("should generate invalid error messages for every invalid attribute", () => {
+          itemInstance.validate();
+          expect(itemInstance['invalidMessages']).toEqual({
+            name: ["Invalid message"],
+            items: []
+          });
+        });
+      });
+
+      describe("when all ValidationRules pass", () => {
+        beforeEach(() => {
+          Item = buildSdkzerModelEntity();
+          itemInstance = new Item({ id: 1 });
+          itemInstance['validationRules'] = {
+            name: [new SampleValidationRuleFixture()], // This will pass
+            items: [new SampleValidationRuleFixture()]  //  This will pass
+          };
+        });
+
+        describe("when the record was previously invalid", () => {
+          it("should not contain invalid error messages even when the entity was previously invalid", () => {
+            // Make it invalid
+            itemInstance['invalidMessages'] = {
+              name: ["name is invalid"],
+              items: []
+            };
+
+            // Make it pass validation now
+            itemInstance.validate();
+            expect(itemInstance['invalidMessages']).toEqual({
+              name: [],
+              items: []
+            });
+          });
+        });
+      });
     });
   });
 

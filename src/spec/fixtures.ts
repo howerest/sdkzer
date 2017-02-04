@@ -9,6 +9,7 @@
  --------------------------------------------------------------------------- */
 
 import { Sdkzer } from "../howerest.sdkzer";
+import { ValidationRule } from "../validation_rule";
 
 export class Item extends Sdkzer {
   public baseEndpoint() {
@@ -50,4 +51,39 @@ export class Item extends Sdkzer {
 
 export function buildSdkzerModelEntity() {
   return Item;
+}
+
+
+// ----------------------------------------------------------------------------
+// Validation Rule fixtures
+
+export class SampleValidationRuleFixture extends ValidationRule {
+  protected conditions:Array<Function> = [
+    () => {
+      return true;
+    },
+    () => {
+      return true;
+    }
+  ]
+}
+
+export class SampleValidationRuleFixture2 extends ValidationRule {
+  protected conditions:Array<Function> = [
+    () => {
+      return true;
+    },
+    () => {
+      this.addInvalidMessage("Invalid message");
+      return false;
+    }
+  ]
+}
+
+export class SampleGlobalValidationRuleFixture extends ValidationRule {
+  protected conditions:Array<Function> = [
+    () => { return true; },
+    () => { this.addInvalidMessage('Invalid field');
+    return false;}
+  ]
 }

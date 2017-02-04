@@ -118,7 +118,7 @@ describe('Sdkzer', function () {
      * NOTE: This is not being used yet
      */
     describe('.configure', function () {
-        it('should configure the default http headers', function () {
+        xit('should configure the default http headers', function () {
         });
     });
     describe('.setDefaults', function () {
@@ -134,6 +134,97 @@ describe('Sdkzer', function () {
         it('shouldnt have defaults', function () {
             var sdkzer = new howerest_sdkzer_1.Sdkzer({});
             expect(sdkzer.defaults()).toEqual({});
+        });
+    });
+    describe('.isValid()', function () {
+        describe("when the entity has at least one invalid message in it", function () {
+            var Item, itemInstance;
+            beforeEach(function () {
+                Item = fixtures_1.buildSdkzerModelEntity();
+                itemInstance = new Item({ id: 1 });
+                itemInstance['invalidMessages'] = {
+                    name: ["name is invalid"],
+                    items: []
+                };
+            });
+            it("should be invalid", function () {
+                expect(itemInstance.isValid()).toEqual(false);
+            });
+        });
+        describe("when the entity has not any invalid message in it", function () {
+            var Item, itemInstance;
+            beforeEach(function () {
+                Item = fixtures_1.buildSdkzerModelEntity();
+                Item['invalidMessages'] = {
+                    name: [],
+                    items: []
+                };
+                itemInstance = new Item({ id: 1 });
+            });
+            it("should be valid", function () {
+                expect(itemInstance.isValid()).toEqual(true);
+            });
+        });
+    });
+    describe(".validate()", function () {
+        var Item, itemInstance;
+        describe("without any ValidationRule", function () {
+            beforeEach(function () {
+                Item = fixtures_1.buildSdkzerModelEntity();
+                itemInstance = new Item({ id: 1 });
+                itemInstance['validationRules'] = {
+                    name: [],
+                    items: []
+                };
+            });
+            it("should not generate invalid errors", function () {
+                itemInstance.validate();
+                expect(itemInstance['invalidMessages']).toEqual({});
+            });
+        });
+        describe("with ValidationRules", function () {
+            describe("when at least one ValidationRule doesn't pass", function () {
+                beforeEach(function () {
+                    Item = fixtures_1.buildSdkzerModelEntity();
+                    itemInstance = new Item({ id: 1 });
+                    itemInstance['validationRules'] = {
+                        name: [new fixtures_1.SampleValidationRuleFixture2()],
+                        items: [new fixtures_1.SampleValidationRuleFixture()] //  This will pass
+                    };
+                });
+                it("should generate invalid error messages for every invalid attribute", function () {
+                    itemInstance.validate();
+                    expect(itemInstance['invalidMessages']).toEqual({
+                        name: ["Invalid message"],
+                        items: []
+                    });
+                });
+            });
+            describe("when all ValidationRules pass", function () {
+                beforeEach(function () {
+                    Item = fixtures_1.buildSdkzerModelEntity();
+                    itemInstance = new Item({ id: 1 });
+                    itemInstance['validationRules'] = {
+                        name: [new fixtures_1.SampleValidationRuleFixture()],
+                        items: [new fixtures_1.SampleValidationRuleFixture()] //  This will pass
+                    };
+                });
+                describe("when the record was previously invalid", function () {
+                    it("should not contain invalid error messages even when the entity was previously invalid", function () {
+                        // Make it invalid
+                        itemInstance['invalidMessages'] = {
+                            name: ["name is invalid"],
+                            items: []
+                        };
+                        // Make it pass validation now
+                        itemInstance.validate();
+                        expect(itemInstance['invalidMessages']).toEqual({
+                            name: [],
+                            items: []
+                        });
+                    });
+                });
+            });
         });
     });
     describe('.attr', function () {

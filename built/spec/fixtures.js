@@ -14,6 +14,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
 var howerest_sdkzer_1 = require("../howerest.sdkzer");
+var validation_rule_1 = require("../validation_rule");
 var Item = (function (_super) {
     __extends(Item, _super);
     function Item() {
@@ -56,3 +57,56 @@ function buildSdkzerModelEntity() {
     return Item;
 }
 exports.buildSdkzerModelEntity = buildSdkzerModelEntity;
+// ----------------------------------------------------------------------------
+// Validation Rule fixtures
+var SampleValidationRuleFixture = (function (_super) {
+    __extends(SampleValidationRuleFixture, _super);
+    function SampleValidationRuleFixture() {
+        var _this = _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                return true;
+            },
+            function () {
+                return true;
+            }
+        ];
+        return _this;
+    }
+    return SampleValidationRuleFixture;
+}(validation_rule_1.ValidationRule));
+exports.SampleValidationRuleFixture = SampleValidationRuleFixture;
+var SampleValidationRuleFixture2 = (function (_super) {
+    __extends(SampleValidationRuleFixture2, _super);
+    function SampleValidationRuleFixture2() {
+        var _this = _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                return true;
+            },
+            function () {
+                _this.addInvalidMessage("Invalid message");
+                return false;
+            }
+        ];
+        return _this;
+    }
+    return SampleValidationRuleFixture2;
+}(validation_rule_1.ValidationRule));
+exports.SampleValidationRuleFixture2 = SampleValidationRuleFixture2;
+var SampleGlobalValidationRuleFixture = (function (_super) {
+    __extends(SampleGlobalValidationRuleFixture, _super);
+    function SampleGlobalValidationRuleFixture() {
+        var _this = _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () { return true; },
+            function () {
+                _this.addInvalidMessage('Invalid field');
+                return false;
+            }
+        ];
+        return _this;
+    }
+    return SampleGlobalValidationRuleFixture;
+}(validation_rule_1.ValidationRule));
+exports.SampleGlobalValidationRuleFixture = SampleGlobalValidationRuleFixture;
