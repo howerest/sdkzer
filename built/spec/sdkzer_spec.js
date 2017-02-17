@@ -526,7 +526,7 @@ describe('Sdkzer', function () {
     });
     describe('.save', function () {
         var Item, itemInstance, attributes, responseText;
-        describe("when the record does't have an id setted (its a new record in the origin)", function () {
+        describe("when the record has an id setted (existing record in the origin)", function () {
             beforeEach(function () {
                 // Since we are not testing backend http API, both attributes and response match
                 attributes = {
@@ -544,7 +544,7 @@ describe('Sdkzer', function () {
                 Item = fixtures_1.buildSdkzerModelEntity();
                 itemInstance = new Item(attributes);
             });
-            it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", function (done) {
+            it("should update the attributes in the origin using the local attributes and using PUT method", function (done) {
                 itemInstance.save().then(function () {
                     var request = jasmine.Ajax.requests.mostRecent();
                     expect(request.url).toEqual('http://api.mydomain.com/v1/items/999');
@@ -557,14 +557,16 @@ describe('Sdkzer', function () {
                 });
             });
         });
-        describe('when the record has an id setted (existing record in the origin)', function () {
-            beforeEach(function () {
-                // Since we are not testing backend http API, both attributes and response match
-                attributes = {
-                    name: 'A new age group',
-                    items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
-                };
-                responseText = JSON.stringify(attributes);
+        describe("when the record does't have an id setted (its a new record in the origin)", function () {
+            var attributes = {
+                name: 'A new age group',
+                items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+            }, responseText, Item, itemInstance;
+            function stubAndReturn(attributes, responseAttrs) {
+                if (!responseAttrs) {
+                    responseAttrs = attributes;
+                }
+                responseText = JSON.stringify(responseAttrs);
                 jasmine.Ajax.stubRequest("http://api.mydomain.com/v1/items", null, "POST").andReturn({
                     status: 200,
                     // statusText: 'HTTP/1.1 200 OK',
@@ -573,13 +575,25 @@ describe('Sdkzer', function () {
                 });
                 Item = fixtures_1.buildSdkzerModelEntity();
                 itemInstance = new Item(attributes);
-            });
-            it("should update the attributes in the origin using the local attributes and using the default restful_crud http pattern", function (done) {
+            }
+            it("should update the attributes in the origin using the local attributes and using POST method", function (done) {
+                stubAndReturn(attributes);
                 itemInstance.save().then(function () {
                     var request = jasmine.Ajax.requests.mostRecent();
                     expect(request.url).toEqual('http://api.mydomain.com/v1/items');
                     expect(request.method).toEqual("POST");
                     // expect(request.data.toEqual(attributes);
+                    done();
+                }, function (error) {
+                    console.log('error! ', error);
+                    done();
+                });
+            });
+            it("should set the id attribute retrieved from the origin", function (done) {
+                // NOTE: We POST without an id but http response must contain an id referencing to persisted entity
+                stubAndReturn(attributes, Object['assign']({}, attributes, { id: 10101011 }));
+                itemInstance.save().then(function () {
+                    expect(itemInstance['attrs']['id']).toBe(10101011);
                     done();
                 }, function (error) {
                     console.log('error! ', error);

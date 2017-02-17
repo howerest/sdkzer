@@ -341,11 +341,11 @@ var Sdkzer = (function () {
      */
     Sdkzer.prototype.save = function (httpHeaders) {
         if (httpHeaders === void 0) { httpHeaders = []; }
-        var _this = this, query, request;
+        var _this = this, query, request, httpMethod = (this.attr('id') == null ? "POST" : "PUT");
         // New record in the origin?
-        if (this.attr('id') == null) {
+        if (httpMethod == "POST") {
             query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: "POST",
+                httpMethod: httpMethod,
                 endpoint: this.baseEndpoint(),
                 headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
                 qsParams: {},
@@ -354,7 +354,7 @@ var Sdkzer = (function () {
         }
         else {
             query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: "PUT",
+                httpMethod: httpMethod,
                 endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
                 headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
                 qsParams: {},
@@ -365,6 +365,10 @@ var Sdkzer = (function () {
         return request.promise.then(
         // Success
         function (response) {
+            if (httpMethod == "POST") {
+                // Append id to attributes
+                _this.attrs['id'] = response.data['id'];
+            }
             _this.lastResponse = response;
         });
     };
