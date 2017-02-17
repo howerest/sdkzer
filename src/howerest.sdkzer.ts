@@ -433,12 +433,13 @@ export class Sdkzer {
   public save(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
     let _this =  this,
         query,
-        request;
+        request,
+        httpMethod = (this.attr('id') == null ? "POST" : "PUT");
 
     // New record in the origin?
-    if (this.attr('id') == null) {
+    if (httpMethod=="POST") {
       query = new WebServices.HttpQuery({
-        httpMethod: "POST",
+        httpMethod: httpMethod,
         endpoint:   this.baseEndpoint(),
         headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
         qsParams:   {},
@@ -448,7 +449,7 @@ export class Sdkzer {
     // Existing record in the origin?
     } else {
       query = new WebServices.HttpQuery({
-        httpMethod: "PUT",
+        httpMethod: httpMethod,
         endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
         headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
         qsParams:   {},
@@ -459,7 +460,11 @@ export class Sdkzer {
     request = new WebServices.HttpRequest(query);
     return request.promise.then(
       // Success
-      function(response) {
+      (response) => {
+        if (httpMethod=="POST") {
+          // Append id to attributes
+          _this.attrs['id'] = response.data['id'];
+        }
         _this.lastResponse = response;
       }
     );
