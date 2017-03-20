@@ -1,0 +1,23 @@
+{
+  "name": "sdkzer",
+  "version": "0.1.0-rc.12",
+  "description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
+  "main": "built/howerest.sdkzer.js",
+  "authors": [
+    {
+			"name": "David Valin",
+			"url": "http://howerest.com/en/labs",
+			"email": "davidvalin@howerest.com"
+		}
+  ],
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/howerest/sdkzer",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

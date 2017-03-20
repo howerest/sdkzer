@@ -5,6 +5,7 @@
 
 --------------------------------------------------------------------------- */
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var validation_rule_1 = require("../validation_rule");
 var fixtures_1 = require("./fixtures");
 describe("ValidationRule", function () {
