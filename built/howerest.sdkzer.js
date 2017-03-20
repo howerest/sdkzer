@@ -13,6 +13,7 @@
 
 --------------------------------------------------------------------------- */
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var es6_promise_1 = require("es6-promise");
 var js_webservices_1 = require("js-webservices");
 var Sdkzer = (function () {
@@ -281,6 +282,7 @@ var Sdkzer = (function () {
                 // TODO: Keep lastResponse
                 var parsedData = _this.$parse(response.data);
                 if (camelize) {
+                    // parsedData = util.Camel.camelize(parsedData);
                 }
                 // Keep track of previous attributes
                 _this.pAttrs = parsedData;
@@ -351,6 +353,7 @@ var Sdkzer = (function () {
                 qsParams: {},
                 data: this.toOriginJSON()
             });
+            // Existing record in the origin?
         }
         else {
             query = new js_webservices_1.WebServices.HttpQuery({
