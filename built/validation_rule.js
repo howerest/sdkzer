@@ -9,6 +9,7 @@
 
 --------------------------------------------------------------------------- */
 "use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var ValidationRule = (function () {
     function ValidationRule(params) {
         this.conditions = [];

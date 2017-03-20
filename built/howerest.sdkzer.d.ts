@@ -1,4 +1,3 @@
-/// <reference types="es6-promise" />
 import { WebServices } from "js-webservices";
 export declare class Sdkzer {
     private attrs;

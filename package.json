@@ -1,7 +1,7 @@
 {
 	"name": "sdkzer",
-	"version": "0.1.0-rc.11",
-	"description": "Implements a dev-friendly / cross-environment friendly javascript API to interact with http restful resources",
+	"version": "0.1.0-rc.12",
+	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
 	"keywords": [
 		"sdk",
 		"javascript",
@@ -43,7 +43,6 @@
 	],
 	"main": "built/howerest.sdkzer.js",
 	"dependencies": {
-		"es6-promise": "4.0.5",
 		"js-webservices": "git+https://github.com/howerest/js-webservices.git"
 	},
 	"devDependencies": {
