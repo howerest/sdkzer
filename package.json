@@ -72,7 +72,7 @@
 		"karma-phantomjs-launcher": "^1.0.2",
 		"karma-remap-istanbul": "^0.4.0",
 		"karma-spec-reporter": "0.0.26",
-		"karma-typescript": "git+https://github.com/monounity/karma-typescript.git#2.1.6",
+		"karma-typescript": "2.1.6",
 		"less": "^2.7.2",
 		"less-loader": "^2.2.3",
 		"mocha": "^3.2.0",
