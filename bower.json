@@ -1,6 +1,6 @@
 {
   "name": "sdkzer",
-  "version": "0.1.0-rc.12",
+  "version": "0.1.0",
   "description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
   "main": "built/howerest.sdkzer.js",
   "authors": [
