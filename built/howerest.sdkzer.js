@@ -14,7 +14,6 @@
 --------------------------------------------------------------------------- */
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var es6_promise_1 = require("es6-promise");
 var js_webservices_1 = require("js-webservices");
 var Sdkzer = (function () {
     /**
@@ -295,7 +294,7 @@ var Sdkzer = (function () {
             });
         }
         if (typeof (promise) === 'undefined') {
-            promise = es6_promise_1.Promise.reject(false);
+            promise = Promise.reject(false);
         }
         return promise;
     };
@@ -396,7 +395,7 @@ var Sdkzer = (function () {
     Sdkzer.fetchIndex = function (httpQuery) {
         var _this = this;
         var query, request, instancesPromise, instances = [], instance;
-        instancesPromise = new es6_promise_1.Promise(function (resolve, reject) {
+        instancesPromise = new Promise(function (resolve, reject) {
             query = new js_webservices_1.WebServices.HttpQuery({
                 httpMethod: "GET",
                 endpoint: (new _this().baseEndpoint()),
@@ -429,7 +428,7 @@ var Sdkzer = (function () {
     Sdkzer.fetchOne = function (id, httpQuery) {
         var _this = this;
         var model = new this(), query, request, instancePromise, instance;
-        instancePromise = new es6_promise_1.Promise(function (resolve, reject) {
+        instancePromise = new Promise(function (resolve, reject) {
             query = new js_webservices_1.WebServices.HttpQuery({
                 httpMethod: "GET",
                 endpoint: model.baseEndpoint() + '/' + id,

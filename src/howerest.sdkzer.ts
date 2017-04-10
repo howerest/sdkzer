@@ -13,7 +13,6 @@
 
 --------------------------------------------------------------------------- */
 
-import { Promise } from "es6-promise";
 import { WebServices } from "js-webservices";
 import { ValidationRule } from "./validation_rule";
 
