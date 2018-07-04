@@ -1,4 +1,4 @@
-## 1.6.0 Release candidate available ##
+## sdkzer ##
 
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
