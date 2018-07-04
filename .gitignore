@@ -1,6 +1,6 @@
 js/
 node_modules/
-coverage/
+./coverage
 .DS_Store
 .baseDir.ts
 npm-debug.log

@@ -2,24 +2,20 @@
   "version": "2.1.4",
   "compilerOptions": {
     "target": "es5",
-    "module": "commonjs",
+    "module": "umd",
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": false,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "built/",
-    "sourceMap": false,
-    "moduleResolution": "node"
+    "rootDir": "./src",
+    "outDir": "dist/",
+    "sourceMap": true,
+    "moduleResolution": "node",
+    "types" : ["node", "es6-promise"]
   },
   "compileOnSave": true,
-  "filesGlob": [
-    "./src/**/*.ts"
+  "include": [
+    "**/src/*.ts"
   ],
-  "exclude": [
-    "typings",
-    "node_modules"
-  ],
-  "atom": {
-    "rewriteTsconfig": false
-  }
+  "exclude": []
 }

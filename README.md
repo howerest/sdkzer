@@ -56,19 +56,23 @@ sdkzer is developed in Typescript. You can extend Sdkzer class for each of your 
 
 Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
 
-### Install Sdkzer in your SDK repository
+To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
-`npm install sdkzer --save`
+### Install Sdkzer and js-webservices in your SDK repository
 
-### Import Sdkzer in your SDK repository
+`yarn add sdkzer js-webservices --save`
+
+### Import Sdkzer and js-webservices in your SDK
 
 `import { Sdkzer } from 'sdkzer'`
+`import { WebServices } from 'js-webservices'`
 
 #### Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called "http://localhost:8000/api/v1/events".
 
 Typescript:
 ```
 import { Sdkzer } from 'sdkzer'
+import { WebServices } from 'js-webservices'
 
 export module SDK {
  /**
@@ -248,9 +252,8 @@ event.destroy().then(
 ## Contribute ##
 
 ```
-npm install
-tsd install
-karma start karma.conf
+yarn install
+yarn test --watch
 ```
 
 1. Write important test cases for every public function

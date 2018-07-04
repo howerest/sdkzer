@@ -1,6 +1,6 @@
 {
 	"name": "sdkzer",
-	"version": "0.6.0-rc.2",
+	"version": "1.6.0",
 	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
 	"keywords": [
 		"sdk",
@@ -19,7 +19,8 @@
 		"model",
 		"models",
 		"business logic",
-		"data logic"
+		"data logic",
+		"validation"
 	],
 	"licenses": [
 		{
@@ -30,58 +31,65 @@
 	"contributors": [
 		{
 			"name": "David Valin",
-			"url": "http://howerest.com/en/labs",
-			"email": "davidvalin@howerest.com"
+			"url": "http://www.davidvalin.com",
+			"email": "hola@davidvalin.com"
 		}
 	],
 	"maintainers": [
 		{
 			"name": "David Valin",
-			"url": "http://howerest.com/en/labs",
-			"email": "davidvalin@howerest.com"
+			"url": "http://www.davidvalin.com",
+			"email": "hola@davidvalin.com"
 		}
 	],
-	"main": "built/howerest.sdkzer.js",
+	"main": "dist/howerest.sdkzer.js",
+	"typings": "dist/howerest.sdkzer.d.ts",
 	"dependencies": {
 		"js-webservices": "0.1.1"
 	},
 	"devDependencies": {
 		"@types/es6-promise": "0.0.32",
-		"@types/jasmine": "^2.5.40",
 		"@types/jasmine-ajax": "^3.1.32",
+		"@types/jest": "^23.1.1",
 		"@types/node": "^6.0.58",
+		"awesome-typescript-loader": "^5.2.0",
 		"babel-polyfill": "^6.20.0",
 		"es6-promise": "^4.0.5",
-		"grunt": "^1.0.1",
-		"grunt-contrib-concat": "^1.0.1",
-		"grunt-contrib-jasmine": "^1.0.3",
-		"grunt-contrib-jshint": "^1.1.0",
-		"grunt-contrib-uglify": "^2.0.0",
-		"grunt-contrib-watch": "^1.0.0",
-		"grunt-karma": "^2.0.0",
 		"jasmine-ajax": "^3.3.1",
 		"jasmine-core": "^2.5.2",
-		"jasmine-spec-reporter": "^3.1.0",
-		"karma": "^1.3.0",
-		"karma-chrome-launcher": "^2.0.0",
-		"karma-cli": "^1.0.1",
-		"karma-growl-reporter": "^1.0.0",
-		"karma-jasmine": "^1.1.0",
-		"karma-mocha": "^1.3.0",
-		"karma-mocha-reporter": "^2.2.1",
-		"karma-phantomjs-launcher": "^1.0.2",
-		"karma-remap-istanbul": "^0.4.0",
-		"karma-spec-reporter": "0.0.26",
-		"karma-typescript": "2.1.6",
-		"less": "^2.7.2",
-		"less-loader": "^2.2.3",
-		"mocha": "^3.2.0",
+		"jest": "^23.1.0",
+		"ts-jest": "^22.4.6",
 		"ts-node": "^2.0.0",
 		"tslint": "^4.3.1",
-		"typescript": "~2.0.3",
+		"typedoc": "^0.11.1",
 		"typings": "^2.1.0",
-		"utf8": "2.1.0"
+		"uglifyjs-webpack-plugin": "^1.2.7",
+		"utf8": "2.1.0",
+		"webpack": "^4.12.0",
+		"webpack-cli": "^3.0.8"
 	},
 	"optionalDependencies": {},
-	"typings": "built/howerest.sdkzer.d.ts"
+	"scripts": {
+		"test": "yarn jest --coverage --verbose",
+		"document": "yarn typedoc --out doc src/*.ts",
+		"release": "yarn test && rm -rf dist && webpack --config webpack.conf.js && yarn document && mv doc dist && mv coverage dist"
+	},
+	"jest": {
+		"moduleFileExtensions": [
+			"ts",
+			"tsx",
+			"js"
+		],
+		"transform": {
+			"^.+\\.(ts|tsx)$": "ts-jest"
+		},
+		"globals": {
+			"ts-jest": {
+				"tsConfigFile": "tsconfig.json"
+			}
+		},
+		"testMatch": [
+			"**/__test__/*_spec.+(ts)"
+		]
+	}
 }

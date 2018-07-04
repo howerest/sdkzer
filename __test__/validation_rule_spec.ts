@@ -1,11 +1,11 @@
 /* --------------------------------------------------------------------------
 
-    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
       Apache 2.0 Licensed
 
 --------------------------------------------------------------------------- */
 
-import { ValidationRule } from "../validation_rule";
+import { ValidationRule } from "../src/validation_rule";
 import { SampleValidationRuleFixture, SampleValidationRuleFixture2, SampleGlobalValidationRuleFixture } from "./fixtures";
 
 describe("ValidationRule", () => {
