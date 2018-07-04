@@ -1,12 +1,9 @@
-## 0.6.0-rc.2 Release candidate available ##
-
-David Valín
-  howerest Labs . http://www.howerest.com/labs
+## 1.6.0 Release candidate available ##
 
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.6.0-rc.2 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_howerest_sdkzer_.sdkzer.html)
+Current v1.6.0 - [Read full API docs](http://www.howerest.com/sdkzer/docs/1.6.0/classes/_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.

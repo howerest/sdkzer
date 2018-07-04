@@ -70,7 +70,7 @@
 	},
 	"optionalDependencies": {},
 	"scripts": {
-		"test": "yarn jest --coverage --verbose",
+		"test": "yarn jest --coverage --collectCoverageFrom='[\"src/*.ts\"]' --verbose",
 		"document": "yarn typedoc --out doc src/*.ts",
 		"release": "yarn test && rm -rf dist && webpack --config webpack.conf.js && yarn document && mv doc dist && mv coverage dist"
 	},

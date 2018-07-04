@@ -64,12 +64,10 @@
 	<div class="row">
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
-				<h2 id="0-6-0-rc-2-release-candidate-available">0.6.0-rc.2 Release candidate available</h2>
-				<p>David Valín
-				howerest Labs . <a href="http://www.howerest.com/labs">http://www.howerest.com/labs</a></p>
+				<h2 id="1-6-0-release-candidate-available">1.6.0 Release candidate available</h2>
 				<p><a href="https://travis-ci.org/howerest/sdkzer"><img src="https://travis-ci.org/howerest/sdkzer.svg?branch=master" alt="Build Status"></a></p>
 				<h1 id="full-api-docs">Full API docs</h1>
-				<p>Current v0.6.0-rc.2 - <a href="http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_howerest_sdkzer_.sdkzer.html">Read full API docs</a></p>
+				<p>Current v1.6.0 - <a href="http://www.howerest.com/sdkzer/docs/1.6.0/classes/_howerest_sdkzer_.sdkzer.html">Read full API docs</a></p>
 				<h2 id="introduction">Introduction</h2>
 				<p>sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your <a href="http://yourdomain.com/api/v1/users">http://yourdomain.com/api/v1/users</a> endpoint.</p>
 				<p>If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.</p>
@@ -98,10 +96,12 @@
 				</ul>
 				<h3 id="1-1-how-to-construct-your-sdk">1.1. How to construct your SDK</h3>
 				<p>Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.</p>
-				<h3 id="install-sdkzer-in-your-sdk-repository">Install Sdkzer in your SDK repository</h3>
-				<p><code>npm install sdkzer --save</code></p>
-				<h3 id="import-sdkzer-in-your-sdk-repository">Import Sdkzer in your SDK repository</h3>
-				<p><code>import { Sdkzer } from &#39;sdkzer&#39;</code></p>
+				<p>To see an SDK example using sdkzer, have a look at <a href="https://github.com/howerest/sdkzer-sdk-sample">sdkzer-sdk-sample</a> repository.</p>
+				<h3 id="install-sdkzer-and-js-webservices-in-your-sdk-repository">Install Sdkzer and js-webservices in your SDK repository</h3>
+				<p><code>yarn add sdkzer js-webservices --save</code></p>
+				<h3 id="import-sdkzer-and-js-webservices-in-your-sdk">Import Sdkzer and js-webservices in your SDK</h3>
+				<p><code>import { Sdkzer } from &#39;sdkzer&#39;</code>
+				<code>import { WebServices } from &#39;js-webservices&#39;</code></p>
 				<h4 id="sample-code-in-this-case-we-want-a-model-called-event-that-will-be-mapped-to-a-restful-endpoint-that-implements-the-crud-operations-called-http-localhost-8000-api-v1-events-">Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called &quot;<a href="http://localhost:8000/api/v1/events&quot;">http://localhost:8000/api/v1/events&quot;</a>.</h4>
 				<p>Typescript:</p>
 				<pre><code><span class="hljs-keyword">import</span> { Sdkzer } <span class="hljs-keyword">from</span> <span class="hljs-string">'sdkzer'</span>
@@ -253,9 +253,8 @@ event.destroy().then(
 					<li>Make easier integration with non RESTful services</li>
 				</ul>
 				<h2 id="contribute">Contribute</h2>
-				<pre><code>npm <span class="hljs-keyword">install</span>
-tsd <span class="hljs-keyword">install</span>
-karma <span class="hljs-keyword">start</span> karma.conf
+				<pre><code>yarn <span class="hljs-keyword">install</span>
+yarn <span class="hljs-keyword">test</span> <span class="hljs-comment">--watch</span>
 </code></pre><ol>
 					<li>Write important test cases for every public function</li>
 					<li>Previous tests should pass</li>
