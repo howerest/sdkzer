@@ -1,12 +1,9 @@
-## 0.6.0-rc.2 Release candidate available ##
-
-David Valín
-  howerest Labs . http://www.howerest.com/labs
+## sdkzer ##
 
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.6.0-rc.2 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.1.0-rc/classes/_howerest_sdkzer_.sdkzer.html)
+Current v1.6.0 - [Read full API docs](http://www.howerest.com/sdkzer/docs/1.6.0/classes/_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
@@ -56,19 +53,23 @@ sdkzer is developed in Typescript. You can extend Sdkzer class for each of your 
 
 Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
 
-### Install Sdkzer in your SDK repository
+To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
-`npm install sdkzer --save`
+### Install Sdkzer and js-webservices in your SDK repository
 
-### Import Sdkzer in your SDK repository
+`yarn add sdkzer js-webservices --save`
+
+### Import Sdkzer and js-webservices in your SDK
 
 `import { Sdkzer } from 'sdkzer'`
+`import { WebServices } from 'js-webservices'`
 
 #### Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called "http://localhost:8000/api/v1/events".
 
 Typescript:
 ```
 import { Sdkzer } from 'sdkzer'
+import { WebServices } from 'js-webservices'
 
 export module SDK {
  /**
@@ -248,9 +249,8 @@ event.destroy().then(
 ## Contribute ##
 
 ```
-npm install
-tsd install
-karma start karma.conf
+yarn install
+yarn test --watch
 ```
 
 1. Write important test cases for every public function

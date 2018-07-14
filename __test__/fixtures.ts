@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 
-    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
       Apache 2.0 Licensed
 
     This sdk entity is being used for unit testing to test communication
@@ -8,8 +8,8 @@
 
  --------------------------------------------------------------------------- */
 
-import { Sdkzer } from "../howerest.sdkzer";
-import { ValidationRule } from "../validation_rule";
+import { Sdkzer } from "../src/howerest.sdkzer";
+import { ValidationRule } from "../src/validation_rule";
 
 export class Item extends Sdkzer {
   public baseEndpoint() {

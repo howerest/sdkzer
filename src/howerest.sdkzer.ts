@@ -1,6 +1,6 @@
 /* --------------------------------------------------------------------------
 
-    howerest 2016 - <davidvalin@howerest.com> | www.howerest.com
+    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
 
     Apache 2.0 Licensed
     -------------------
@@ -13,8 +13,8 @@
 
 --------------------------------------------------------------------------- */
 
-import { WebServices } from "js-webservices";
-import { ValidationRule } from "./validation_rule";
+import { WebServices } from 'js-webservices';
+import { ValidationRule } from './validation_rule';
 
 export class Sdkzer {
 

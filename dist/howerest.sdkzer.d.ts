@@ -1,4 +1,4 @@
-import { WebServices } from "js-webservices";
+import { WebServices } from 'js-webservices';
 export declare class Sdkzer {
     private attrs;
     private pAttrs;
