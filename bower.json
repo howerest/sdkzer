@@ -1,8 +1,8 @@
 {
   "name": "sdkzer",
-  "version": "1.6.0",
+  "version": "0.6.2",
   "description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
-  "main": "built/howerest.sdkzer.js",
+  "main": "dist/howerest.sdkzer.js",
   "authors": [
     {
 			"name": "David Valin",

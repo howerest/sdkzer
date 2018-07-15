@@ -1,4 +1,4 @@
-/*! sdkzer 1.6.0 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.6.2 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -389,7 +389,7 @@ var Sdkzer = /** @class */ (function () {
                 _this.pAttrs = parsedData;
                 // Assign the parsed attributes
                 _this.attrs = parsedData;
-            }, 
+            },
             // Fail
             function (response) {
                 _this.syncing = false;
