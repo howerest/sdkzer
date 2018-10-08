@@ -8,7 +8,7 @@
     "removeComments": false,
     "suppressImplicitAnyIndexErrors": true,
     "rootDir": "./src",
-    "outDir": ".",
+    "outDir": "./dist",
     "sourceMap": true,
     "moduleResolution": "node",
     "types" : ["node", "es6-promise"]
