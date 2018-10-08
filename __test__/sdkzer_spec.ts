@@ -540,7 +540,7 @@ describe('Sdkzer', () => {
   });
 
 
-  describe('.$parse', () => {
+  describe('.parseRecord', () => {
     let Item, itemInstance, json, expectedParsedJson;
 
     beforeEach(() => {
@@ -553,7 +553,7 @@ describe('Sdkzer', () => {
         id: 1001,
         name: "Bruce Lee"
       };
-      expect(itemInstance.$parse(json)).toEqual(json);
+      expect(itemInstance.parseRecord(json)).toEqual(json);
     });
 
     test("should parse the data that is on a specific key when a prefix attribute is specified", () => {
@@ -572,7 +572,7 @@ describe('Sdkzer', () => {
         name: "Bruce Lee"
       };
 
-      expect(itemInstance.$parse(json, 'data')).toEqual(expectedParsedJson);
+      expect(itemInstance.parseRecord(json, 'data')).toEqual(expectedParsedJson);
     });
   });
 
@@ -782,22 +782,13 @@ describe('Sdkzer', () => {
       // This will be successful since we have the requested mocked up
 
       test("should fetch a collection of records from the origin and return a Promise resolves into an array of instances of Item", (done) => {
-        // Ensure that $parse gets caller per instance too
-        Item.prototype.$parse = (data) => {
-          let newName = data.name;
-          return {
-            id: data.id,
-            newNameKey: newName
-          };
-        };
-
         Item.fetchIndex().then((instances) => {
           expect(instances[0] instanceof Item).toBeTruthy();
-          expect(instances[0].attrs).toEqual({ id: 1, newNameKey: "Event 1" });
+          expect(instances[0].attrs).toEqual({ id: 1, name: "Event 1" });
           expect(instances[1] instanceof Item).toBeTruthy();
-          expect(instances[1].attrs).toEqual({ id: 9, newNameKey: "Event 2" });
+          expect(instances[1].attrs).toEqual({ id: 9, name: "Event 2" });
           expect(instances[2] instanceof Item).toBeTruthy();
-          expect(instances[2].attrs).toEqual({ id: 11, newNameKey: "Event 3" });
+          expect(instances[2].attrs).toEqual({ id: 11, name: "Event 3" });
           done();
         });
       });
@@ -860,8 +851,8 @@ describe('Sdkzer', () => {
       // This will be successful since we have the requested mocked up
 
       test("should fetch a record from the origin and return a Promise resolves an instance of Item", (done) => {
-        // Ensure that $parse gets caller per instance too
-        Item.prototype.$parse = (data) => {
+        // Ensure that parseRecord gets called per instance too
+        Item.prototype.parseRecord = (data) => {
           let newName = data.name;
           return {
             id: data.id,

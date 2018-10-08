@@ -354,7 +354,7 @@ export class Sdkzer {
           _this.syncing = false;
 
           // TODO: Keep lastResponse
-          let parsedData = _this.$parse(response.data);
+          let parsedData = _this.parseRecord(response.data);
 
           if (camelize) {
             // parsedData = util.Camel.camelize(parsedData);
@@ -380,22 +380,27 @@ export class Sdkzer {
 
 
   /**
-   * Parses the resources data from an incoming HttpResponse
-   * The idea is to return the resources attributes exclusively
+   * Parses a single resource record from an incoming HttpResponse data
+   * NOTE: The idea is to return the parsed record data only
    */
-  public $parse(data:Object, dataPrefixKey?:string) : Object {
-    if (dataPrefixKey !== null && data[dataPrefixKey]) {
-      return data[dataPrefixKey];
-    } else {
-      return data;
-    }
+  public parseRecord(data:Object, prefix?:string) : object {
+    return prefix ? data[prefix] : data;
   }
 
 
   /**
+   * Parses a collection of resource records from an incoming HttpResponse data
+   * NOTE: The idea is to return the parsed collection of records data only
+   */
+  public static parseCollection(data:Array<Object>, prefix?:string) : Array<object> {
+    return prefix ? data[prefix] : data;
+  }
+
+  
+  /**
    * Transforms the local attributes to be processed by the origin in JSON format
    */
-  public toOriginJSON() : Object {
+  protected toOriginJSON() : Object {
     return this.attrs;
   }
 
@@ -514,9 +519,10 @@ export class Sdkzer {
 
       request = new WebServices.HttpRequest(query);
       request.promise.then((response) => {
-        for(let i in response.data) {
+        const collectionList = this.parseCollection(response.data);
+        for(let i in collectionList) {
           instance = new this();
-          instance.attrs = instance.pAttrs = instance.$parse(response.data[i]);
+          instance.attrs = instance.pAttrs = instance.parseRecord(response.data[i]);
           instances.push(instance);
         }
         resolve(instances);
@@ -557,7 +563,7 @@ export class Sdkzer {
       request = new WebServices.HttpRequest(query);
       request.promise.then((response) => {
         instance = new this();
-        instance.attrs = instance.pAttrs = instance.$parse(response.data);
+        instance.attrs = instance.pAttrs = instance.parseRecord(response.data);
         resolve(instance);
       }, (error) => {
         reject(error);
