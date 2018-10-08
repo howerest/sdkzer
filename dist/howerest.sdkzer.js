@@ -1,4 +1,4 @@
-/*! sdkzer 0.6.2 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.6.3 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -381,7 +381,7 @@ var Sdkzer = /** @class */ (function () {
             function (response) {
                 _this.syncing = false;
                 // TODO: Keep lastResponse
-                var parsedData = _this.$parse(response.data);
+                var parsedData = _this.parseRecord(response.data);
                 if (camelize) {
                     // parsedData = util.Camel.camelize(parsedData);
                 }
@@ -389,7 +389,7 @@ var Sdkzer = /** @class */ (function () {
                 _this.pAttrs = parsedData;
                 // Assign the parsed attributes
                 _this.attrs = parsedData;
-            },
+            }, 
             // Fail
             function (response) {
                 _this.syncing = false;
@@ -401,16 +401,18 @@ var Sdkzer = /** @class */ (function () {
         return promise;
     };
     /**
-     * Parses the resources data from an incoming HttpResponse
-     * The idea is to return the resources attributes exclusively
+     * Parses a single resource record from an incoming HttpResponse data
+     * NOTE: The idea is to return the parsed record data only
      */
-    Sdkzer.prototype.$parse = function (data, dataPrefixKey) {
-        if (dataPrefixKey !== null && data[dataPrefixKey]) {
-            return data[dataPrefixKey];
-        }
-        else {
-            return data;
-        }
+    Sdkzer.prototype.parseRecord = function (data, prefix) {
+        return prefix ? data[prefix] : data;
+    };
+    /**
+     * Parses a collection of resource records from an incoming HttpResponse data
+     * NOTE: The idea is to return the parsed collection of records data only
+     */
+    Sdkzer.parseCollection = function (data, prefix) {
+        return prefix ? data[prefix] : data;
     };
     /**
      * Transforms the local attributes to be processed by the origin in JSON format
@@ -495,12 +497,12 @@ var Sdkzer = /** @class */ (function () {
      * Retrieves a collection of records from the origin
      */
     Sdkzer.fetchIndex = function (httpQuery) {
-        var _this = this;
+        var _this_1 = this;
         var query, request, instancesPromise, instances = [], instance;
         instancesPromise = new Promise(function (resolve, reject) {
             query = new js_webservices_1.WebServices.HttpQuery({
                 httpMethod: "GET",
-                endpoint: (new _this().baseEndpoint()),
+                endpoint: (new _this_1().baseEndpoint()),
                 headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
                 qsParams: {},
                 data: {}
@@ -510,9 +512,10 @@ var Sdkzer = /** @class */ (function () {
             }
             request = new js_webservices_1.WebServices.HttpRequest(query);
             request.promise.then(function (response) {
-                for (var i in response.data) {
-                    instance = new _this();
-                    instance.attrs = instance.pAttrs = instance.$parse(response.data[i]);
+                var collectionList = _this_1.parseCollection(response.data);
+                for (var i in collectionList) {
+                    instance = new _this_1();
+                    instance.attrs = instance.pAttrs = instance.parseRecord(response.data[i]);
                     instances.push(instance);
                 }
                 resolve(instances);
@@ -528,7 +531,7 @@ var Sdkzer = /** @class */ (function () {
      * @param httpQuery   Use a HttpQuery instance to override the default query
      */
     Sdkzer.fetchOne = function (id, httpQuery) {
-        var _this = this;
+        var _this_1 = this;
         var model = new this(), query, request, instancePromise, instance;
         instancePromise = new Promise(function (resolve, reject) {
             query = new js_webservices_1.WebServices.HttpQuery({
@@ -543,8 +546,8 @@ var Sdkzer = /** @class */ (function () {
             }
             request = new js_webservices_1.WebServices.HttpRequest(query);
             request.promise.then(function (response) {
-                instance = new _this();
-                instance.attrs = instance.pAttrs = instance.$parse(response.data);
+                instance = new _this_1();
+                instance.attrs = instance.pAttrs = instance.parseRecord(response.data);
                 resolve(instance);
             }, function (error) {
                 reject(error);

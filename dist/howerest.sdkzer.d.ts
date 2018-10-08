@@ -26,20 +26,20 @@ export declare class Sdkzer {
     /**
      * Checks if Sdkzer has been configured to communicate to RESTful resources
      */
-    private static usingRestfulCrudHttpPattern();
+    private static usingRestfulCrudHttpPattern;
     /**
      * Checks if Sdkzer has been configured to communicate using custom CRUD endpoints
      */
-    private static usingCustomHttpPattern();
+    private static usingCustomHttpPattern;
     /**
      * Checks if Sdkzer is using any fetch strategy once received parent ids
      */
-    private static usingParentsFetchStrategy();
+    private static usingParentsFetchStrategy;
     /**
      * Retrieves the http guess config for an specific CRUD operation.
      * @param {String} operation  Accepts "create", "read", "update" and "delete"
      */
-    private static getHttpQueryGuessConfigFor(operation);
+    private static getHttpQueryGuessConfigFor;
     /**
      * Sets the defaults() values in the instance attributes
      */
@@ -121,14 +121,19 @@ export declare class Sdkzer {
      */
     fetch(httpQuery?: WebServices.HttpQuery, camelize?: Boolean): Promise<WebServices.HttpResponse>;
     /**
-     * Parses the resources data from an incoming HttpResponse
-     * The idea is to return the resources attributes exclusively
+     * Parses a single resource record from an incoming HttpResponse data
+     * NOTE: The idea is to return the parsed record data only
      */
-    $parse(data: Object, dataPrefixKey?: string): Object;
+    parseRecord(data: Object, prefix?: string): object;
+    /**
+     * Parses a collection of resource records from an incoming HttpResponse data
+     * NOTE: The idea is to return the parsed collection of records data only
+     */
+    static parseCollection(data: Array<Object>, prefix?: string): Array<object>;
     /**
      * Transforms the local attributes to be processed by the origin in JSON format
      */
-    toOriginJSON(): Object;
+    protected toOriginJSON(): Object;
     /**
      * Transforms the local attributes to be processed by the origin in XML format
      */
