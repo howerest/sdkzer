@@ -4373,6 +4373,13 @@ schema-utils@^0.4.4, schema-utils@^0.4.5:
     ajv "^6.1.0"
     ajv-keywords "^3.1.0"
 
+sdkzer@0.6.3:
+  version "0.6.3"
+  resolved "https://registry.yarnpkg.com/sdkzer/-/sdkzer-0.6.3.tgz#97638a1cecb3cc82275fee323ca568ed79563ba3"
+  dependencies:
+    js-webservices "^0.1.1"
+    ts-loader "^5.2.1"
+
 semver-diff@^2.0.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/semver-diff/-/semver-diff-2.1.0.tgz#4bbb8437c8d37e4b0cf1a68fd726ec6d645d6d36"
