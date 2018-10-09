@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ISdkzerConfigOptions | sdkzer</title>
+	<title>IValidationRule | sdkzer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,13 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="../modules/_howerest_sdkzer_.html">&quot;howerest.sdkzer&quot;</a>
-				</li>
-				<li>
-					<a href="_howerest_sdkzer_.isdkzerconfigoptions.html">ISdkzerConfigOptions</a>
+					<a href="ivalidationrule.html">IValidationRule</a>
 				</li>
 			</ul>
-			<h1>Interface ISdkzerConfigOptions</h1>
+			<h1>Interface IValidationRule</h1>
 		</div>
 	</div>
 </header>
@@ -73,8 +70,14 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">ISdkzerConfigOptions</span>
+						<span class="target">IValidationRule</span>
 					</li>
+				</ul>
+			</section>
+			<section class="tsd-panel">
+				<h3>Implemented by</h3>
+				<ul class="tsd-hierarchy">
+					<li><a href="../classes/validationrule.html" class="tsd-signature-type">ValidationRule</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -84,7 +87,14 @@
 						<section class="tsd-index-section ">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_howerest_sdkzer_.isdkzerconfigoptions.html#defaulthttpheaders" class="tsd-kind-icon">default<wbr>Http<wbr>Headers</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalidationrule.html#invalidmessage" class="tsd-kind-icon">invalid<wbr>Message</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalidationrule.html#params" class="tsd-kind-icon">params</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section ">
+							<h3>Methods</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ivalidationrule.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,14 +103,53 @@
 			<section class="tsd-panel-group tsd-member-group ">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="defaulthttpheaders" class="tsd-anchor"></a>
-					<h3>default<wbr>Http<wbr>Headers</h3>
-					<div class="tsd-signature tsd-kind-icon">default<wbr>Http<wbr>Headers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
+					<a name="invalidmessage" class="tsd-anchor"></a>
+					<h3>invalid<wbr>Message</h3>
+					<div class="tsd-signature tsd-kind-icon">invalid<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">String</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/6b5c1d5/src/howerest.sdkzer.ts#L577">howerest.sdkzer.ts:577</a></li>
+							<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/e5b4d33/src/validation_rule.ts#L59">validation_rule.ts:59</a></li>
 						</ul>
 					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="params" class="tsd-anchor"></a>
+					<h3>params</h3>
+					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/e5b4d33/src/validation_rule.ts#L58">validation_rule.ts:58</a></li>
+						</ul>
+					</aside>
+				</section>
+			</section>
+			<section class="tsd-panel-group tsd-member-group ">
+				<h2>Methods</h2>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
+					<a name="isvalid" class="tsd-anchor"></a>
+					<h3>is<wbr>Valid</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Valid<span class="tsd-signature-symbol">(</span>fromValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, toValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/e5b4d33/src/validation_rule.ts#L61">validation_rule.ts:61</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>fromValue: <span class="tsd-signature-type">any</span></h5>
+								</li>
+								<li>
+									<h5>toValue: <span class="tsd-signature-type">any</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
 				</section>
 			</section>
 		</div>
@@ -110,29 +159,35 @@
 					<li class="globals  ">
 						<a href="../globals.html"><em>Globals</em></a>
 					</li>
-					<li class="current tsd-kind-external-module">
-						<a href="../modules/_howerest_sdkzer_.html">"howerest.sdkzer"</a>
-					</li>
-					<li class=" tsd-kind-external-module">
-						<a href="../modules/_validation_rule_.html">"validation_<wbr>rule"</a>
-					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
 				<ul class="before-current">
-					<li class=" tsd-kind-class tsd-parent-kind-external-module">
-						<a href="../classes/_howerest_sdkzer_.sdkzer.html" class="tsd-kind-icon">Sdkzer</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/sdkzer.html" class="tsd-kind-icon">Sdkzer</a>
 					</li>
-					<li class=" tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_howerest_sdkzer_.ihttpqueryguessconfig.html" class="tsd-kind-icon">IHttp<wbr>Query<wbr>Guess<wbr>Config</a>
+					<li class=" tsd-kind-class">
+						<a href="../classes/validationrule.html" class="tsd-kind-icon">Validation<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ihttpqueryguessconfig.html" class="tsd-kind-icon">IHttp<wbr>Query<wbr>Guess<wbr>Config</a>
+					</li>
+					<li class=" tsd-kind-interface">
+						<a href="isdkzerconfigoptions.html" class="tsd-kind-icon">ISdkzer<wbr>Config<wbr>Options</a>
 					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface tsd-parent-kind-external-module">
-						<a href="_howerest_sdkzer_.isdkzerconfigoptions.html" class="tsd-kind-icon">ISdkzer<wbr>Config<wbr>Options</a>
+					<li class="current tsd-kind-interface">
+						<a href="ivalidationrule.html" class="tsd-kind-icon">IValidation<wbr>Rule</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="_howerest_sdkzer_.isdkzerconfigoptions.html#defaulthttpheaders" class="tsd-kind-icon">default<wbr>Http<wbr>Headers</a>
+								<a href="ivalidationrule.html#invalidmessage" class="tsd-kind-icon">invalid<wbr>Message</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="ivalidationrule.html#params" class="tsd-kind-icon">params</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-interface">
+								<a href="ivalidationrule.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
 							</li>
 						</ul>
 					</li>
