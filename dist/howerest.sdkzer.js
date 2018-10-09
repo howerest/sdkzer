@@ -1,4 +1,4 @@
-/*! sdkzer 0.6.3 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.6.4 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -515,7 +515,7 @@ var Sdkzer = /** @class */ (function () {
                 var collectionList = _this_1.parseCollection(response.data);
                 for (var i in collectionList) {
                     instance = new _this_1();
-                    instance.attrs = instance.pAttrs = instance.parseRecord(response.data[i]);
+                    instance.attrs = instance.pAttrs = instance.parseRecord(collectionList[i]);
                     instances.push(instance);
                 }
                 resolve(instances);

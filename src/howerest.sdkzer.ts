@@ -522,7 +522,7 @@ export class Sdkzer {
         const collectionList = this.parseCollection(response.data);
         for(let i in collectionList) {
           instance = new this();
-          instance.attrs = instance.pAttrs = instance.parseRecord(response.data[i]);
+          instance.attrs = instance.pAttrs = instance.parseRecord(collectionList[i]);
           instances.push(instance);
         }
         resolve(instances);
