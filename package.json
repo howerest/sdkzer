@@ -45,14 +45,14 @@
 	"main": "dist/howerest.sdkzer.js",
 	"typings": "dist/howerest.sdkzer.d.ts",
 	"dependencies": {
-		"js-webservices": "^0.1.1",
-		"ts-loader": "^5.2.1"
+		"js-webservices": "^0.1.1"
 	},
 	"devDependencies": {
 		"@types/es6-promise": "0.0.32",
 		"@types/jasmine-ajax": "^3.1.32",
 		"@types/jest": "^23.1.1",
 		"@types/node": "^6.0.58",
+		"ts-loader": "^5.2.1",
 		"awesome-typescript-loader": "^5.2.0",
 		"babel-polyfill": "^6.20.0",
 		"es6-promise": "^4.0.5",
@@ -73,7 +73,7 @@
 	"optionalDependencies": {},
 	"scripts": {
 		"test": "yarn jest --coverage --collectCoverageFrom='[\"src/*.ts\"]' --verbose",
-		"document": "yarn typedoc --out doc src/*.ts",
+		"document": "yarn typedoc --mode file --out doc src/*.ts",
 		"release": "yarn test && rm -rf dist && webpack --config webpack.conf.js && yarn document && mv doc dist && mv coverage dist"
 	},
 	"jest": {
