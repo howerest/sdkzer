@@ -18,10 +18,10 @@ import { ValidationRule } from './validation_rule';
 
 export class Sdkzer {
 
-  private attrs:Object;
-  private pAttrs:Object;
-  private validationRules:Object;
-  private invalidMessages:Object = {};
+  public attrs:Object;
+  public pAttrs:Object;
+  protected validationRules:Object;
+  public invalidMessages:Object = {};
   public syncing:boolean = false;
   public lastResponse:WebServices.HttpResponse = null;
 
