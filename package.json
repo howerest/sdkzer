@@ -48,27 +48,24 @@
 		"js-webservices": "^0.1.1"
 	},
 	"devDependencies": {
+		"@babel/polyfill": "^7.0.0",
 		"@types/es6-promise": "0.0.32",
-		"@types/jasmine-ajax": "^3.1.32",
-		"@types/jest": "^23.1.1",
+		"@types/jest": "^23.3.5",
 		"@types/node": "^6.0.58",
-		"ts-loader": "^5.2.1",
 		"awesome-typescript-loader": "^5.2.0",
-		"babel-polyfill": "^6.20.0",
 		"es6-promise": "^4.0.5",
-		"jasmine-ajax": "^3.3.1",
-		"jasmine-core": "^2.5.2",
-		"jest": "^23.1.0",
-		"ts-jest": "^22.4.6",
+		"jest": "^23.6.0",
+		"ts-jest": "^23.10.4",
+		"ts-loader": "^5.2.1",
 		"ts-node": "^2.0.0",
 		"tslint": "^4.3.1",
 		"typedoc": "^0.11.1",
-		"typescript": "^2.9.1",
-		"typings": "^2.1.0",
+		"typescript": "^3.1.3",
 		"uglifyjs-webpack-plugin": "^1.2.7",
 		"utf8": "2.1.0",
 		"webpack": "^4.12.0",
-		"webpack-cli": "^3.0.8"
+		"webpack-cli": "^3.0.8",
+		"xhr-mock": "^2.4.1"
 	},
 	"optionalDependencies": {},
 	"scripts": {
@@ -84,11 +81,6 @@
 		],
 		"transform": {
 			"^.+\\.(ts|tsx)$": "ts-jest"
-		},
-		"globals": {
-			"ts-jest": {
-				"tsConfigFile": "tsconfig.json"
-			}
 		},
 		"testMatch": [
 			"**/__test__/*_spec.+(ts)"
