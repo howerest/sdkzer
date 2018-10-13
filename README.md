@@ -3,7 +3,8 @@
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.6.6 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.6.6/classes/_howerest_sdkzer_.sdkzer.html)
+[Read full API docs](http://howerest.com/sdkzer/docs/0.6.6/classes/sdkzer.html)
+[More info about sdkzer](http://howerest.com/labs/sdkzer)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
@@ -236,10 +237,12 @@ SDK.Event.destroy().then(
 
 #### Next steps
 
-- Write about integration with Angular 2
-- Write about integration with Angular 1.x
-- Write about integration with Riot.js
-- Make easier integration with non RESTful services
+- Add most basic Validation Rules fully unit tested
+
+- Write about integration with Angular
+- Write about WebComponents integration
+- Write about integration with Riot.JS
+
 
 ## Contribute ##
 
