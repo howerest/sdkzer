@@ -8,9 +8,6 @@
     Sdkzer, which is how the developer will use Sdkzer (check fixtures.ts)
 
 --------------------------------------------------------------------------- */
-
-/// <reference path="../node_modules/@types/es6-promise/index.d.ts" />
-
 import { WebServices } from "js-webservices";
 import { Sdkzer } from "../src/howerest.sdkzer";
 import {
