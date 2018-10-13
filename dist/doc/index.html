@@ -67,7 +67,8 @@
 				<h2 id="sdkzer">sdkzer</h2>
 				<p><a href="https://travis-ci.org/howerest/sdkzer"><img src="https://travis-ci.org/howerest/sdkzer.svg?branch=master" alt="Build Status"></a></p>
 				<h1 id="full-api-docs">Full API docs</h1>
-				<p>Current v0.6.6 - <a href="http://www.howerest.com/sdkzer/docs/0.6.6/classes/_howerest_sdkzer_.sdkzer.html">Read full API docs</a></p>
+				<p><a href="http://howerest.com/sdkzer/docs/0.6.7/classes/sdkzer.html">Read full API docs</a>
+				<a href="http://howerest.com/labs/sdkzer">More info about sdkzer</a></p>
 				<h2 id="introduction">Introduction</h2>
 				<p>sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your <a href="http://yourdomain.com/api/v1/users">http://yourdomain.com/api/v1/users</a> endpoint.</p>
 				<p>If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.</p>
@@ -88,14 +89,10 @@
 				<p>This is inspired in &quot;<a href="https://github.com/bfanger/angular-activerecord">angular-activerecord</a>&quot;. I&#39;ve being loving angular-activerecord but it was depending on Angular 1.x code, this didn&#39;t fix my requirement of cross-framework and environment. A deeper layer of objects (without dependencies) to handle XHR, HttpRequest, HttpResponse, HttpQuery... was a potential improvement.</p>
 				<p>The use of TypeScript would help to organize the code, the tests, and understand it better.</p>
 				<p>Finally I separated those low level classes into WebServices. Sdkzer is on top of WebServices, helping to build models around CRUD operations.</p>
-				<h2 id="typescript">Typescript</h2>
-				<p>sdkzer is developed in Typescript. You can extend Sdkzer class for each of your SDK entities and you are ready to go.</p>
+				<h2 id="typescript-javascript-es6">Typescript / Javascript ES6</h2>
+				<p>sdkzer is developed in Typescript and available as Typescript and Javascript ES6. You can extend Sdkzer class for each of your SDK entities and you are ready to go.</p>
 				<h2 id="1-implementing-your-sdk-with-sdkzer">1. Implementing your SDK with sdkzer</h2>
-				<ul>
-					<li>Setup TypeScript compiler</li>
-				</ul>
-				<h3 id="1-1-how-to-construct-your-sdk">1.1. How to construct your SDK</h3>
-				<p>Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.</p>
+				<p>Build an npm package exporting all your SDK entities.</p>
 				<p>To see an SDK example using sdkzer, have a look at <a href="https://github.com/howerest/sdkzer-sdk-sample">sdkzer-sdk-sample</a> repository.</p>
 				<h3 id="install-sdkzer-and-js-webservices-in-your-sdk-repository">Install Sdkzer and js-webservices in your SDK repository</h3>
 				<p><code>yarn add sdkzer js-webservices --save</code></p>
@@ -103,54 +100,53 @@
 				<p><code>import { Sdkzer } from &#39;sdkzer&#39;</code>
 				<code>import { WebServices } from &#39;js-webservices&#39;</code></p>
 				<h4 id="sample-code-in-this-case-we-want-a-model-called-event-that-will-be-mapped-to-a-restful-endpoint-that-implements-the-crud-operations-called-http-localhost-8000-api-v1-events-">Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called &quot;<a href="http://localhost:8000/api/v1/events&quot;">http://localhost:8000/api/v1/events&quot;</a>.</h4>
-				<p>Typescript:</p>
-				<pre><code><span class="hljs-keyword">import</span> { Sdkzer } <span class="hljs-keyword">from</span> <span class="hljs-string">'sdkzer'</span>
-<span class="hljs-keyword">import</span> { WebServices } <span class="hljs-keyword">from</span> <span class="hljs-string">'js-webservices'</span>
+				<pre><code><span class="hljs-keyword">import</span> { Sdkzer } from <span class="hljs-string">'sdkzer'</span>
+<span class="hljs-keyword">import</span> { WebServices } from <span class="hljs-string">'js-webservices'</span>
 
-<span class="hljs-keyword">export</span> <span class="hljs-keyword">module</span> SDK {
+export <span class="hljs-keyword">module</span> SDK {
  <span class="hljs-comment">/**
   * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
   * Event is mapped to "http://localhost:8000/api/v1/events" endpoint
   */</span>
- <span class="hljs-keyword">export</span> <span class="hljs-keyword">class</span> Event <span class="hljs-keyword">extends</span> Sdkzer {
-    <span class="hljs-keyword">public</span> baseEndpoint() {
+ export <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Event</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Sdkzer</span> </span>{
+    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">baseEndpoint</span><span class="hljs-params">()</span> </span>{
        <span class="hljs-keyword">return</span> <span class="hljs-string">"http://localhost:8000/api/v1/events"</span>;
      }
 
-     <span class="hljs-keyword">public</span> defaults() {
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">defaults</span><span class="hljs-params">()</span> </span>{
        <span class="hljs-keyword">return</span> {
-         name: <span class="hljs-literal">null</span>,
+         name: <span class="hljs-keyword">null</span>,
          geo: {
-           lat: <span class="hljs-literal">null</span>,
-           lon: <span class="hljs-literal">null</span>
+           lat: <span class="hljs-keyword">null</span>,
+           lon: <span class="hljs-keyword">null</span>
          },
-         start_date: <span class="hljs-literal">null</span>,
-         end_date: <span class="hljs-literal">null</span>
+         start_date: <span class="hljs-keyword">null</span>,
+         end_date: <span class="hljs-keyword">null</span>
        };
      }
 
      <span class="hljs-comment">/*
       * This parses the data received from the origin endpoint
       */</span>
-     <span class="hljs-keyword">public</span> $parse(data:<span class="hljs-built_in">Object</span>) {
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">parseRecord</span><span class="hljs-params">(data:Object)</span> </span>{
        <span class="hljs-keyword">return</span> data[<span class="hljs-string">'event'</span>];
      }
 
      <span class="hljs-comment">/*
       * This converts local state into data understandable by the origin endpoint
       */</span>
-     <span class="hljs-keyword">public</span> toOriginJSON() {
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">toOriginJSON</span><span class="hljs-params">()</span> </span>{
        <span class="hljs-keyword">return</span> { <span class="hljs-string">'event'</span>: <span class="hljs-keyword">this</span>.attr() };
      }
 
      <span class="hljs-comment">/*
       * Your instance methods hold your business logic
       */</span>
-     <span class="hljs-keyword">public</span> isHappening() {
-       <span class="hljs-keyword">return</span> (<span class="hljs-keyword">this</span>.attr(<span class="hljs-string">"start_date"</span>) === <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>().toISOString().slice(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>));
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">isHappening</span><span class="hljs-params">()</span> </span>{
+       <span class="hljs-keyword">return</span> (<span class="hljs-keyword">this</span>.attr(<span class="hljs-string">"start_date"</span>) === <span class="hljs-keyword">new</span> Date().toISOString().slice(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>));
      }
 
-     <span class="hljs-keyword">public</span> howLongAgo() {
+     <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">howLongAgo</span><span class="hljs-params">()</span> </span>{
        <span class="hljs-comment">// ...</span>
      }
 
@@ -159,9 +155,9 @@
      <span class="hljs-comment">/*
       * Your static methods to retrieve collections
       */</span>
-      <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> fetchIndexByCityName(cityName) {
+      <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-title">fetchIndexByCityName</span><span class="hljs-params">(cityName)</span> </span>{
         <span class="hljs-comment">// This query will merged on top of the default Event.fetchIndex() HttpQuery</span>
-        <span class="hljs-keyword">var</span> indexByCityNameHttpQuery = <span class="hljs-keyword">new</span> WebServices.HttpQuery({
+        var indexByCityNameHttpQuery = <span class="hljs-keyword">new</span> WebServices.HttpQuery({
             qsParams: {
               <span class="hljs-string">'city_name'</span>: cityName
             }
@@ -185,23 +181,23 @@
 </code></pre><h2 id="2-using-your-sdk">2. Using your SDK</h2>
 				<p>You can use your an sdkzer SDK in the browser or Node.js environments.</p>
 				<h3 id="2-1-read-retrieve-collections-from-a-resource">2.1. Read (retrieve) collections from a resource</h3>
-				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
+				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK from <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
 <span class="hljs-keyword">var</span> events;
 
 SDK.Event.fetchIndexByCityName(<span class="hljs-string">"New York"</span>).then(
   <span class="hljs-comment">// Success</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInstances</span>) </span>{
+  (eventInstances) =&gt; {
     events = eventInstances;
   },
   <span class="hljs-comment">// Fail</span>
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ }
+  (error) =&gt; {}
 );
 </code></pre><h2 id="2-2-create-read-update-delete-crud-">2.2. Create / Read / Update / Delete (CRUD)</h2>
 				<h3 id="2-2-1-create-a-record-and-save">2.2.1. Create a record and save</h3>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
-<span class="hljs-keyword">var</span> myEvent = <span class="hljs-keyword">new</span> SDK.EventEvent({
+<span class="hljs-keyword">const</span> myEvent = <span class="hljs-keyword">new</span> SDK.EventEvent({
   <span class="hljs-attr">name</span>: <span class="hljs-string">"Salsa event"</span>,
   <span class="hljs-attr">geo</span>: {
     <span class="hljs-attr">lat</span>: <span class="hljs-number">52.370216</span>,
@@ -211,46 +207,48 @@ SDK.Event.fetchIndexByCityName(<span class="hljs-string">"New York"</span>).then
   <span class="hljs-attr">end_date</span>: <span class="hljs-string">"2016/06/02"</span>
 });
 
-myEvent.update();
+myEvent.save();
 </code></pre><h3 id="2-2-2-read-retrieve-a-record">2.2.2. Read (retrieve) a record</h3>
 				<h5 id="option-a-when-you-have-an-instance-already">Option A. When you have an instance already</h5>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
-<span class="hljs-comment">// Your instance needs an id in order to be fetched from the origin</span>
-<span class="hljs-keyword">var</span> event = <span class="hljs-keyword">new</span> SDK.Event({ <span class="hljs-attr">id</span>: <span class="hljs-number">19</span> });
-<span class="hljs-comment">// [...]</span>
-event.fetch().then(
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Attributes has been updated!'</span>); },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when fetching the User'</span>) }
+<span class="hljs-regexp">//</span> Your instance needs an id <span class="hljs-keyword">in</span> order to be fetched <span class="hljs-keyword">from</span> the origin
+var event = <span class="hljs-keyword">new</span> SDK.Event({ id: <span class="hljs-number">19</span> });
+<span class="hljs-regexp">//</span> [...]
+event.fetch().<span class="hljs-keyword">then</span>(
+  <span class="hljs-function"><span class="hljs-params">(response)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Attributes has been updated!'</span>); },
+  <span class="hljs-function"><span class="hljs-params">(error)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when fetching the User '</span>, e) }
 );
 </code></pre><h5 id="option-b-when-you-don-t-have-an-instance-already">Option B. When you don&#39;t have an instance already</h5>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
-<span class="hljs-keyword">var</span> event;
-SDK.Event.fetchOne(<span class="hljs-number">19</span>).then(
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">eventInstance</span>) </span>{ event = eventInstance },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when syncing the Event'</span>) }
+let event;
+SDK.Event.fetchOne(<span class="hljs-number">19</span>).<span class="hljs-keyword">then</span>(
+  <span class="hljs-function"><span class="hljs-params">(eventInstance)</span> =&gt;</span> { event = eventInstance },
+  <span class="hljs-function"><span class="hljs-params">(error)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when syncing the Event '</span>, e) }
 );
 </code></pre><h3 id="2-2-3-update-a-record">2.2.3. Update a record</h3>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
-event.update().then(
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Updated'</span>); },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when updating'</span>); }
+SDK.Event.save().<span class="hljs-keyword">then</span>(
+  <span class="hljs-function"><span class="hljs-params">(response)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Updated'</span>); },
+  <span class="hljs-function"><span class="hljs-params">(error)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when updating '</span>, e); }
 );
 </code></pre><h3 id="2-2-4-delete-a-record">2.2.4. Delete a record</h3>
 				<pre><code><span class="hljs-keyword">import</span> * <span class="hljs-keyword">as</span> SDK <span class="hljs-keyword">from</span> <span class="hljs-string">'my-sdkzer-sdk'</span>;
 
-event.destroy().then(
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">response</span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Deleted'</span>); },
-  <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{ <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when deleting'</span>) }
+SDK.Event.destroy().<span class="hljs-keyword">then</span>(
+  <span class="hljs-function"><span class="hljs-params">(response)</span> =&gt;</span> { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Deleted'</span>); },
+  (error) { <span class="hljs-built_in">console</span>.log(<span class="hljs-string">'Failed when deleting '</span>, e) }
 );
 </code></pre><h4 id="next-steps">Next steps</h4>
 				<ul>
-					<li>Write about integration with Angular 2</li>
-					<li>Write about integration with Angular 1.x</li>
-					<li>Write about integration with Riot.js</li>
-					<li>Make easier integration with non RESTful services</li>
+					<li><p>Add most basic Validation Rules fully unit tested</p>
+					</li>
+					<li><p>Write about integration with Angular</p>
+					</li>
+					<li>Write about WebComponents integration</li>
+					<li>Write about integration with Riot.JS</li>
 				</ul>
 				<h2 id="contribute">Contribute</h2>
 				<pre><code>yarn <span class="hljs-keyword">install</span>
