@@ -6,7 +6,6 @@
     "declaration": true,
     "noImplicitAny": false,
     "removeComments": false,
-    "suppressImplicitAnyIndexErrors": true,
     "rootDir": "./src",
     "outDir": "./dist",
     "sourceMap": true,
@@ -15,7 +14,7 @@
   },
   "compileOnSave": true,
   "include": [
-    "src/*.ts",
+    "src/**/*.ts",
     "node_modules/@types/**/*.ts"
   ],
   "exclude": []

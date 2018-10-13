@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>IValidationRule | sdkzer</title>
+	<title>MinMaxNumberValidatorParams | sdkzer</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -56,10 +56,10 @@
 					<a href="../globals.html">Globals</a>
 				</li>
 				<li>
-					<a href="ivalidationrule.html">IValidationRule</a>
+					<a href="minmaxnumbervalidatorparams.html">MinMaxNumberValidatorParams</a>
 				</li>
 			</ul>
-			<h1>Interface IValidationRule</h1>
+			<h1>Interface MinMaxNumberValidatorParams</h1>
 		</div>
 	</div>
 </header>
@@ -70,92 +70,45 @@
 				<h3>Hierarchy</h3>
 				<ul class="tsd-hierarchy">
 					<li>
-						<span class="target">IValidationRule</span>
+						<span class="target">MinMaxNumberValidatorParams</span>
 					</li>
-				</ul>
-			</section>
-			<section class="tsd-panel">
-				<h3>Implemented by</h3>
-				<ul class="tsd-hierarchy">
-					<li><a href="../classes/allowedvalueswitchvalidator.html" class="tsd-signature-type">AllowedValueSwitchValidator</a></li>
-					<li><a href="../classes/emailvalidator.html" class="tsd-signature-type">EmailValidator</a></li>
-					<li><a href="../classes/lengthvalidator.html" class="tsd-signature-type">LengthValidator</a></li>
-					<li><a href="../classes/minmaxnumbervalidator.html" class="tsd-signature-type">MinMaxNumberValidator</a></li>
-					<li><a href="../classes/regexpvalidator.html" class="tsd-signature-type">RegExpValidator</a></li>
-					<li><a href="../classes/requiredvalidator.html" class="tsd-signature-type">RequiredValidator</a></li>
-					<li><a href="../classes/validationrule.html" class="tsd-signature-type">ValidationRule</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
 				<h2>Index</h2>
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
-						<section class="tsd-index-section ">
+						<section class="tsd-index-section tsd-is-external tsd-is-not-exported">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalidationrule.html#invalidmessage" class="tsd-kind-icon">invalid<wbr>Message</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="ivalidationrule.html#params" class="tsd-kind-icon">params</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section ">
-							<h3>Methods</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-method tsd-parent-kind-interface"><a href="ivalidationrule.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="minmaxnumbervalidatorparams.html#max" class="tsd-kind-icon">max</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported"><a href="minmaxnumbervalidatorparams.html#min" class="tsd-kind-icon">min</a></li>
 							</ul>
 						</section>
 					</div>
 				</section>
 			</section>
-			<section class="tsd-panel-group tsd-member-group ">
+			<section class="tsd-panel-group tsd-member-group tsd-is-external tsd-is-not-exported">
 				<h2>Properties</h2>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="invalidmessage" class="tsd-anchor"></a>
-					<h3>invalid<wbr>Message</h3>
-					<div class="tsd-signature tsd-kind-icon">invalid<wbr>Message<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">String</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="max" class="tsd-anchor"></a>
+					<h3>max</h3>
+					<div class="tsd-signature tsd-kind-icon">max<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/4f2e876/src/validation_rule.ts#L59">validation_rule.ts:59</a></li>
+							<li>Defined in validation_rules/min_max_number_validator.ts:3</li>
 						</ul>
 					</aside>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
-					<a name="params" class="tsd-anchor"></a>
-					<h3>params</h3>
-					<div class="tsd-signature tsd-kind-icon">params<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">any</span></div>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+					<a name="min" class="tsd-anchor"></a>
+					<h3>min</h3>
+					<div class="tsd-signature tsd-kind-icon">min<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/4f2e876/src/validation_rule.ts#L58">validation_rule.ts:58</a></li>
+							<li>Defined in validation_rules/min_max_number_validator.ts:3</li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group ">
-				<h2>Methods</h2>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-interface">
-					<a name="isvalid" class="tsd-anchor"></a>
-					<h3>is<wbr>Valid</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-interface">
-						<li class="tsd-signature tsd-kind-icon">is<wbr>Valid<span class="tsd-signature-symbol">(</span>fromValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span>, toValue<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/howerest/sdkzer/blob/4f2e876/src/validation_rule.ts#L61">validation_rule.ts:61</a></li>
-								</ul>
-							</aside>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>fromValue: <span class="tsd-signature-type">any</span></h5>
-								</li>
-								<li>
-									<h5>toValue: <span class="tsd-signature-type">any</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
-						</li>
-					</ul>
 				</section>
 			</section>
 		</div>
@@ -199,30 +152,27 @@
 					<li class=" tsd-kind-interface">
 						<a href="isdkzerconfigoptions.html" class="tsd-kind-icon">ISdkzer<wbr>Config<wbr>Options</a>
 					</li>
+					<li class=" tsd-kind-interface">
+						<a href="ivalidationrule.html" class="tsd-kind-icon">IValidation<wbr>Rule</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
+						<a href="lengthvalidatorparams.html" class="tsd-kind-icon">Length<wbr>Validator<wbr>Params</a>
+					</li>
 				</ul>
 				<ul class="current">
-					<li class="current tsd-kind-interface">
-						<a href="ivalidationrule.html" class="tsd-kind-icon">IValidation<wbr>Rule</a>
+					<li class="current tsd-kind-interface tsd-is-external tsd-is-not-exported">
+						<a href="minmaxnumbervalidatorparams.html" class="tsd-kind-icon">Min<wbr>Max<wbr>Number<wbr>Validator<wbr>Params</a>
 						<ul>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivalidationrule.html#invalidmessage" class="tsd-kind-icon">invalid<wbr>Message</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="minmaxnumbervalidatorparams.html#max" class="tsd-kind-icon">max</a>
 							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-interface">
-								<a href="ivalidationrule.html#params" class="tsd-kind-icon">params</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-interface">
-								<a href="ivalidationrule.html#isvalid" class="tsd-kind-icon">is<wbr>Valid</a>
+							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external tsd-is-not-exported">
+								<a href="minmaxnumbervalidatorparams.html#min" class="tsd-kind-icon">min</a>
 							</li>
 						</ul>
 					</li>
 				</ul>
 				<ul class="after-current">
-					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="lengthvalidatorparams.html" class="tsd-kind-icon">Length<wbr>Validator<wbr>Params</a>
-					</li>
-					<li class=" tsd-kind-interface tsd-is-external tsd-is-not-exported">
-						<a href="minmaxnumbervalidatorparams.html" class="tsd-kind-icon">Min<wbr>Max<wbr>Number<wbr>Validator<wbr>Params</a>
-					</li>
 				</ul>
 			</nav>
 		</div>
