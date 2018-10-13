@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-Current v0.6.5 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.6.5/classes/_howerest_sdkzer_.sdkzer.html)
+Current v0.6.6 - [Read full API docs](http://www.howerest.com/sdkzer/docs/0.6.6/classes/_howerest_sdkzer_.sdkzer.html)
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint.
@@ -41,17 +41,13 @@ The use of TypeScript would help to organize the code, the tests, and understand
 
 Finally I separated those low level classes into WebServices. Sdkzer is on top of WebServices, helping to build models around CRUD operations.
 
-## Typescript ##
+## Typescript / Javascript ES6 ##
 
-sdkzer is developed in Typescript. You can extend Sdkzer class for each of your SDK entities and you are ready to go.
+sdkzer is developed in Typescript and available as Typescript and Javascript ES6. You can extend Sdkzer class for each of your SDK entities and you are ready to go.
 
 ## 1. Implementing your SDK with sdkzer ##
 
-- Setup TypeScript compiler
-
-### 1.1. How to construct your SDK ###
-
-Wrap your SDK into a module that contain all your model instances. You can optionally create 1 module per entity as well if you have many model entities that you want to lazy load.
+Build an npm package exporting all your SDK entities.
 
 To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
@@ -66,7 +62,6 @@ To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://g
 
 #### Sample code. In this case we want a model called Event that will be mapped to a RESTful endpoint that implements the CRUD operations called "http://localhost:8000/api/v1/events".
 
-Typescript:
 ```
 import { Sdkzer } from 'sdkzer'
 import { WebServices } from 'js-webservices'
@@ -96,7 +91,7 @@ export module SDK {
      /*
       * This parses the data received from the origin endpoint
       */
-     public $parse(data:Object) {
+     public parseRecord(data:Object) {
        return data['event'];
      }
 
@@ -167,11 +162,11 @@ var events;
 
 SDK.Event.fetchIndexByCityName("New York").then(
   // Success
-  function(eventInstances) {
+  (eventInstances) => {
     events = eventInstances;
   },
   // Fail
-  function() { }
+  (error) => {}
 );
 ```
 
@@ -181,7 +176,7 @@ SDK.Event.fetchIndexByCityName("New York").then(
 ```
 import * as SDK from 'my-sdkzer-sdk';
 
-var myEvent = new SDK.EventEvent({
+const myEvent = new SDK.EventEvent({
   name: "Salsa event",
   geo: {
     lat: 52.370216,
@@ -191,7 +186,7 @@ var myEvent = new SDK.EventEvent({
   end_date: "2016/06/02"
 });
 
-myEvent.update();
+myEvent.save();
 ```
 
 ### 2.2.2. Read (retrieve) a record ###
@@ -204,18 +199,18 @@ import * as SDK from 'my-sdkzer-sdk';
 var event = new SDK.Event({ id: 19 });
 // [...]
 event.fetch().then(
-  function(response) { console.log('Attributes has been updated!'); },
-  function() { console.log('Failed when fetching the User') }
+  (response) => { console.log('Attributes has been updated!'); },
+  (error) => { console.log('Failed when fetching the User ', e) }
 );
 ```
 ##### Option B. When you don't have an instance already
 ```
 import * as SDK from 'my-sdkzer-sdk';
 
-var event;
+let event;
 SDK.Event.fetchOne(19).then(
-  function(eventInstance) { event = eventInstance },
-  function(response) { console.log('Failed when syncing the Event') }
+  (eventInstance) => { event = eventInstance },
+  (error) => { console.log('Failed when syncing the Event ', e) }
 );
 ```
 
@@ -223,9 +218,9 @@ SDK.Event.fetchOne(19).then(
 ```
 import * as SDK from 'my-sdkzer-sdk';
 
-event.update().then(
-  function(response) { console.log('Updated'); },
-  function() { console.log('Failed when updating'); }
+SDK.Event.save().then(
+  (response) => { console.log('Updated'); },
+  (error) => { console.log('Failed when updating ', e); }
 );
 ```
 
@@ -233,9 +228,9 @@ event.update().then(
 ```
 import * as SDK from 'my-sdkzer-sdk';
 
-event.destroy().then(
-  function(response) { console.log('Deleted'); },
-  function() { console.log('Failed when deleting') }
+SDK.Event.destroy().then(
+  (response) => { console.log('Deleted'); },
+  (error) { console.log('Failed when deleting ', e) }
 );
 ```
 
