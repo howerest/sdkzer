@@ -400,7 +400,7 @@ export class Sdkzer {
   /**
    * Transforms the local attributes to be processed by the origin in JSON format
    */
-  protected toOriginJSON() : Object {
+  public toOriginJSON() : Object {
     return this.attrs;
   }
 
@@ -409,7 +409,6 @@ export class Sdkzer {
    * Transforms the local attributes to be processed by the origin in XML format
    */
   public toOriginXML() : String {
-    // TODO: Implement
     return '';
   }
 
@@ -417,17 +416,19 @@ export class Sdkzer {
   /**
    * Transforms the local attributes to be processed by the origin in a specific format
    */
-  public toOrigin(format:string) : Object|String {
+  public toOrigin(format:string="json") : Object|String {
+    let snapshot;
+
     switch(format) {
-      case 'json':
-        this.toOriginJSON();
+      case "json":
+        snapshot = this.toOriginJSON();
         break;
-     case 'xml':
-       this.toOriginXML();
-       break;
+      case "xml":
+        snapshot = this.toOriginXML();
+        break;
     }
 
-    return this.attrs;
+    return snapshot;
   }
 
 
