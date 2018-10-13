@@ -609,7 +609,6 @@ describe('Sdkzer', () => {
 
     test("should retrieve the attributes in xml format when 'xml' format is specified", () => {
       let sdkzer = new Sdkzer(initialAttributes);
-      console.log('sdkzer.attrs', sdkzer.attrs);
       spyOn(Sdkzer.prototype, "toOriginXML");
       sdkzer.toOrigin('xml');
       expect(sdkzer.toOriginXML).toHaveBeenCalled();
