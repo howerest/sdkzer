@@ -1,9 +1,9 @@
 import { WebServices } from 'js-webservices';
 export declare class Sdkzer {
-    private attrs;
-    private pAttrs;
-    private validationRules;
-    private invalidMessages;
+    attrs: Object;
+    pAttrs: Object;
+    protected validationRules: Object;
+    invalidMessages: Object;
     syncing: boolean;
     lastResponse: WebServices.HttpResponse;
     private static DEFAULT_HTTP_HEADERS;
@@ -133,7 +133,7 @@ export declare class Sdkzer {
     /**
      * Transforms the local attributes to be processed by the origin in JSON format
      */
-    protected toOriginJSON(): Object;
+    toOriginJSON(): Object;
     /**
      * Transforms the local attributes to be processed by the origin in XML format
      */
@@ -141,7 +141,7 @@ export declare class Sdkzer {
     /**
      * Transforms the local attributes to be processed by the origin in a specific format
      */
-    toOrigin(format: string): Object | String;
+    toOrigin(format?: string): Object | String;
     /**
      * Saves the local object into the origin
      */
@@ -167,3 +167,10 @@ export interface ISdkzerConfigOptions {
 export interface IHttpQueryGuessConfig {
     restful: Object;
 }
+export { ValidationRule } from "./validation_rule";
+export { RequiredValidator } from "./validation_rules/required_validator";
+export { RegExpValidator } from "./validation_rules/reg_exp_validator";
+export { MinMaxNumberValidator } from "./validation_rules/min_max_number_validator";
+export { LengthValidator } from "./validation_rules/length_validator";
+export { EmailValidator } from "./validation_rules/email_validator";
+export { AllowedValueSwitchValidator } from "./validation_rules/allowed_value_switch_validator";

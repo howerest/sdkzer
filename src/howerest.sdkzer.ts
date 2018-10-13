@@ -584,3 +584,11 @@ export interface ISdkzerConfigOptions {
 export interface IHttpQueryGuessConfig {
   restful:Object;
 }
+  
+export { ValidationRule } from "./validation_rule";
+export { RequiredValidator } from "./validation_rules/required_validator"
+export { RegExpValidator } from "./validation_rules/reg_exp_validator"
+export { MinMaxNumberValidator } from "./validation_rules/min_max_number_validator"
+export { LengthValidator } from "./validation_rules/length_validator"
+export { EmailValidator } from "./validation_rules/email_validator"
+export { AllowedValueSwitchValidator } from "./validation_rules/allowed_value_switch_validator"

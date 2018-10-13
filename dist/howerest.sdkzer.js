@@ -1,4 +1,4 @@
-/*! sdkzer 0.6.4 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.6.5 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -424,22 +424,23 @@ var Sdkzer = /** @class */ (function () {
      * Transforms the local attributes to be processed by the origin in XML format
      */
     Sdkzer.prototype.toOriginXML = function () {
-        // TODO: Implement
         return '';
     };
     /**
      * Transforms the local attributes to be processed by the origin in a specific format
      */
     Sdkzer.prototype.toOrigin = function (format) {
+        if (format === void 0) { format = "json"; }
+        var snapshot;
         switch (format) {
-            case 'json':
-                this.toOriginJSON();
+            case "json":
+                snapshot = this.toOriginJSON();
                 break;
-            case 'xml':
-                this.toOriginXML();
+            case "xml":
+                snapshot = this.toOriginXML();
                 break;
         }
-        return this.attrs;
+        return snapshot;
     };
     /**
      * Saves the local object into the origin
@@ -586,6 +587,20 @@ var Sdkzer = /** @class */ (function () {
     return Sdkzer;
 }());
 exports.Sdkzer = Sdkzer;
+var validation_rule_1 = __webpack_require__(2);
+exports.ValidationRule = validation_rule_1.ValidationRule;
+var required_validator_1 = __webpack_require__(3);
+exports.RequiredValidator = required_validator_1.RequiredValidator;
+var reg_exp_validator_1 = __webpack_require__(4);
+exports.RegExpValidator = reg_exp_validator_1.RegExpValidator;
+var min_max_number_validator_1 = __webpack_require__(5);
+exports.MinMaxNumberValidator = min_max_number_validator_1.MinMaxNumberValidator;
+var length_validator_1 = __webpack_require__(6);
+exports.LengthValidator = length_validator_1.LengthValidator;
+var email_validator_1 = __webpack_require__(7);
+exports.EmailValidator = email_validator_1.EmailValidator;
+var allowed_value_switch_validator_1 = __webpack_require__(8);
+exports.AllowedValueSwitchValidator = allowed_value_switch_validator_1.AllowedValueSwitchValidator;
 
 
 /***/ }),
@@ -593,6 +608,355 @@ exports.Sdkzer = Sdkzer;
 /***/ (function(module, exports) {
 
 module.exports = require("js-webservices");
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+/* --------------------------------------------------------------------------
+
+    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
+
+    Apache 2.0 Licensed
+    -------------------
+
+    ValidationRule: represents a validation rule
+
+--------------------------------------------------------------------------- */
+Object.defineProperty(exports, "__esModule", { value: true });
+var ValidationRule = /** @class */ (function () {
+    function ValidationRule(params) {
+        this.conditions = [];
+        this._invalidMessage = "Invalid";
+        this.params = params;
+        this._invalidMessage = "";
+    }
+    Object.defineProperty(ValidationRule.prototype, "invalidMessage", {
+        /**
+         * Retrieves the invalid message for the ValidationRule
+         */
+        get: function () {
+            return this._invalidMessage;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    /**
+     * Checks if the ValidationRule is valid
+     */
+    ValidationRule.prototype.isValid = function (fromValue, toValue) {
+        this.fromValue = fromValue;
+        this.toValue = toValue;
+        // Reset the invalid message
+        this._invalidMessage = '';
+        for (var i = 0; i < this.conditions.length; i++) {
+            if (this.conditions[i]() === false) {
+                return false;
+            }
+        }
+        return true;
+    };
+    /**
+     * Adds an invalid message to the ValidationRule
+     */
+    ValidationRule.prototype.addInvalidMessage = function (message) {
+        this._invalidMessage += message;
+    };
+    return ValidationRule;
+}());
+exports.ValidationRule = ValidationRule;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var RequiredValidator = /** @class */ (function (_super) {
+    __extends(RequiredValidator, _super);
+    function RequiredValidator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                var match = true;
+                if (typeof (_this.toValue) === "undefined" || _this.toValue.length === 0) {
+                    match = false;
+                    _this.addInvalidMessage("A value is required and was not provided");
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return RequiredValidator;
+}(validation_rule_1.ValidationRule));
+exports.RequiredValidator = RequiredValidator;
+
+
+/***/ }),
+/* 4 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var RegExpValidator = /** @class */ (function (_super) {
+    __extends(RegExpValidator, _super);
+    function RegExpValidator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                var match = true;
+                if (!_this.toValue || !_this.toValue.match || !_this.toValue.match(_this.params['rule'])) {
+                    match = false;
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return RegExpValidator;
+}(validation_rule_1.ValidationRule));
+exports.RegExpValidator = RegExpValidator;
+
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var MinMaxNumberValidator = /** @class */ (function (_super) {
+    __extends(MinMaxNumberValidator, _super);
+    function MinMaxNumberValidator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                var match = true;
+                if (_this.toValue.length < _this.params['min']) {
+                    match = false;
+                    _this.addInvalidMessage(_this.toValue + " is shorter than " + _this.params['min']);
+                }
+                if (_this.toValue.length > _this.params['max']) {
+                    match = false;
+                    _this.addInvalidMessage(_this.toValue + " is longer than " + _this.params['max']);
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return MinMaxNumberValidator;
+}(validation_rule_1.ValidationRule));
+exports.MinMaxNumberValidator = MinMaxNumberValidator;
+
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var LengthValidator = /** @class */ (function (_super) {
+    __extends(LengthValidator, _super);
+    function LengthValidator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.conditions = [
+            function () {
+                var match = true;
+                if (_this.toValue.length < _this.params['min']) {
+                    match = false;
+                    _this.addInvalidMessage(_this.toValue + " is shorter than " + _this.params['min']);
+                }
+                if (_this.toValue.length > _this.params['max']) {
+                    match = false;
+                    _this.addInvalidMessage(_this.toValue + " is longer than " + _this.params['max']);
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return LengthValidator;
+}(validation_rule_1.ValidationRule));
+exports.LengthValidator = LengthValidator;
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var reg_exp_validator_1 = __webpack_require__(4);
+var EmailValidator = /** @class */ (function (_super) {
+    __extends(EmailValidator, _super);
+    function EmailValidator() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.conditions = [
+            // Check for email regexp...
+            function () {
+                var match = true;
+                var regExpValidator = new reg_exp_validator_1.RegExpValidator({ rule: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i });
+                if (!regExpValidator.isValid(_this.fromValue, _this.toValue)) {
+                    _this.addInvalidMessage(_this.toValue + ' is not a valid email address');
+                    match = false;
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return EmailValidator;
+}(validation_rule_1.ValidationRule));
+exports.EmailValidator = EmailValidator;
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+Object.defineProperty(exports, "__esModule", { value: true });
+var validation_rule_1 = __webpack_require__(2);
+var AllowedValueSwitchValidator = /** @class */ (function (_super) {
+    __extends(AllowedValueSwitchValidator, _super);
+    function AllowedValueSwitchValidator() {
+        // Sample declaration of allowed transition:
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        // {
+        //   matches: [
+        //     { from: "open", to: ["scheduled", "canceled", "closed"] },
+        //     { from: "close", to: ["open"] }
+        //   ]
+        // }
+        _this.conditions = [
+            function () {
+                var match = false;
+                if (_this.params && _this.params['matches'] && _this.params['matches'].length) {
+                    for (var i = 0; i < _this.params['matches'].length; i++) {
+                        var rule = _this.params['matches'][i];
+                        if (rule['from'] && rule['to'] && rule['to'].length) {
+                            // Origin value matched
+                            if (rule['from'] === _this.fromValue) {
+                                // Check that the destination value also matches
+                                for (var i2 = 0; i2 < rule['to'].length; i2++) {
+                                    if (!match) {
+                                        if (_this.toValue === rule['to'][i2] && !match) {
+                                            match = true;
+                                        }
+                                    }
+                                }
+                            }
+                            else {
+                                match = false;
+                            }
+                        }
+                    }
+                }
+                if (!match) {
+                    _this.addInvalidMessage(_this.fromValue + " cannot change to '" + _this.toValue + "'");
+                }
+                return match;
+            }
+        ];
+        return _this;
+    }
+    return AllowedValueSwitchValidator;
+}(validation_rule_1.ValidationRule));
+exports.AllowedValueSwitchValidator = AllowedValueSwitchValidator;
+
 
 /***/ })
 /******/ ]);
