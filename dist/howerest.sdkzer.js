@@ -1,4 +1,4 @@
-/*! sdkzer 0.6.7 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.6.8 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -220,6 +220,8 @@ var Sdkzer = /** @class */ (function () {
      * Checks wether an entity is a valid entity
      */
     Sdkzer.prototype.validate = function () {
+        // Reset previous invalid messages from previous validations
+        this.invalidMessages = {};
         var isValid = true, toValidateAttr, validationRule;
         var toValidateAttrs = Object.keys(this.validationRules);
         // Validate attribute's ValidationRules
@@ -227,10 +229,12 @@ var Sdkzer = /** @class */ (function () {
             toValidateAttr = toValidateAttrs_1[_i];
             for (var _a = 0, _b = this.validationRules[toValidateAttr]; _a < _b.length; _a++) {
                 validationRule = _b[_a];
+                // When the ValidationRule is invalid...
                 if (!validationRule.isValid(this.pAttrs[toValidateAttr], this.attrs[toValidateAttr])) {
                     if (!this.invalidMessages[toValidateAttr]) {
                         this.invalidMessages[toValidateAttr] = [];
                     }
+                    // Collect the invalid message from the ValidationRules for that field
                     this.invalidMessages[toValidateAttr].push(validationRule.invalidMessage);
                 }
                 else {
