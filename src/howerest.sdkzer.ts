@@ -164,16 +164,20 @@ export class Sdkzer {
    * Checks wether an entity is a valid entity
    */
   public validate() : void {
+    // Reset previous invalid messages from previous validations
+    this.invalidMessages = {};
     let isValid = true, toValidateAttr, validationRule;
     const toValidateAttrs = Object.keys(this.validationRules);
 
     // Validate attribute's ValidationRules
     for(toValidateAttr of toValidateAttrs) {
       for(validationRule of this.validationRules[toValidateAttr]) {
+        // When the ValidationRule is invalid...
         if (!validationRule.isValid(this.pAttrs[toValidateAttr], this.attrs[toValidateAttr])) {
           if (!this.invalidMessages[toValidateAttr]) {
             this.invalidMessages[toValidateAttr] = [];
           }
+          // Collect the invalid message from the ValidationRules for that field
           this.invalidMessages[toValidateAttr].push(validationRule.invalidMessage);
         } else {
           this.invalidMessages[toValidateAttr] = [];
