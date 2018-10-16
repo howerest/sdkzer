@@ -195,10 +195,23 @@ describe('Sdkzer', () => {
 
   describe(".validate()", () => {
     let Item, itemInstance;
+
+    beforeEach(() => {
+      Item = buildSdkzerModelEntity();
+      itemInstance = new Item({ id: 1 });
+    });
+
+    test("it should clean all invalid messages from previous validations", () => {
+      itemInstance.invalidMessages = {
+        name: ["beeeep! ugly name"]
+      };
+      itemInstance.validationRules = {};
+      itemInstance.validate();
+      expect(itemInstance.invalidMessages).toEqual({});
+    });
+
     describe("without any ValidationRule", () => {
       beforeEach(() => {
-        Item = buildSdkzerModelEntity();
-        itemInstance = new Item({ id: 1 });
         itemInstance['validationRules'] = {
           name: [],
           items: []
@@ -214,8 +227,6 @@ describe('Sdkzer', () => {
     describe("with ValidationRules", () => {
       describe("when at least one ValidationRule doesn't pass", () => {
         beforeEach(() => {
-          Item = buildSdkzerModelEntity();
-          itemInstance = new Item({ id: 1 });
           itemInstance['validationRules'] = {
             name: [new SampleValidationRuleFixture2()], // This will fail
             items: [new SampleValidationRuleFixture()]  //  This will pass
@@ -233,8 +244,6 @@ describe('Sdkzer', () => {
 
       describe("when all ValidationRules pass", () => {
         beforeEach(() => {
-          Item = buildSdkzerModelEntity();
-          itemInstance = new Item({ id: 1 });
           itemInstance['validationRules'] = {
             name: [new SampleValidationRuleFixture()], // This will pass
             items: [new SampleValidationRuleFixture()]  //  This will pass

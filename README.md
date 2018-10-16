@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
 
 # Full API docs
-[Read full API docs](http://howerest.com/sdkzer/docs/0.6.7/classes/sdkzer.html)
+[Read full API docs](http://howerest.com/sdkzer/docs/0.6.8/classes/sdkzer.html)
 [More info about sdkzer](http://howerest.com/labs/sdkzer)
 
 ## Introduction ##
