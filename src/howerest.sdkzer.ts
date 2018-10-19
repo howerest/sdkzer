@@ -12,14 +12,17 @@
     2. Start consuming your resource
 
 --------------------------------------------------------------------------- */
-
 import { WebServices } from 'js-webservices';
 import { ValidationRule } from './validation_rule';
+import { Promise } from 'es6-promise';
 
-export class Sdkzer {
+export interface SdkzerParams {
+  id: any
+}
+export class Sdkzer<T extends SdkzerParams> {
 
-  public attrs:Object;
-  public pAttrs:Object;
+  public attrs:T;
+  public pAttrs:T;
   protected validationRules:Object;
   public invalidMessages:Object = {};
   public syncing:boolean = false;
@@ -57,8 +60,8 @@ export class Sdkzer {
    *                            Those attributes are in force to defaults()
    */
   public constructor(attrs:Object = {}) {
-    this.attrs = { id: null };
-    this.pAttrs = { id: null };
+    this.attrs = { id: null } as T;
+    this.pAttrs = { id: null } as T;
 
     this.setDefaults();
 
@@ -309,7 +312,7 @@ export class Sdkzer {
    * Retrieves the previous attributes
    */
   public prevAttrs() : Object {
-    let previousAttrs = {};
+    let previousAttrs = {} as T
     for (let attrKey in this.attrs) {
       if (this.pAttrs[attrKey] !== this.attrs[attrKey]) {
         previousAttrs[attrKey] = (this.pAttrs[attrKey] ? this.pAttrs[attrKey] : null);
@@ -387,7 +390,7 @@ export class Sdkzer {
    * Parses a single resource record from an incoming HttpResponse data
    * NOTE: The idea is to return the parsed record data only
    */
-  public parseRecord(data:Object, prefix?:string) : object {
+  public parseRecord(data:Object, prefix?:string) : T {
     return prefix ? data[prefix] : data;
   }
 
