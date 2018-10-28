@@ -1,6 +1,6 @@
 {
 	"name": "sdkzer",
-	"version": "0.6.8",
+	"version": "0.6.9",
 	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
 	"keywords": [
 		"sdk",
@@ -18,7 +18,7 @@
 		"typescript",
 		"model",
 		"models",
-		"business logic",	
+		"business logic",
 		"data logic",
 		"validation"
 	],
@@ -45,7 +45,7 @@
 	"main": "dist/howerest.sdkzer.js",
 	"typings": "dist/howerest.sdkzer.d.ts",
 	"dependencies": {
-		"js-webservices": "^0.1.1"
+		"js-webservices": "^0.1.2"
 	},
 	"devDependencies": {
 		"@babel/polyfill": "^7.0.0",
