@@ -1,6 +1,6 @@
 {
 	"name": "sdkzer",
-	"version": "0.6.9",
+	"version": "0.7.0",
 	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
 	"keywords": [
 		"sdk",
@@ -83,5 +83,9 @@
 		"testMatch": [
 			"**/__test__/*_spec.+(ts)"
 		]
-	}
+	},
+	"private": false,
+	"publishConfig": {
+    "registry": "http://localhost:8081/repository/npm-hosted/"
+  }
 }

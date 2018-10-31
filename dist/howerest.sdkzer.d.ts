@@ -159,7 +159,7 @@ export declare class Sdkzer {
      * @param id          The record id that we want to fetch by
      * @param httpQuery   Use a HttpQuery instance to override the default query
      */
-    static fetchOne(id: Number, httpQuery?: WebServices.HttpQuery): Promise<any>;
+    static fetchOne(id: number | string, httpQuery?: WebServices.HttpQuery): Promise<any>;
 }
 export interface ISdkzerConfigOptions {
     defaultHttpHeaders: string;
