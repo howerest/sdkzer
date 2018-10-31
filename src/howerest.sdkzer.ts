@@ -545,7 +545,7 @@ export class Sdkzer {
    * @param id          The record id that we want to fetch by
    * @param httpQuery   Use a HttpQuery instance to override the default query
    */
-  public static fetchOne(id: Number, httpQuery?:WebServices.HttpQuery) : Promise<any>  {
+  public static fetchOne(id: number|string, httpQuery?:WebServices.HttpQuery) : Promise<any>  {
     let model = new this(),
         query,
         request,
