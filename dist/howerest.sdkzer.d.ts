@@ -1,7 +1,10 @@
 import { WebServices } from 'js-webservices';
-export declare class Sdkzer {
-    attrs: Object;
-    pAttrs: Object;
+export interface SdkzerParams {
+    id: any;
+}
+export declare class Sdkzer<T extends SdkzerParams> {
+    attrs: T;
+    pAttrs: T;
     protected validationRules: Object;
     invalidMessages: Object;
     syncing: boolean;
@@ -16,7 +19,7 @@ export declare class Sdkzer {
      * @param  {Object}   attrs   The initial attributes for the resource.
      *                            Those attributes are in force to defaults()
      */
-    constructor(attrs?: Object);
+    constructor(attrs?: T);
     /**
      * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
      * classes that extend from Sdkzer in the current scope.
@@ -111,7 +114,7 @@ export declare class Sdkzer {
     /**
      * Retrieves the previous attributes
      */
-    prevAttrs(): Object;
+    prevAttrs(): T;
     /**
      * Retrieves the previous value prior to last save for a specific attribute
      */
@@ -124,7 +127,7 @@ export declare class Sdkzer {
      * Parses a single resource record from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed record data only
      */
-    parseRecord(data: Object, prefix?: string): object;
+    parseRecord(data: Object, prefix?: string): T;
     /**
      * Parses a collection of resource records from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed collection of records data only

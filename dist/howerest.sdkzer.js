@@ -1,4 +1,4 @@
-/*! sdkzer 0.7.0 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.7.1 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -101,6 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 "use strict";
 
+Object.defineProperty(exports, "__esModule", { value: true });
 /* --------------------------------------------------------------------------
 
     howerest 2018 - <hola@davidvalin.com> | www.howerest.com
@@ -115,7 +116,6 @@ return /******/ (function(modules) { // webpackBootstrap
     2. Start consuming your resource
 
 --------------------------------------------------------------------------- */
-Object.defineProperty(exports, "__esModule", { value: true });
 var js_webservices_1 = __webpack_require__(1);
 var Sdkzer = /** @class */ (function () {
     /**

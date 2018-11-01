@@ -1,6 +1,6 @@
 {
 	"name": "sdkzer",
-	"version": "0.7.0",
+	"version": "0.7.1",
 	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
 	"keywords": [
 		"sdk",
