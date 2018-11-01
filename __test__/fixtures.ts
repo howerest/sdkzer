@@ -8,10 +8,16 @@
 
  --------------------------------------------------------------------------- */
 
-import { Sdkzer } from "../src/howerest.sdkzer";
+import { Sdkzer, SdkzerParams } from "../src/howerest.sdkzer";
 import { ValidationRule } from "../src/validation_rule";
 
-export class Item extends Sdkzer {
+export interface SimpleDtoFields extends SdkzerParams {
+  name?: string;
+  age?: number;
+}
+
+
+export class Item extends Sdkzer<SimpleDtoFields> {
   public baseEndpoint() {
     return 'http://api.mydomain.com/v1/items';
   }
