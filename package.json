@@ -84,8 +84,5 @@
 			"**/__test__/*_spec.+(ts)"
 		]
 	},
-	"private": false,
-	"publishConfig": {
-    "registry": "http://localhost:8081/repository/npm-hosted/"
-  }
+	"private": false
 }
