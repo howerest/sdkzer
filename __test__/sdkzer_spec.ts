@@ -15,11 +15,11 @@ import {
   SampleValidationRuleFixture,
   SampleValidationRuleFixture2,
   SampleGlobalValidationRuleFixture,
-  SimpleDtoFields
+  EntityFields
 } from "./fixtures";
 import xmlMock from 'xhr-mock';
 
-const emptyDto: SimpleDtoFields = {
+const emptyDto: EntityFields = {
   id: 123
 };
 
@@ -149,7 +149,7 @@ describe('Sdkzer', () => {
   describe('.setDefaults', () => {
     test('should update the attributes with the default attributes', () => {
       spyOn(Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);
-      let sdkzer = new Sdkzer<SimpleDtoFields>({ id: 123, name: 'Chuck Norris' });
+      let sdkzer = new Sdkzer<EntityFields>({ id: 123, name: 'Chuck Norris' });
       // Defaults should be overwritten
       sdkzer.setDefaults();
       expect(sdkzer['attrs']).toEqual(defaultAttributes);
@@ -159,7 +159,7 @@ describe('Sdkzer', () => {
 
   describe('.defaults', () => {
     test('shouldnt have defaults', () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>(emptyDto);
+      let sdkzer = new Sdkzer<EntityFields>(emptyDto);
       expect(sdkzer.defaults()).toEqual({});
     });
   });
@@ -322,7 +322,7 @@ describe('Sdkzer', () => {
 
   describe('.baseEndpoint', () => {
     test('shouldnt have an empty default base endpoint defined', () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>(emptyDto);
+      let sdkzer = new Sdkzer<EntityFields>(emptyDto);
       expect(sdkzer.baseEndpoint()).toEqual(null);
     });
   });
@@ -350,7 +350,7 @@ describe('Sdkzer', () => {
 
   describe('.hasChanged', () => {
     test("should check if the record attributes has changed from the origin", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>({ id: 1 });
+      let sdkzer = new Sdkzer<EntityFields>({ id: 1 });
       expect(sdkzer.hasChanged()).toEqual(false);
       sdkzer['pAttrs'] = { id: 123, name: 'Previous name' };
       sdkzer['attrs'] = { id: 123, name: 'New name' };
@@ -361,7 +361,7 @@ describe('Sdkzer', () => {
 
   describe('.hasAttrChanged', () => {
     test("should check if the record has any specific attribute that differs from the origin", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>();
+      let sdkzer = new Sdkzer<EntityFields>();
       sdkzer['pAttrs'] = { id: 123, name: 'First Name' };
       sdkzer['attrs'] = { id: 123, name: 'First Name' };
       expect(sdkzer.hasAttrChanged('name')).toEqual(false);
@@ -373,7 +373,7 @@ describe('Sdkzer', () => {
 
   describe('.changedAttrs', () => {
     test("should retrieve a list of attributes different from the origin", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>();
+      let sdkzer = new Sdkzer<EntityFields>();
       expect(sdkzer.changedAttrs()).toEqual([]);
       sdkzer['attrs'].id = 123;
       sdkzer['attrs'].age = 29;
@@ -388,7 +388,7 @@ describe('Sdkzer', () => {
 
   describe('.prevAttrs', () => {
     test("should retrieve a list of the previous values for the attributes changed from the origin", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>({
+      let sdkzer = new Sdkzer<EntityFields>({
         id: 123,
         name: 'My initial name'
       });
@@ -410,7 +410,7 @@ describe('Sdkzer', () => {
 
   describe('.prevValue', () => {
     test("should retrieve the previous attribute value before last sync from origin", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>({
+      let sdkzer = new Sdkzer<EntityFields>({
         id: 123,
         name: 'My initial name'
       });
@@ -594,7 +594,7 @@ describe('Sdkzer', () => {
 
   describe('.toOriginJSON', () => {
     test("should return the record attributes as they are", () => {
-      let sdkzer = new Sdkzer<SimpleDtoFields>();
+      let sdkzer = new Sdkzer<EntityFields>();
       sdkzer['attrs'] = {
         id: 1,
         name: "Steve Jobs"
