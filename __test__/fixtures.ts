@@ -11,13 +11,13 @@
 import { Sdkzer, SdkzerParams } from "../src/howerest.sdkzer";
 import { ValidationRule } from "../src/validation_rule";
 
-export interface SimpleDtoFields extends SdkzerParams {
+export interface EntityFields extends SdkzerParams {
   name?: string;
   age?: number;
 }
 
 
-export class Item extends Sdkzer<SimpleDtoFields> {
+export class Item extends Sdkzer<EntityFields> {
   public baseEndpoint() {
     return 'http://api.mydomain.com/v1/items';
   }
