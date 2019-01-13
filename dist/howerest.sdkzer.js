@@ -1,4 +1,4 @@
-/*! sdkzer 0.7.1 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.7.2 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
