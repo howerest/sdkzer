@@ -29,27 +29,7 @@ export class Sdkzer<T extends SdkzerParams> {
 
   // Configuration
   private static DEFAULT_HTTP_HEADERS:WebServices.HttpHeader[] = [];
-  private static HTTP_PATTERN:String = 'restful_crud';
   private static PARENTS_FETCH_STRATEGY:String = 'none';
-  private static HTTP_QUERY_GUESS_CONFIG:Object = {
-    "restful_crud": {
-      "read_collection" : {
-        verb: "GET",
-        endpoint: ''   },
-      "read_record" :     {
-        verb: "GET",
-        endpoint: ''   },
-      "create_record" :   {
-        verb: "GET",
-        endpoint: ''   },
-      "update_record":    {
-        verb: "GET",
-        endpoint: ''   },
-      "delete_record":    {
-        verb: "GET",
-        endpoint: ''   }
-    }
-  }
 
 
   /**
@@ -84,25 +64,7 @@ export class Sdkzer<T extends SdkzerParams> {
          Sdkzer['DEFAULT_HTTP_HEADERS'].push(new WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
        }
      }
-     // Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
      // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-     // Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
-   }
-
-
-   /**
-    * Checks if Sdkzer has been configured to communicate to RESTful resources
-    */
-   private static usingRestfulCrudHttpPattern() : Boolean {
-     return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
-   }
-
-
-   /**
-    * Checks if Sdkzer has been configured to communicate using custom CRUD endpoints
-    */
-   private static usingCustomHttpPattern() : Boolean {
-     return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
    }
 
 
@@ -111,19 +73,6 @@ export class Sdkzer<T extends SdkzerParams> {
     */
    private static usingParentsFetchStrategy() : Boolean {
      return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
-   }
-
-
-   /**
-    * Retrieves the http guess config for an specific CRUD operation.
-    * @param {String} operation  Accepts "create", "read", "update" and "delete"
-    */
-   private static getHttpQueryGuessConfigFor(operation:String) : Object {
-     if (Sdkzer.usingRestfulCrudHttpPattern()) {
-       return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
-     } else {
-       return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['custom'];
-     }
    }
 
 
@@ -402,7 +351,7 @@ export class Sdkzer<T extends SdkzerParams> {
     return prefix ? data[prefix] : data;
   }
 
-  
+
   /**
    * Transforms the local attributes to be processed by the origin in JSON format
    */
@@ -590,7 +539,7 @@ export interface ISdkzerConfigOptions {
 export interface IHttpQueryGuessConfig {
   restful:Object;
 }
-  
+
 export { ValidationRule } from "./validation_rule";
 export { RequiredValidator } from "./validation_rules/required_validator"
 export { RegExpValidator } from "./validation_rules/reg_exp_validator"
