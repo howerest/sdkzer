@@ -328,7 +328,7 @@ describe('Sdkzer', () => {
   });
 
   describe('.resourceEndpoint', () => {
-    test('should have a default resourceEndpoint defined for a "restful_crud" HTTP_PATTERN', () => {
+    test('should have a default resourceEndpoint defined', () => {
       let sdkzer = new Sdkzer();
       expect(typeof(sdkzer.resourceEndpoint)).toEqual('function');
     });
@@ -713,7 +713,7 @@ describe('Sdkzer', () => {
       itemInstance = new Item({ id : 9771 });
     });
 
-    test("should destroy the record in the origin using the default 'restful_crud' HTTP_PATTERN", async () => {
+    test("should destroy the record in the origin", async () => {
       xmlMock.delete('http://api.mydomain.com/v1/items/9771', (req, res) => {
         expect(req.method()).toEqual('DELETE');
         expect(req.url()['host']).toEqual('api.mydomain.com');
