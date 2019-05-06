@@ -4,7 +4,7 @@ export class AllowedValueSwitchValidator extends ValidationRule {
     // Sample declaration of allowed transition:
 
     // {
-    //   matches: [
+    //   allowed: [
     //     { from: "open", to: ["scheduled", "canceled", "closed"] },
     //     { from: "close", to: ["open"] }
     //   ]
@@ -12,24 +12,23 @@ export class AllowedValueSwitchValidator extends ValidationRule {
 
   protected conditions:Array<Function> = [
     () => {
-      let match:Boolean = false;
+      let match:Boolean = false,
+          rule;
 
-      if (this.params && this.params['matches'] && this.params['matches'].length) {
-        for (let i = 0; i < this.params['matches'].length; i++) {
-          const rule = this.params['matches'][i];
+      if (this.params && this.params['allowed'] && this.params['allowed'].length) {
+        for (let i = 0; i < this.params['allowed'].length; i++) {
+          rule = this.params['allowed'][i];
           if (rule['from'] && rule['to'] && rule['to'].length) {
             // Origin value matched
             if (rule['from'] === this.fromValue) {
-              // Check that the destination value also matches
+              // Check that the destination value also allowed
               for (let i2 = 0; i2 < rule['to'].length; i2++) {
                 if (!match) {
-                  if (this.toValue === rule['to'][i2] && !match) {
+                  if (this.toValue === rule['to'][i2]) {
                     match = true;
                   }
                 }
               }
-            } else {
-              match = false;
             }
           }
         }

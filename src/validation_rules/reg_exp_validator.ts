@@ -6,6 +6,7 @@ export class RegExpValidator extends ValidationRule {
       let match:Boolean = true;
       if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params['rule'])) {
         match = false;
+        this.addInvalidMessage(this.toValue + " is not valid");
       }
       return match;
     }

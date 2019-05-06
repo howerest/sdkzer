@@ -9,11 +9,11 @@ export class LengthValidator extends ValidationRule {
 
       if (this.toValue.length < this.params['min']) {
         match = false;
-        this.addInvalidMessage(this.toValue + " is shorter than " + this.params['min']);
+        this.addInvalidMessage(`${this.toValue} contains less than ${this.params['min']} items`);
       }
       if (this.toValue.length > this.params['max']) {
         match = false;
-        this.addInvalidMessage(this.toValue + " is longer than " + this.params['max']);
+        this.addInvalidMessage(`${this.toValue} contains more than ${this.params['max']} items`);
       }
 
       return match;
