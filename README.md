@@ -237,11 +237,11 @@ SDK.Event.destroy().then(
 
 #### Next steps
 
-- Add most basic Validation Rules fully unit tested
-
-- Write about integration with Angular
-- Write about WebComponents integration
+- Write about integration with Polymer
 - Write about integration with Riot.JS
+- Write about integration with React
+- Write about integration with Vue.js
+- Write about integration with Angular
 
 
 ## Contribute ##
