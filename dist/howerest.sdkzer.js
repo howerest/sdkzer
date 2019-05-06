@@ -1,4 +1,4 @@
-/*! sdkzer 0.7.2 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.7.3 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -150,39 +150,13 @@ var Sdkzer = /** @class */ (function () {
                 Sdkzer['DEFAULT_HTTP_HEADERS'].push(new js_webservices_1.WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
             }
         }
-        // Sdkzer['HTTP_PATTERN'] = options['httpPattern'] ? options['httpPattern'] : this['HTTP_PATTERN'];
         // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-        // Sdkzer['HTTP_QUERY_GUESS_CONFIG'] = options['httpQueryGuessConfig'] ? options['httpQueryGuessConfig'] : this['HTTP_QUERY_GUESS_CONFIG'];
-    };
-    /**
-     * Checks if Sdkzer has been configured to communicate to RESTful resources
-     */
-    Sdkzer.usingRestfulCrudHttpPattern = function () {
-        return (Sdkzer['HTTP_PATTERN'] === 'restful_crud' ? true : false);
-    };
-    /**
-     * Checks if Sdkzer has been configured to communicate using custom CRUD endpoints
-     */
-    Sdkzer.usingCustomHttpPattern = function () {
-        return (Sdkzer['HTTP_PATTERN'] !== 'restful_crud' ? true : false);
     };
     /**
      * Checks if Sdkzer is using any fetch strategy once received parent ids
      */
     Sdkzer.usingParentsFetchStrategy = function () {
         return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
-    };
-    /**
-     * Retrieves the http guess config for an specific CRUD operation.
-     * @param {String} operation  Accepts "create", "read", "update" and "delete"
-     */
-    Sdkzer.getHttpQueryGuessConfigFor = function (operation) {
-        if (Sdkzer.usingRestfulCrudHttpPattern()) {
-            return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['restful_crud'];
-        }
-        else {
-            return Sdkzer['HTTP_QUERY_GUESS_CONFIG']['custom'];
-        }
     };
     /**
      * Sets the defaults() values in the instance attributes
@@ -562,32 +536,7 @@ var Sdkzer = /** @class */ (function () {
     };
     // Configuration
     Sdkzer.DEFAULT_HTTP_HEADERS = [];
-    Sdkzer.HTTP_PATTERN = 'restful_crud';
     Sdkzer.PARENTS_FETCH_STRATEGY = 'none';
-    Sdkzer.HTTP_QUERY_GUESS_CONFIG = {
-        "restful_crud": {
-            "read_collection": {
-                verb: "GET",
-                endpoint: ''
-            },
-            "read_record": {
-                verb: "GET",
-                endpoint: ''
-            },
-            "create_record": {
-                verb: "GET",
-                endpoint: ''
-            },
-            "update_record": {
-                verb: "GET",
-                endpoint: ''
-            },
-            "delete_record": {
-                verb: "GET",
-                endpoint: ''
-            }
-        }
-    };
     return Sdkzer;
 }());
 exports.Sdkzer = Sdkzer;
@@ -597,8 +546,8 @@ var required_validator_1 = __webpack_require__(3);
 exports.RequiredValidator = required_validator_1.RequiredValidator;
 var reg_exp_validator_1 = __webpack_require__(4);
 exports.RegExpValidator = reg_exp_validator_1.RegExpValidator;
-var min_max_number_validator_1 = __webpack_require__(5);
-exports.MinMaxNumberValidator = min_max_number_validator_1.MinMaxNumberValidator;
+var number_validator_1 = __webpack_require__(5);
+exports.NumberValidator = number_validator_1.NumberValidator;
 var length_validator_1 = __webpack_require__(6);
 exports.LengthValidator = length_validator_1.LengthValidator;
 var email_validator_1 = __webpack_require__(7);
@@ -745,6 +694,7 @@ var RegExpValidator = /** @class */ (function (_super) {
                 var match = true;
                 if (!_this.toValue || !_this.toValue.match || !_this.toValue.match(_this.params['rule'])) {
                     match = false;
+                    _this.addInvalidMessage(_this.toValue + " is not valid");
                 }
                 return match;
             }
@@ -777,29 +727,29 @@ var __extends = (this && this.__extends) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var validation_rule_1 = __webpack_require__(2);
-var MinMaxNumberValidator = /** @class */ (function (_super) {
-    __extends(MinMaxNumberValidator, _super);
-    function MinMaxNumberValidator() {
+var NumberValidator = /** @class */ (function (_super) {
+    __extends(NumberValidator, _super);
+    function NumberValidator() {
         var _this = _super !== null && _super.apply(this, arguments) || this;
         _this.conditions = [
             function () {
                 var match = true;
-                if (_this.toValue.length < _this.params['min']) {
+                if (_this.toValue < _this.params['min']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is shorter than " + _this.params['min']);
+                    _this.addInvalidMessage(_this.toValue + " is smaller than " + _this.params['min']);
                 }
-                if (_this.toValue.length > _this.params['max']) {
+                if (_this.toValue > _this.params['max']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is longer than " + _this.params['max']);
+                    _this.addInvalidMessage(_this.toValue + " is bigger than " + _this.params['max']);
                 }
                 return match;
             }
         ];
         return _this;
     }
-    return MinMaxNumberValidator;
+    return NumberValidator;
 }(validation_rule_1.ValidationRule));
-exports.MinMaxNumberValidator = MinMaxNumberValidator;
+exports.NumberValidator = NumberValidator;
 
 
 /***/ }),
@@ -832,11 +782,11 @@ var LengthValidator = /** @class */ (function (_super) {
                 var match = true;
                 if (_this.toValue.length < _this.params['min']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is shorter than " + _this.params['min']);
+                    _this.addInvalidMessage(_this.toValue + " contains less than " + _this.params['min'] + " items");
                 }
                 if (_this.toValue.length > _this.params['max']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is longer than " + _this.params['max']);
+                    _this.addInvalidMessage(_this.toValue + " contains more than " + _this.params['max'] + " items");
                 }
                 return match;
             }
@@ -920,31 +870,28 @@ var AllowedValueSwitchValidator = /** @class */ (function (_super) {
         // Sample declaration of allowed transition:
         var _this = _super !== null && _super.apply(this, arguments) || this;
         // {
-        //   matches: [
+        //   allowed: [
         //     { from: "open", to: ["scheduled", "canceled", "closed"] },
         //     { from: "close", to: ["open"] }
         //   ]
         // }
         _this.conditions = [
             function () {
-                var match = false;
-                if (_this.params && _this.params['matches'] && _this.params['matches'].length) {
-                    for (var i = 0; i < _this.params['matches'].length; i++) {
-                        var rule = _this.params['matches'][i];
+                var match = false, rule;
+                if (_this.params && _this.params['allowed'] && _this.params['allowed'].length) {
+                    for (var i = 0; i < _this.params['allowed'].length; i++) {
+                        rule = _this.params['allowed'][i];
                         if (rule['from'] && rule['to'] && rule['to'].length) {
                             // Origin value matched
                             if (rule['from'] === _this.fromValue) {
-                                // Check that the destination value also matches
+                                // Check that the destination value also allowed
                                 for (var i2 = 0; i2 < rule['to'].length; i2++) {
                                     if (!match) {
-                                        if (_this.toValue === rule['to'][i2] && !match) {
+                                        if (_this.toValue === rule['to'][i2]) {
                                             match = true;
                                         }
                                     }
                                 }
-                            }
-                            else {
-                                match = false;
                             }
                         }
                     }
