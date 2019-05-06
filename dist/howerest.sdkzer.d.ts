@@ -10,9 +10,7 @@ export declare class Sdkzer<T extends SdkzerParams> {
     syncing: boolean;
     lastResponse: WebServices.HttpResponse;
     private static DEFAULT_HTTP_HEADERS;
-    private static HTTP_PATTERN;
     private static PARENTS_FETCH_STRATEGY;
-    private static HTTP_QUERY_GUESS_CONFIG;
     /**
      * Creates an instance of a model entity with an API to communicate with
      * a resource (http RESTful resource)
@@ -27,22 +25,9 @@ export declare class Sdkzer<T extends SdkzerParams> {
      */
     static configure(options: ISdkzerConfigOptions): void;
     /**
-     * Checks if Sdkzer has been configured to communicate to RESTful resources
-     */
-    private static usingRestfulCrudHttpPattern;
-    /**
-     * Checks if Sdkzer has been configured to communicate using custom CRUD endpoints
-     */
-    private static usingCustomHttpPattern;
-    /**
      * Checks if Sdkzer is using any fetch strategy once received parent ids
      */
     private static usingParentsFetchStrategy;
-    /**
-     * Retrieves the http guess config for an specific CRUD operation.
-     * @param {String} operation  Accepts "create", "read", "update" and "delete"
-     */
-    private static getHttpQueryGuessConfigFor;
     /**
      * Sets the defaults() values in the instance attributes
      */
@@ -167,13 +152,10 @@ export declare class Sdkzer<T extends SdkzerParams> {
 export interface ISdkzerConfigOptions {
     defaultHttpHeaders: string;
 }
-export interface IHttpQueryGuessConfig {
-    restful: Object;
-}
 export { ValidationRule } from "./validation_rule";
 export { RequiredValidator } from "./validation_rules/required_validator";
 export { RegExpValidator } from "./validation_rules/reg_exp_validator";
-export { MinMaxNumberValidator } from "./validation_rules/min_max_number_validator";
+export { NumberValidator } from "./validation_rules/number_validator";
 export { LengthValidator } from "./validation_rules/length_validator";
 export { EmailValidator } from "./validation_rules/email_validator";
 export { AllowedValueSwitchValidator } from "./validation_rules/allowed_value_switch_validator";
