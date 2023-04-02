@@ -52,7 +52,14 @@
 		"ts-loader": "^5.2.1",
 		"tslint": "^4.3.1",
 		"typescript": "^5.0.3",
-		"utf8": "2.1.0"
+		"utf8": "2.1.0",
+		"@babel/polyfill": "^7.12.1",
+		"@types/es6-promise": "^3.3.0",
+		"@types/jest": "^29.5.0",
+		"typedoc": "^0.23.28",
+		"uglifyjs-webpack-plugin": "^2.2.0",
+		"webpack": "^5.77.0",
+		"webpack-cli": "^5.0.1"
 	},
 	"optionalDependencies": {},
 	"scripts": {
@@ -77,14 +84,5 @@
 		],
 		"testEnvironment": "jsdom"
 	},
-	"private": false,
-	"dependencies": {
-		"@babel/polyfill": "^7.12.1",
-		"@types/es6-promise": "^3.3.0",
-		"@types/jest": "^29.5.0",
-		"typedoc": "^0.23.28",
-		"uglifyjs-webpack-plugin": "^2.2.0",
-		"webpack": "^5.77.0",
-		"webpack-cli": "^5.0.1"
-	}
+	"private": false
 }
