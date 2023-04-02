@@ -2,24 +2,24 @@ export declare class ValidationRule implements IValidationRule {
     protected conditions: Array<Function | any>;
     fromValue: any;
     toValue: any;
-    params: Object;
+    params: object;
     private _invalidMessage;
     constructor(params?: any);
     /**
      * Retrieves the invalid message for the ValidationRule
      */
-    readonly invalidMessage: string;
+    get invalidMessage(): string;
     /**
      * Checks if the ValidationRule is valid
      */
-    isValid(fromValue: any, toValue: any): Boolean;
+    isValid(fromValue: any, toValue: any): boolean;
     /**
      * Adds an invalid message to the ValidationRule
      */
-    addInvalidMessage(message: String): void;
+    addInvalidMessage(message: string): void;
 }
 export interface IValidationRule {
     params: any;
-    invalidMessage: String;
+    invalidMessage: string;
     isValid(fromValue: any, toValue: any): any;
 }

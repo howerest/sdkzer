@@ -1,33 +1,28 @@
-import { WebServices } from 'js-webservices';
 export interface SdkzerParams {
     id: any;
 }
 export declare class Sdkzer<T extends SdkzerParams> {
     attrs: T;
     pAttrs: T;
-    protected validationRules: Object;
-    invalidMessages: Object;
+    protected validationRules: object;
+    invalidMessages: object;
     syncing: boolean;
-    lastResponse: WebServices.HttpResponse;
+    lastResponse: Response | null;
     private static DEFAULT_HTTP_HEADERS;
     private static PARENTS_FETCH_STRATEGY;
     /**
      * Creates an instance of a model entity with an API to communicate with
      * a resource (http RESTful resource)
-     * @param  {Object}   attrs   The initial attributes for the resource.
+     * @param  {object}   attrs   The initial attributes for the resource.
      *                            Those attributes are in force to defaults()
      */
     constructor(attrs?: T);
     /**
      * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
      * classes that extend from Sdkzer in the current scope.
-     * @param options {ISdkzerConfigOptions} The configuration options
+     * @param {ISdkzerConfigOptions} options The configuration options
      */
     static configure(options: ISdkzerConfigOptions): void;
-    /**
-     * Checks if Sdkzer is using any fetch strategy once received parent ids
-     */
-    private static usingParentsFetchStrategy;
     /**
      * Sets the defaults() values in the instance attributes
      */
@@ -36,7 +31,7 @@ export declare class Sdkzer<T extends SdkzerParams> {
      * Retrieves the defaults for the entity. Override it using your default
      * attributes if you need any
      */
-    defaults(): Object;
+    defaults(): object;
     /**
      * Checks wether an entity is a valid entity.
      * It doesn't perform validation (check validate())
@@ -61,7 +56,7 @@ export declare class Sdkzer<T extends SdkzerParams> {
      * @param attrName  The attribute name that we want to read or set
      * @param value     The attribute value that we want to set for "attrName"
      */
-    attr(attrName?: string, value?: any): Object | void;
+    attr(attrName?: string, value?: any): object | void;
     /**
      * Retrieves the base resource url. Override it using your base endpoint
      * for your resource.
@@ -77,25 +72,25 @@ export declare class Sdkzer<T extends SdkzerParams> {
      * NOTE: This method will become the interface to connect using different
      * http patterns
      */
-    resourceEndpoint(): String;
+    resourceEndpoint(): string;
     /**
      * Checks if the record is not saved in the origin. An record will be
      * consiered new when it has an "id" attribute set to null and it lacks of
      * a "lastResponse" attribute value
      */
-    isNew(): Boolean;
+    isNew(): boolean;
     /**
      * Checks if the record has changed since the last save
      */
-    hasChanged(): Boolean;
+    hasChanged(): boolean;
     /**
      * Checks if an attribute has changed from the origin
      */
-    hasAttrChanged(attrName: string): Boolean;
+    hasAttrChanged(attrName: string): boolean;
     /**
      * Retrieves the name of the changed attributes since the last save
      */
-    changedAttrs(): Array<String>;
+    changedAttrs(): Array<string>;
     /**
      * Retrieves the previous attributes
      */
@@ -107,50 +102,66 @@ export declare class Sdkzer<T extends SdkzerParams> {
     /**
      * Fetches the newest attributes from the origin.
      */
-    fetch(httpQuery?: WebServices.HttpQuery, camelize?: Boolean): Promise<WebServices.HttpResponse>;
+    fetch(httpQuery?: IQuery, camelize?: boolean): Promise<Response>;
     /**
      * Parses a single resource record from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed record data only
      */
-    parseRecord(data: Object, prefix?: string): T;
+    parseRecord(data: object, prefix?: string): T;
     /**
      * Parses a collection of resource records from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed collection of records data only
      */
-    static parseCollection(data: Array<Object>, prefix?: string): Array<object>;
+    static parseCollection(data: Array<object>, prefix?: string): Array<object>;
     /**
      * Transforms the local attributes to be processed by the origin in JSON format
      */
-    toOriginJSON(): Object;
+    toOriginJSON(): object;
     /**
      * Transforms the local attributes to be processed by the origin in XML format
      */
-    toOriginXML(): String;
+    toOriginXML(): string;
     /**
      * Transforms the local attributes to be processed by the origin in a specific format
+     * @param format The format to transform into
      */
-    toOrigin(format?: string): Object | String;
+    toOrigin(format?: string): object | string;
     /**
-     * Saves the local object into the origin
+     * Persists the local state into the origin
      */
-    save(httpHeaders?: WebServices.HttpHeader[]): Promise<WebServices.HttpResponse>;
+    save(httpHeaders?: THttpHeaders): Promise<Response>;
     /**
      * Destroys the current record in the origin
      */
-    destroy(): Promise<any>;
+    destroy(): Promise<Response>;
     /**
      * Retrieves a collection of records from the origin
+     * @param httpQuery An optional query to be merged with the default one
      */
-    static fetchIndex(httpQuery?: WebServices.HttpQuery): Promise<Array<any>>;
+    static fetchIndex(httpQuery?: IQuery): Promise<Array<any>>;
     /**
      * Retrieves a single record from the origin
      * @param id          The record id that we want to fetch by
      * @param httpQuery   Use a HttpQuery instance to override the default query
      */
-    static fetchOne(id: number | string, httpQuery?: WebServices.HttpQuery): Promise<any>;
+    static fetchOne(id: number | string, httpQuery?: IQuery): Promise<any>;
+}
+export type THttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+export type THttpHeaders = {
+    [key: string]: string;
+};
+export interface IQueryString {
+    [key: string]: string | number;
+}
+export interface IQuery {
+    url?: string;
+    method?: THttpMethod;
+    headers?: THttpHeaders;
+    qsParams?: IQueryString;
+    data?: {};
 }
 export interface ISdkzerConfigOptions {
-    defaultHttpHeaders: string;
+    defaultHttpHeaders: THttpHeaders;
 }
 export { ValidationRule } from "./validation_rule";
 export { RequiredValidator } from "./validation_rules/required_validator";

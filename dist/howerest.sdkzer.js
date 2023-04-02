@@ -1,4 +1,4 @@
-/*! sdkzer 0.7.3 - By David Valin - www.davidvalin.com */
+/*! sdkzer 0.8.1 - By David Valin - www.davidvalin.com */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -8,131 +8,54 @@
 		var a = factory();
 		for(var i in a) (typeof exports === 'object' ? exports : root)[i] = a[i];
 	}
-})(this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
-/******/ })
-/************************************************************************/
-/******/ ([
+})(this, () => {
+return /******/ (() => { // webpackBootstrap
+/******/ 	"use strict";
+/******/ 	var __webpack_modules__ = ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(__unused_webpack_module, exports, __webpack_require__) {
 
-"use strict";
 
-Object.defineProperty(exports, "__esModule", { value: true });
-/* --------------------------------------------------------------------------
+/* =========================================================================
 
-    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
-
+    howerest 2023 - <hola@davidvalin.com> | www.howerest.com
+    ___________________
     Apache 2.0 Licensed
-    -------------------
 
-    Implements a standarized & friendly API to deal with RESTful http resources
-    that implement endpoints to perform the CRUD operations
+    Implements a standarized & friendly API to deal with RESTful http
+    resources that implement endpoints to perform the CRUD operations.
 
-    1. Define a resource:
-    2. Start consuming your resource
+      1. Define a resource by extending Sdkzer class
+      2. Define a "baseEndpoint()" function for your class
+      3. Start consuming your resource
 
---------------------------------------------------------------------------- */
-var js_webservices_1 = __webpack_require__(1);
-var Sdkzer = /** @class */ (function () {
+=========================================================================== */
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AllowedValueSwitchValidator = exports.EmailValidator = exports.LengthValidator = exports.NumberValidator = exports.RegExpValidator = exports.RequiredValidator = exports.ValidationRule = exports.Sdkzer = void 0;
+class Sdkzer {
     /**
      * Creates an instance of a model entity with an API to communicate with
      * a resource (http RESTful resource)
-     * @param  {Object}   attrs   The initial attributes for the resource.
+     * @param  {object}   attrs   The initial attributes for the resource.
      *                            Those attributes are in force to defaults()
      */
-    function Sdkzer(attrs) {
-        if (attrs === void 0) { attrs = {}; }
+    constructor(attrs = {}) {
         this.invalidMessages = {};
         this.syncing = false;
         this.lastResponse = null;
         this.attrs = { id: null };
         this.pAttrs = { id: null };
         this.setDefaults();
-        for (var attrKey in attrs) {
+        for (let attrKey in attrs) {
             // Object initialization parameters are in force to default parameters
             this.attrs[attrKey] = attrs[attrKey];
             this.pAttrs[attrKey] = attrs[attrKey];
@@ -141,68 +64,53 @@ var Sdkzer = /** @class */ (function () {
     /**
      * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
      * classes that extend from Sdkzer in the current scope.
-     * @param options {ISdkzerConfigOptions} The configuration options
+     * @param {ISdkzerConfigOptions} options The configuration options
      */
-    Sdkzer.configure = function (options) {
-        if (options['defaultHttpHeaders']) {
-            Sdkzer['DEFAULT_HTTP_HEADERS'] = [];
-            for (var i = 0; i < options['defaultHttpHeaders'].length; i++) {
-                Sdkzer['DEFAULT_HTTP_HEADERS'].push(new js_webservices_1.WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
-            }
-        }
-        // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-    };
-    /**
-     * Checks if Sdkzer is using any fetch strategy once received parent ids
-     */
-    Sdkzer.usingParentsFetchStrategy = function () {
-        return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
-    };
+    static configure(options) {
+        Sdkzer.DEFAULT_HTTP_HEADERS = options.defaultHttpHeaders || {};
+    }
     /**
      * Sets the defaults() values in the instance attributes
      */
-    Sdkzer.prototype.setDefaults = function () {
+    setDefaults() {
         if (this.defaults()) {
-            var defaults = this.defaults();
-            for (var attrKey in defaults) {
+            let defaults = this.defaults();
+            for (let attrKey in defaults) {
                 this.attrs[attrKey] = defaults[attrKey];
             }
         }
-    };
+    }
     /**
      * Retrieves the defaults for the entity. Override it using your default
      * attributes if you need any
      */
-    Sdkzer.prototype.defaults = function () {
+    defaults() {
         return {};
-    };
+    }
     /**
      * Checks wether an entity is a valid entity.
      * It doesn't perform validation (check validate())
      */
-    Sdkzer.prototype.isValid = function () {
-        var attrs = Object.keys(this.invalidMessages);
-        for (var _i = 0, attrs_1 = attrs; _i < attrs_1.length; _i++) {
-            var attrName = attrs_1[_i];
+    isValid() {
+        const attrs = Object.keys(this.invalidMessages);
+        for (const attrName of attrs) {
             if (this.invalidMessages[attrName] && this.invalidMessages[attrName].length > 0) {
                 return false;
             }
         }
         return true;
-    };
+    }
     /**
      * Checks wether an entity is a valid entity
      */
-    Sdkzer.prototype.validate = function () {
+    validate() {
         // Reset previous invalid messages from previous validations
         this.invalidMessages = {};
-        var isValid = true, toValidateAttr, validationRule;
-        var toValidateAttrs = Object.keys(this.validationRules);
+        let toValidateAttr, validationRule;
+        const toValidateAttrs = Object.keys(this.validationRules);
         // Validate attribute's ValidationRules
-        for (var _i = 0, toValidateAttrs_1 = toValidateAttrs; _i < toValidateAttrs_1.length; _i++) {
-            toValidateAttr = toValidateAttrs_1[_i];
-            for (var _a = 0, _b = this.validationRules[toValidateAttr]; _a < _b.length; _a++) {
-                validationRule = _b[_a];
+        for (toValidateAttr of toValidateAttrs) {
+            for (validationRule of this.validationRules[toValidateAttr]) {
                 // When the ValidationRule is invalid...
                 if (!validationRule.isValid(this.pAttrs[toValidateAttr], this.attrs[toValidateAttr])) {
                     if (!this.invalidMessages[toValidateAttr]) {
@@ -216,7 +124,7 @@ var Sdkzer = /** @class */ (function () {
                 }
             }
         }
-    };
+    }
     /**
      * This method can do 3 different things:
      *
@@ -232,19 +140,19 @@ var Sdkzer = /** @class */ (function () {
      * @param attrName  The attribute name that we want to read or set
      * @param value     The attribute value that we want to set for "attrName"
      */
-    Sdkzer.prototype.attr = function (attrName, value) {
+    attr(attrName, value) {
         // Setting an attribute?
         if (attrName !== undefined && value !== undefined) {
             // TODO: Add before&after-callback
-            var attrKeys = attrName.split('.');
-            var attrKeyName = '';
+            let attrKeys = attrName.split('.');
+            let attrKeyName = '';
             eval("this.attrs['" + attrKeys.join("']['") + "'] = " + (typeof (value) === 'string' ? "'" + value + "'" : value));
         }
         else if (attrName !== undefined && value === undefined) {
             // Reading an attribute?
-            var attrKeys = attrName.split('.');
-            var attrValue = this.attrs[attrName.split('.')[0]];
-            for (var i = 1; i < attrKeys.length; i++) {
+            let attrKeys = attrName.split('.');
+            let attrValue = this.attrs[attrName.split('.')[0]];
+            for (let i = 1; i < attrKeys.length; i++) {
                 attrValue = attrValue[attrKeys[i]];
             }
             return attrValue;
@@ -254,7 +162,7 @@ var Sdkzer = /** @class */ (function () {
             // TODO: Add before&after-callbacks
             return this.attrs;
         }
-    };
+    }
     /**
      * Retrieves the base resource url. Override it using your base endpoint
      * for your resource.
@@ -264,48 +172,48 @@ var Sdkzer = /** @class */ (function () {
      *  A base endpoint for a RESTful endpoint look like:
      *    return "https://www.an-api.com/v1/users"
      */
-    Sdkzer.prototype.baseEndpoint = function () {
+    baseEndpoint() {
         return null;
-    };
+    }
     /**
      * Retrieves the resource url
      * NOTE: This method will become the interface to connect using different
      * http patterns
      */
-    Sdkzer.prototype.resourceEndpoint = function () {
+    resourceEndpoint() {
         return '';
-    };
+    }
     /**
      * Checks if the record is not saved in the origin. An record will be
      * consiered new when it has an "id" attribute set to null and it lacks of
      * a "lastResponse" attribute value
      */
-    Sdkzer.prototype.isNew = function () {
-        return ((this.attrs['id'] !== null && this.lastResponse !== null) ? false : true);
-    };
+    isNew() {
+        return ((this.attrs.id !== null) ? false : true);
+    }
     /**
      * Checks if the record has changed since the last save
      */
-    Sdkzer.prototype.hasChanged = function () {
+    hasChanged() {
         return (this.changedAttrs().length > 0 ? true : false);
-    };
+    }
     /**
      * Checks if an attribute has changed from the origin
      */
-    Sdkzer.prototype.hasAttrChanged = function (attrName) {
-        var i, changedAttrs = this.changedAttrs();
+    hasAttrChanged(attrName) {
+        let i, changedAttrs = this.changedAttrs();
         for (i = 0; i < changedAttrs.length; i++) {
             if (changedAttrs[i] === attrName) {
                 return true;
             }
         }
         return false;
-    };
+    }
     /**
      * Retrieves the name of the changed attributes since the last save
      */
-    Sdkzer.prototype.changedAttrs = function () {
-        var changedAttrs = [], currAttrs = Object.keys(this['attrs']), prevAttrs = Object.keys(this['pAttrs']), i, i2;
+    changedAttrs() {
+        let changedAttrs = [], currAttrs = Object.keys(this.attrs), prevAttrs = Object.keys(this.pAttrs), i, i2;
         for (i = 0; i <= currAttrs.length; i++) {
             for (i2 = 0; i2 <= prevAttrs.length; i2++) {
                 if (currAttrs[i] !== null && currAttrs[i] === prevAttrs[i2] && this.attrs[currAttrs[i]] !== this.pAttrs[prevAttrs[i2]]) {
@@ -315,258 +223,292 @@ var Sdkzer = /** @class */ (function () {
             }
         }
         return changedAttrs;
-    };
+    }
     /**
      * Retrieves the previous attributes
      */
-    Sdkzer.prototype.prevAttrs = function () {
-        var previousAttrs = {};
-        for (var attrKey in this.attrs) {
+    prevAttrs() {
+        let previousAttrs = {};
+        for (let attrKey in this.attrs) {
             if (this.pAttrs[attrKey] !== this.attrs[attrKey]) {
                 previousAttrs[attrKey] = (this.pAttrs[attrKey] ? this.pAttrs[attrKey] : null);
             }
         }
         return previousAttrs;
-    };
+    }
     /**
      * Retrieves the previous value prior to last save for a specific attribute
      */
-    Sdkzer.prototype.prevValue = function (attrName) {
+    prevValue(attrName) {
         return this.prevAttrs()[attrName];
-    };
+    }
     /**
      * Fetches the newest attributes from the origin.
      */
-    Sdkzer.prototype.fetch = function (httpQuery, camelize) {
-        if (camelize === void 0) { camelize = true; }
-        var _this = this, promise;
-        if (this.attrs['id']) {
-            this.syncing = true;
-            var query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: "GET",
-                endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
-                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-                qsParams: {},
-                data: {}
-            });
-            if (typeof (httpQuery) !== 'undefined') {
-                query = js_webservices_1.WebServices.Merger.mergeHttpQueries([query, httpQuery]);
-            }
-            var request = new js_webservices_1.WebServices.HttpRequest(query);
-            promise = request.promise;
-            promise.then(
-            // Success
-            function (response) {
-                _this.syncing = false;
-                // TODO: Keep lastResponse
-                var parsedData = _this.parseRecord(response.data);
-                if (camelize) {
-                    // parsedData = util.Camel.camelize(parsedData);
+    fetch(httpQuery, camelize = true) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let _this = this, promise;
+            if (this.attrs.id) {
+                this.syncing = true;
+                let query = {
+                    url: `${this.baseEndpoint()}/${this.attrs.id}`,
+                    method: 'GET',
+                    headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
+                    qsParams: {},
+                    data: {}
+                };
+                if (typeof (httpQuery) !== 'undefined') {
+                    query = Object.assign(Object.assign({}, query), httpQuery);
                 }
-                // Keep track of previous attributes
-                _this.pAttrs = parsedData;
-                // Assign the parsed attributes
-                _this.attrs = parsedData;
-            }, 
-            // Fail
-            function (response) {
-                _this.syncing = false;
-            });
-        }
-        if (typeof (promise) === 'undefined') {
-            promise = Promise.reject(false);
-        }
-        return promise;
-    };
+                try {
+                    let response = yield fetch(`${query.url}${query.qsParams ? qsToString(query.qsParams) : ''}`, {
+                        method: query.method,
+                        headers: query.headers,
+                        body: query.data.toString()
+                    });
+                    // Success
+                    _this.syncing = false;
+                    // TODO: Keep lastResponse
+                    let parsedData = _this.parseRecord(JSON.parse(yield response.json()));
+                    if (camelize) {
+                        // parsedData = util.Camel.camelize(parsedData);
+                    }
+                    // Keep track of previous attributes
+                    _this.pAttrs = parsedData;
+                    // Assign the parsed attributes
+                    _this.attrs = parsedData;
+                    return response;
+                }
+                catch (e) {
+                    // Fail
+                    _this.syncing = false;
+                    return Promise.reject(false);
+                }
+            }
+        });
+    }
     /**
      * Parses a single resource record from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed record data only
      */
-    Sdkzer.prototype.parseRecord = function (data, prefix) {
+    parseRecord(data, prefix) {
         return prefix ? data[prefix] : data;
-    };
+    }
     /**
      * Parses a collection of resource records from an incoming HttpResponse data
      * NOTE: The idea is to return the parsed collection of records data only
      */
-    Sdkzer.parseCollection = function (data, prefix) {
+    static parseCollection(data, prefix) {
         return prefix ? data[prefix] : data;
-    };
+    }
     /**
      * Transforms the local attributes to be processed by the origin in JSON format
      */
-    Sdkzer.prototype.toOriginJSON = function () {
+    toOriginJSON() {
         return this.attrs;
-    };
+    }
     /**
      * Transforms the local attributes to be processed by the origin in XML format
      */
-    Sdkzer.prototype.toOriginXML = function () {
+    toOriginXML() {
         return '';
-    };
+    }
     /**
      * Transforms the local attributes to be processed by the origin in a specific format
+     * @param format The format to transform into
      */
-    Sdkzer.prototype.toOrigin = function (format) {
-        if (format === void 0) { format = "json"; }
-        var snapshot;
+    toOrigin(format = 'json') {
+        let snapshot;
         switch (format) {
-            case "json":
+            case 'json':
                 snapshot = this.toOriginJSON();
                 break;
-            case "xml":
+            case 'xml':
                 snapshot = this.toOriginXML();
                 break;
         }
         return snapshot;
-    };
+    }
     /**
-     * Saves the local object into the origin
+     * Persists the local state into the origin
      */
-    Sdkzer.prototype.save = function (httpHeaders) {
-        if (httpHeaders === void 0) { httpHeaders = []; }
-        var _this = this, query, request, httpMethod = (this.attr('id') == null ? "POST" : "PUT");
-        // New record in the origin?
-        if (httpMethod == "POST") {
-            query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: httpMethod,
-                endpoint: this.baseEndpoint(),
-                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-                qsParams: {},
-                data: this.toOriginJSON()
-            });
-            // Existing record in the origin?
-        }
-        else {
-            query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: httpMethod,
-                endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
-                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-                qsParams: {},
-                data: this.toOriginJSON()
-            });
-        }
-        request = new js_webservices_1.WebServices.HttpRequest(query);
-        return request.promise.then(
-        // Success
-        function (response) {
-            if (httpMethod == "POST") {
-                // Append id to attributes
-                _this.attrs['id'] = response.data['id'];
+    save(httpHeaders = {}) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let _this = this, query, request, httpMethod = (this.attr('id') == null ? 'POST' : 'PUT');
+            // New record in the origin?
+            if (httpMethod === 'POST') {
+                query = {
+                    method: httpMethod,
+                    url: this.baseEndpoint(),
+                    headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
+                    qsParams: {},
+                    data: this.toOriginJSON()
+                };
+                // Existing record in the origin?
             }
-            _this.lastResponse = response;
+            else {
+                query = {
+                    method: httpMethod,
+                    url: `${this.baseEndpoint()}/${this.attrs.id}${query && query.qsParams ? qsToString(query.qsParams) : ''}`,
+                    headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
+                    qsParams: {},
+                    data: this.toOriginJSON()
+                };
+            }
+            try {
+                const response = yield fetch(query.url, {
+                    method: query.method,
+                    headers: query.headers,
+                    body: query.data.toString()
+                });
+                if (httpMethod === 'POST') {
+                    // Append id to attributes
+                    _this.attrs.id = (yield response.json())['id'];
+                }
+                _this.lastResponse = response;
+                return response;
+            }
+            catch (e) {
+                return Promise.reject(false);
+            }
         });
-    };
+    }
     /**
      * Destroys the current record in the origin
      */
-    Sdkzer.prototype.destroy = function () {
-        var query, request;
-        query = new js_webservices_1.WebServices.HttpQuery({
-            httpMethod: "DELETE",
-            endpoint: this.baseEndpoint() + '/' + this.attrs['id'],
-            headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-            qsParams: {},
-            data: {}
-        });
-        request = new js_webservices_1.WebServices.HttpRequest(query);
-        return request.promise;
-    };
-    /**
-     * Retrieves a collection of records from the origin
-     */
-    Sdkzer.fetchIndex = function (httpQuery) {
-        var _this_1 = this;
-        var query, request, instancesPromise, instances = [], instance;
-        instancesPromise = new Promise(function (resolve, reject) {
-            query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: "GET",
-                endpoint: (new _this_1().baseEndpoint()),
-                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+    destroy() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let query;
+            query = {
+                method: 'DELETE',
+                url: `${this.baseEndpoint()}/${this.attrs.id}`,
+                headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
                 qsParams: {},
                 data: {}
-            });
-            if (typeof (httpQuery) !== 'undefined') {
-                query = js_webservices_1.WebServices.Merger.mergeHttpQueries([query, httpQuery]);
+            };
+            try {
+                return yield fetch(query.url, {
+                    method: query.method,
+                    headers: query.headers,
+                    body: query.data.toString()
+                });
             }
-            request = new js_webservices_1.WebServices.HttpRequest(query);
-            request.promise.then(function (response) {
-                var collectionList = _this_1.parseCollection(response.data);
-                for (var i in collectionList) {
-                    instance = new _this_1();
-                    instance.attrs = instance.pAttrs = instance.parseRecord(collectionList[i]);
-                    instances.push(instance);
-                }
-                resolve(instances);
-            }, function (error) {
-                reject(error);
-            });
+            catch (e) {
+                return Promise.reject(false);
+            }
         });
-        return instancesPromise;
-    };
+    }
+    /**
+     * Retrieves a collection of records from the origin
+     * @param httpQuery An optional query to be merged with the default one
+     */
+    static fetchIndex(httpQuery) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let query, request, instancesPromise, instances = [], instance;
+            instancesPromise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+                query = {
+                    method: 'GET',
+                    url: `${new this().baseEndpoint()}${httpQuery && httpQuery.qsParams ? qsToString(httpQuery.qsParams) : ''}`,
+                    headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
+                    qsParams: {}
+                };
+                if (typeof (httpQuery) !== 'undefined') {
+                    query = Object.assign(Object.assign({}, query), httpQuery);
+                }
+                try {
+                    const response = yield fetch(query.url, {
+                        method: query.method,
+                        headers: query.headers
+                    });
+                    const collectionList = this.parseCollection(JSON.parse(yield response.json()));
+                    for (let i in collectionList) {
+                        instance = new this();
+                        instance.attrs = instance.pAttrs = instance.parseRecord(collectionList[i]);
+                        instances.push(instance);
+                    }
+                    resolve(instances);
+                }
+                catch (e) {
+                    reject(e);
+                }
+            }));
+            return instancesPromise;
+        });
+    }
     /**
      * Retrieves a single record from the origin
      * @param id          The record id that we want to fetch by
      * @param httpQuery   Use a HttpQuery instance to override the default query
      */
-    Sdkzer.fetchOne = function (id, httpQuery) {
-        var _this_1 = this;
-        var model = new this(), query, request, instancePromise, instance;
-        instancePromise = new Promise(function (resolve, reject) {
-            query = new js_webservices_1.WebServices.HttpQuery({
-                httpMethod: "GET",
-                endpoint: model.baseEndpoint() + '/' + id,
-                headers: Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-                qsParams: {},
-                data: {}
-            });
+    static fetchOne(id, httpQuery) {
+        let model = new this(), query, instancePromise, instance;
+        instancePromise = new Promise((resolve, reject) => __awaiter(this, void 0, void 0, function* () {
+            query = {
+                method: 'GET',
+                url: `${model.baseEndpoint()}/${id}${httpQuery && httpQuery.qsParams ? qsToString(httpQuery.qsParams) : ''}`,
+                headers: Sdkzer.DEFAULT_HTTP_HEADERS || {},
+                qsParams: {}
+            };
             if (typeof (httpQuery) !== 'undefined') {
-                query = js_webservices_1.WebServices.Merger.mergeHttpQueries([query, httpQuery]);
+                query = Object.assign(Object.assign({}, query), httpQuery);
             }
-            request = new js_webservices_1.WebServices.HttpRequest(query);
-            request.promise.then(function (response) {
-                instance = new _this_1();
-                instance.attrs = instance.pAttrs = instance.parseRecord(response.data);
+            try {
+                const response = yield fetch(query.url, {
+                    method: query.method,
+                    headers: query.headers
+                });
+                instance = new this();
+                instance.attrs = instance.pAttrs = instance.parseRecord(JSON.parse(yield response.json()));
                 resolve(instance);
-            }, function (error) {
-                reject(error);
-            });
-        });
+            }
+            catch (e) {
+                reject(e);
+            }
+        }));
         return instancePromise;
-    };
-    // Configuration
-    Sdkzer.DEFAULT_HTTP_HEADERS = [];
-    Sdkzer.PARENTS_FETCH_STRATEGY = 'none';
-    return Sdkzer;
-}());
+    }
+}
+// Configuration
+Sdkzer.DEFAULT_HTTP_HEADERS = {};
+Sdkzer.PARENTS_FETCH_STRATEGY = 'none';
 exports.Sdkzer = Sdkzer;
-var validation_rule_1 = __webpack_require__(2);
-exports.ValidationRule = validation_rule_1.ValidationRule;
-var required_validator_1 = __webpack_require__(3);
-exports.RequiredValidator = required_validator_1.RequiredValidator;
-var reg_exp_validator_1 = __webpack_require__(4);
-exports.RegExpValidator = reg_exp_validator_1.RegExpValidator;
-var number_validator_1 = __webpack_require__(5);
-exports.NumberValidator = number_validator_1.NumberValidator;
-var length_validator_1 = __webpack_require__(6);
-exports.LengthValidator = length_validator_1.LengthValidator;
-var email_validator_1 = __webpack_require__(7);
-exports.EmailValidator = email_validator_1.EmailValidator;
-var allowed_value_switch_validator_1 = __webpack_require__(8);
-exports.AllowedValueSwitchValidator = allowed_value_switch_validator_1.AllowedValueSwitchValidator;
+function qsToString(qs) {
+    let qsPart = '';
+    // Add query string to url
+    if (Object.keys(qs).length > 0) {
+        qsPart += '?';
+        let i = 0;
+        let keys = Object.keys(qs);
+        for (let key of keys) {
+            if (i > 0) {
+                qsPart += '&';
+            }
+            qsPart += `${key}=${qs[key]}`;
+            i++;
+        }
+    }
+    return qsPart;
+}
+var validation_rule_1 = __webpack_require__(1);
+Object.defineProperty(exports, "ValidationRule", ({ enumerable: true, get: function () { return validation_rule_1.ValidationRule; } }));
+var required_validator_1 = __webpack_require__(2);
+Object.defineProperty(exports, "RequiredValidator", ({ enumerable: true, get: function () { return required_validator_1.RequiredValidator; } }));
+var reg_exp_validator_1 = __webpack_require__(3);
+Object.defineProperty(exports, "RegExpValidator", ({ enumerable: true, get: function () { return reg_exp_validator_1.RegExpValidator; } }));
+var number_validator_1 = __webpack_require__(4);
+Object.defineProperty(exports, "NumberValidator", ({ enumerable: true, get: function () { return number_validator_1.NumberValidator; } }));
+var length_validator_1 = __webpack_require__(5);
+Object.defineProperty(exports, "LengthValidator", ({ enumerable: true, get: function () { return length_validator_1.LengthValidator; } }));
+var email_validator_1 = __webpack_require__(6);
+Object.defineProperty(exports, "EmailValidator", ({ enumerable: true, get: function () { return email_validator_1.EmailValidator; } }));
+var allowed_value_switch_validator_1 = __webpack_require__(7);
+Object.defineProperty(exports, "AllowedValueSwitchValidator", ({ enumerable: true, get: function () { return allowed_value_switch_validator_1.AllowedValueSwitchValidator; } }));
 
 
 /***/ }),
 /* 1 */
-/***/ (function(module, exports) {
+/***/ ((__unused_webpack_module, exports) => {
 
-module.exports = require("js-webservices");
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
 
 /* --------------------------------------------------------------------------
 
@@ -578,316 +520,218 @@ module.exports = require("js-webservices");
     ValidationRule: represents a validation rule
 
 --------------------------------------------------------------------------- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var ValidationRule = /** @class */ (function () {
-    function ValidationRule(params) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.ValidationRule = void 0;
+class ValidationRule {
+    constructor(params) {
         this.conditions = [];
         this._invalidMessage = "Invalid";
         this.params = params;
         this._invalidMessage = "";
     }
-    Object.defineProperty(ValidationRule.prototype, "invalidMessage", {
-        /**
-         * Retrieves the invalid message for the ValidationRule
-         */
-        get: function () {
-            return this._invalidMessage;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    /**
+     * Retrieves the invalid message for the ValidationRule
+     */
+    get invalidMessage() {
+        return this._invalidMessage;
+    }
     /**
      * Checks if the ValidationRule is valid
      */
-    ValidationRule.prototype.isValid = function (fromValue, toValue) {
+    isValid(fromValue, toValue) {
         this.fromValue = fromValue;
         this.toValue = toValue;
         // Reset the invalid message
         this._invalidMessage = '';
-        for (var i = 0; i < this.conditions.length; i++) {
+        for (let i = 0; i < this.conditions.length; i++) {
             if (this.conditions[i]() === false) {
                 return false;
             }
         }
         return true;
-    };
+    }
     /**
      * Adds an invalid message to the ValidationRule
      */
-    ValidationRule.prototype.addInvalidMessage = function (message) {
+    addInvalidMessage(message) {
         this._invalidMessage += message;
-    };
-    return ValidationRule;
-}());
+    }
+}
 exports.ValidationRule = ValidationRule;
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 2 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var RequiredValidator = /** @class */ (function (_super) {
-    __extends(RequiredValidator, _super);
-    function RequiredValidator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.conditions = [
-            function () {
-                var match = true;
-                if (typeof (_this.toValue) === "undefined" || _this.toValue.length === 0) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RequiredValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+class RequiredValidator extends validation_rule_1.ValidationRule {
+    constructor() {
+        super(...arguments);
+        this.conditions = [
+            () => {
+                let match = true;
+                if (typeof (this.toValue) === "undefined" || this.toValue.length === 0) {
                     match = false;
-                    _this.addInvalidMessage("A value is required and was not provided");
+                    this.addInvalidMessage("A value is required and was not provided");
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return RequiredValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.RequiredValidator = RequiredValidator;
 
 
 /***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 3 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var RegExpValidator = /** @class */ (function (_super) {
-    __extends(RegExpValidator, _super);
-    function RegExpValidator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.conditions = [
-            function () {
-                var match = true;
-                if (!_this.toValue || !_this.toValue.match || !_this.toValue.match(_this.params['rule'])) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.RegExpValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+class RegExpValidator extends validation_rule_1.ValidationRule {
+    constructor() {
+        super(...arguments);
+        this.conditions = [
+            () => {
+                let match = true;
+                if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params['rule'])) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is not valid");
+                    this.addInvalidMessage(this.toValue + " is not valid");
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return RegExpValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.RegExpValidator = RegExpValidator;
 
 
 /***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 4 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var NumberValidator = /** @class */ (function (_super) {
-    __extends(NumberValidator, _super);
-    function NumberValidator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.conditions = [
-            function () {
-                var match = true;
-                if (_this.toValue < _this.params['min']) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.NumberValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+class NumberValidator extends validation_rule_1.ValidationRule {
+    constructor() {
+        super(...arguments);
+        this.conditions = [
+            () => {
+                let match = true;
+                if (this.toValue < this.params['min']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is smaller than " + _this.params['min']);
+                    this.addInvalidMessage(this.toValue + " is smaller than " + this.params['min']);
                 }
-                if (_this.toValue > _this.params['max']) {
+                if (this.toValue > this.params['max']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " is bigger than " + _this.params['max']);
+                    this.addInvalidMessage(this.toValue + " is bigger than " + this.params['max']);
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return NumberValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.NumberValidator = NumberValidator;
 
 
 /***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 5 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var LengthValidator = /** @class */ (function (_super) {
-    __extends(LengthValidator, _super);
-    function LengthValidator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.conditions = [
-            function () {
-                var match = true;
-                if (_this.toValue.length < _this.params['min']) {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.LengthValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+class LengthValidator extends validation_rule_1.ValidationRule {
+    constructor() {
+        super(...arguments);
+        this.conditions = [
+            () => {
+                let match = true;
+                if (this.toValue.length < this.params['min']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " contains less than " + _this.params['min'] + " items");
+                    this.addInvalidMessage(`${this.toValue} contains less than ${this.params['min']} items`);
                 }
-                if (_this.toValue.length > _this.params['max']) {
+                if (this.toValue.length > this.params['max']) {
                     match = false;
-                    _this.addInvalidMessage(_this.toValue + " contains more than " + _this.params['max'] + " items");
+                    this.addInvalidMessage(`${this.toValue} contains more than ${this.params['max']} items`);
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return LengthValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.LengthValidator = LengthValidator;
 
 
 /***/ }),
-/* 7 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 6 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var reg_exp_validator_1 = __webpack_require__(4);
-var EmailValidator = /** @class */ (function (_super) {
-    __extends(EmailValidator, _super);
-    function EmailValidator() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.conditions = [
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.EmailValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+const reg_exp_validator_1 = __webpack_require__(3);
+class EmailValidator extends validation_rule_1.ValidationRule {
+    constructor() {
+        super(...arguments);
+        this.conditions = [
             // Check for email regexp...
-            function () {
-                var match = true;
-                var regExpValidator = new reg_exp_validator_1.RegExpValidator({ rule: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i });
-                if (!regExpValidator.isValid(_this.fromValue, _this.toValue)) {
-                    _this.addInvalidMessage(_this.toValue + ' is not a valid email address');
+            () => {
+                let match = true;
+                const regExpValidator = new reg_exp_validator_1.RegExpValidator({ rule: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i });
+                if (!regExpValidator.isValid(this.fromValue, this.toValue)) {
+                    this.addInvalidMessage(this.toValue + ' is not a valid email address');
                     match = false;
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return EmailValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.EmailValidator = EmailValidator;
 
 
 /***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
+/* 7 */
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var validation_rule_1 = __webpack_require__(2);
-var AllowedValueSwitchValidator = /** @class */ (function (_super) {
-    __extends(AllowedValueSwitchValidator, _super);
-    function AllowedValueSwitchValidator() {
+Object.defineProperty(exports, "__esModule", ({ value: true }));
+exports.AllowedValueSwitchValidator = void 0;
+const validation_rule_1 = __webpack_require__(1);
+class AllowedValueSwitchValidator extends validation_rule_1.ValidationRule {
+    constructor() {
         // Sample declaration of allowed transition:
-        var _this = _super !== null && _super.apply(this, arguments) || this;
+        super(...arguments);
         // {
         //   allowed: [
         //     { from: "open", to: ["scheduled", "canceled", "closed"] },
         //     { from: "close", to: ["open"] }
         //   ]
         // }
-        _this.conditions = [
-            function () {
-                var match = false, rule;
-                if (_this.params && _this.params['allowed'] && _this.params['allowed'].length) {
-                    for (var i = 0; i < _this.params['allowed'].length; i++) {
-                        rule = _this.params['allowed'][i];
+        this.conditions = [
+            () => {
+                let match = false, rule;
+                if (this.params && this.params['allowed'] && this.params['allowed'].length) {
+                    for (let i = 0; i < this.params['allowed'].length; i++) {
+                        rule = this.params['allowed'][i];
                         if (rule['from'] && rule['to'] && rule['to'].length) {
                             // Origin value matched
-                            if (rule['from'] === _this.fromValue) {
+                            if (rule['from'] === this.fromValue) {
                                 // Check that the destination value also allowed
-                                for (var i2 = 0; i2 < rule['to'].length; i2++) {
+                                for (let i2 = 0; i2 < rule['to'].length; i2++) {
                                     if (!match) {
-                                        if (_this.toValue === rule['to'][i2]) {
+                                        if (this.toValue === rule['to'][i2]) {
                                             match = true;
                                         }
                                     }
@@ -897,19 +741,52 @@ var AllowedValueSwitchValidator = /** @class */ (function (_super) {
                     }
                 }
                 if (!match) {
-                    _this.addInvalidMessage(_this.fromValue + " cannot change to '" + _this.toValue + "'");
+                    this.addInvalidMessage(this.fromValue + " cannot change to '" + this.toValue + "'");
                 }
                 return match;
             }
         ];
-        return _this;
     }
-    return AllowedValueSwitchValidator;
-}(validation_rule_1.ValidationRule));
+}
 exports.AllowedValueSwitchValidator = AllowedValueSwitchValidator;
 
 
 /***/ })
-/******/ ]);
+/******/ 	]);
+/************************************************************************/
+/******/ 	// The module cache
+/******/ 	var __webpack_module_cache__ = {};
+/******/ 	
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
+/******/ 		// Check if module is in cache
+/******/ 		var cachedModule = __webpack_module_cache__[moduleId];
+/******/ 		if (cachedModule !== undefined) {
+/******/ 			return cachedModule.exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = __webpack_module_cache__[moduleId] = {
+/******/ 			// no module.id needed
+/******/ 			// no module.loaded needed
+/******/ 			exports: {}
+/******/ 		};
+/******/ 	
+/******/ 		// Execute the module function
+/******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 	
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
+/******/ 	
+/************************************************************************/
+/******/ 	
+/******/ 	// startup
+/******/ 	// Load entry module and return exports
+/******/ 	// This entry module is referenced by other modules so it can't be inlined
+/******/ 	var __webpack_exports__ = __webpack_require__(0);
+/******/ 	
+/******/ 	return __webpack_exports__;
+/******/ })()
+;
 });
 //# sourceMappingURL=howerest.sdkzer.js.map
