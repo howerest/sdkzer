@@ -1,41 +1,39 @@
-/* --------------------------------------------------------------------------
+/* =========================================================================
 
-    howerest 2018 - <hola@davidvalin.com> | www.howerest.com
-
+    howerest 2023 - <hola@davidvalin.com> | www.howerest.com
+    ___________________
     Apache 2.0 Licensed
-    -------------------
 
-    Implements a standarized & friendly API to deal with RESTful http resources
-    that implement endpoints to perform the CRUD operations
+    Implements a standarized & friendly API to deal with RESTful http
+    resources that implement endpoints to perform the CRUD operations.
 
-    1. Define a resource:
-    2. Start consuming your resource
+      1. Define a resource by extending Sdkzer class
+      2. Define a "baseEndpoint()" function for your class
+      3. Start consuming your resource
 
---------------------------------------------------------------------------- */
-import { WebServices } from 'js-webservices';
-import { ValidationRule } from './validation_rule';
+=========================================================================== */
 
 export interface SdkzerParams {
   id: any
 }
+
 export class Sdkzer<T extends SdkzerParams> {
 
   public attrs:T;
   public pAttrs:T;
-  protected validationRules:Object;
-  public invalidMessages:Object = {};
+  protected validationRules:object;
+  public invalidMessages:object = {};
   public syncing:boolean = false;
-  public lastResponse:WebServices.HttpResponse = null;
+  public lastResponse:Response|null = null;
 
   // Configuration
-  private static DEFAULT_HTTP_HEADERS:WebServices.HttpHeader[] = [];
-  private static PARENTS_FETCH_STRATEGY:String = 'none';
-
+  private static DEFAULT_HTTP_HEADERS:THttpHeaders = {};
+  private static PARENTS_FETCH_STRATEGY:string = 'none';
 
   /**
    * Creates an instance of a model entity with an API to communicate with
    * a resource (http RESTful resource)
-   * @param  {Object}   attrs   The initial attributes for the resource.
+   * @param  {object}   attrs   The initial attributes for the resource.
    *                            Those attributes are in force to defaults()
    */
   public constructor(attrs:T = {} as T) {
@@ -55,24 +53,10 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Configures Sdkzer constants that determine the behaviour of Sdkzer in all
    * classes that extend from Sdkzer in the current scope.
-   * @param options {ISdkzerConfigOptions} The configuration options
+   * @param {ISdkzerConfigOptions} options The configuration options
    */
    public static configure(options:ISdkzerConfigOptions) : void {
-     if (options['defaultHttpHeaders']) {
-       Sdkzer['DEFAULT_HTTP_HEADERS'] = [];
-       for (let i = 0; i < options['defaultHttpHeaders'].length; i++) {
-         Sdkzer['DEFAULT_HTTP_HEADERS'].push(new WebServices.HttpHeader(options['defaultHttpHeaders'][i]));
-       }
-     }
-     // Sdkzer['PARENTS_FETCH_STRATEGY'] = options['parentsFetchStrategy'] ? options['parentsFetchStrategy'] : this['PARENTS_FETCH_STRATEGY'];
-   }
-
-
-   /**
-    * Checks if Sdkzer is using any fetch strategy once received parent ids
-    */
-   private static usingParentsFetchStrategy() : Boolean {
-     return Sdkzer['PARENTS_FETCH_STRATEGY'] !== 'none' ? true : false;
+    Sdkzer.DEFAULT_HTTP_HEADERS = options.defaultHttpHeaders || {};
    }
 
 
@@ -93,9 +77,10 @@ export class Sdkzer<T extends SdkzerParams> {
    * Retrieves the defaults for the entity. Override it using your default
    * attributes if you need any
    */
-  public defaults() : Object {
+  public defaults() : object {
     return {};
   }
+
 
   /**
    * Checks wether an entity is a valid entity.
@@ -111,13 +96,14 @@ export class Sdkzer<T extends SdkzerParams> {
     return true;
   }
 
+
   /**
    * Checks wether an entity is a valid entity
    */
   public validate() : void {
     // Reset previous invalid messages from previous validations
     this.invalidMessages = {};
-    let isValid = true, toValidateAttr, validationRule;
+    let toValidateAttr, validationRule;
     const toValidateAttrs = Object.keys(this.validationRules);
 
     // Validate attribute's ValidationRules
@@ -137,6 +123,7 @@ export class Sdkzer<T extends SdkzerParams> {
     }
   }
 
+
   /**
    * This method can do 3 different things:
    *
@@ -152,7 +139,7 @@ export class Sdkzer<T extends SdkzerParams> {
    * @param attrName  The attribute name that we want to read or set
    * @param value     The attribute value that we want to set for "attrName"
    */
-   public attr(attrName?: string, value?: any) : Object|void {
+   public attr(attrName?: string, value?: any) : object|void {
      // Setting an attribute?
      if (attrName !== undefined && value !== undefined) {
        // TODO: Add before&after-callback
@@ -194,7 +181,7 @@ export class Sdkzer<T extends SdkzerParams> {
    * NOTE: This method will become the interface to connect using different
    * http patterns
    */
-  public resourceEndpoint() : String {
+  public resourceEndpoint() : string {
     return '';
   }
 
@@ -204,15 +191,15 @@ export class Sdkzer<T extends SdkzerParams> {
    * consiered new when it has an "id" attribute set to null and it lacks of
    * a "lastResponse" attribute value
    */
-  public isNew() : Boolean {
-    return ((this.attrs['id'] !== null && this.lastResponse !== null) ? false : true);
+  public isNew() : boolean {
+    return ((this.attrs.id !== null) ? false : true);
   }
 
 
   /**
    * Checks if the record has changed since the last save
    */
-  public hasChanged() : Boolean {
+  public hasChanged() : boolean {
     return (this.changedAttrs().length > 0 ? true : false);
   }
 
@@ -220,7 +207,7 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Checks if an attribute has changed from the origin
    */
-  public hasAttrChanged(attrName:string) : Boolean {
+  public hasAttrChanged(attrName:string) : boolean {
     let i, changedAttrs = this.changedAttrs();
 
     for (i = 0; i < changedAttrs.length; i++) {
@@ -236,10 +223,10 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Retrieves the name of the changed attributes since the last save
    */
-  public changedAttrs() : Array<String> {
+  public changedAttrs() : Array<string> {
     let changedAttrs = [],
-        currAttrs = Object.keys(this['attrs']),
-        prevAttrs = Object.keys(this['pAttrs']),
+        currAttrs = Object.keys(this.attrs),
+        prevAttrs = Object.keys(this.pAttrs),
         i, i2;
 
     for (i=0; i <= currAttrs.length; i++) {
@@ -281,55 +268,52 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Fetches the newest attributes from the origin.
    */
-  public fetch(httpQuery?:WebServices.HttpQuery, camelize: Boolean = true) : Promise<WebServices.HttpResponse> {
+  public async fetch(httpQuery?:IQuery, camelize: boolean = true) : Promise<Response> {
     let _this = this,
         promise;
 
-    if (this.attrs['id']) {
+    if (this.attrs.id) {
       this.syncing = true;
 
-      let query = new WebServices.HttpQuery({
-        httpMethod: "GET",
-        endpoint:   this.baseEndpoint() + '/' + this.attrs['id'],
-        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+      let query:IQuery = {
+        url:        `${this.baseEndpoint()}/${this.attrs.id}`,
+        method:     'GET',
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
         qsParams:   {},
         data:       {}
-      });
-
-      if (typeof(httpQuery) !== 'undefined') {
-        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
       }
 
-      let request = new WebServices.HttpRequest(query);
-      promise = request.promise;
-      promise.then(
+      if (typeof(httpQuery) !== 'undefined') {
+        query = {
+          ...query,
+          ...httpQuery
+        };
+      }
+      
+      try {
+        let response = await fetch(`${query.url}${query.qsParams ? qsToString(query.qsParams): ''}`, {
+          method: query.method,
+          headers: query.headers,
+          body: query.data.toString()
+        });
         // Success
-        (response) => {
-          _this.syncing = false;
-
-          // TODO: Keep lastResponse
-          let parsedData = _this.parseRecord(response.data);
-
-          if (camelize) {
-            // parsedData = util.Camel.camelize(parsedData);
-          }
-          // Keep track of previous attributes
-          _this.pAttrs = parsedData;
-          // Assign the parsed attributes
-          _this.attrs = parsedData;
-        },
-        // Fail
-        (response) => {
-          _this.syncing = false;
+        _this.syncing = false;
+        // TODO: Keep lastResponse
+        let parsedData = _this.parseRecord(JSON.parse(await response.json()));
+        if (camelize) {
+          // parsedData = util.Camel.camelize(parsedData);
         }
-      );
+        // Keep track of previous attributes
+        _this.pAttrs = parsedData;
+        // Assign the parsed attributes
+        _this.attrs = parsedData;
+        return response;
+      } catch(e) {
+        // Fail
+        _this.syncing = false;
+        return Promise.reject(false);
+      }
     }
-
-    if (typeof(promise) === 'undefined') {
-      promise = Promise.reject(false);
-    }
-
-    return promise;
   }
 
 
@@ -337,7 +321,7 @@ export class Sdkzer<T extends SdkzerParams> {
    * Parses a single resource record from an incoming HttpResponse data
    * NOTE: The idea is to return the parsed record data only
    */
-  public parseRecord(data:Object, prefix?:string) : T {
+  public parseRecord(data:object, prefix?:string) : T {
     return prefix ? data[prefix] : data;
   }
 
@@ -346,7 +330,7 @@ export class Sdkzer<T extends SdkzerParams> {
    * Parses a collection of resource records from an incoming HttpResponse data
    * NOTE: The idea is to return the parsed collection of records data only
    */
-  public static parseCollection(data:Array<Object>, prefix?:string) : Array<object> {
+  public static parseCollection(data:Array<object>, prefix?:string) : Array<object> {
     return prefix ? data[prefix] : data;
   }
 
@@ -354,7 +338,7 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Transforms the local attributes to be processed by the origin in JSON format
    */
-  public toOriginJSON() : Object {
+  public toOriginJSON() : object {
     return this.attrs;
   }
 
@@ -362,22 +346,23 @@ export class Sdkzer<T extends SdkzerParams> {
   /**
    * Transforms the local attributes to be processed by the origin in XML format
    */
-  public toOriginXML() : String {
+  public toOriginXML() : string {
     return '';
   }
 
 
   /**
    * Transforms the local attributes to be processed by the origin in a specific format
+   * @param format The format to transform into
    */
-  public toOrigin(format:string="json") : Object|String {
+  public toOrigin(format:string = 'json') : object|string {
     let snapshot;
 
     switch(format) {
-      case "json":
+      case 'json':
         snapshot = this.toOriginJSON();
         break;
-      case "xml":
+      case 'xml':
         snapshot = this.toOriginXML();
         break;
     }
@@ -387,103 +372,120 @@ export class Sdkzer<T extends SdkzerParams> {
 
 
   /**
-   * Saves the local object into the origin
+   * Persists the local state into the origin
    */
-  public save(httpHeaders:WebServices.HttpHeader[] = []) : Promise<WebServices.HttpResponse> {
+  public async save(httpHeaders:THttpHeaders = {}) : Promise<Response> {
     let _this =  this,
-        query,
+        query:IQuery,
         request,
-        httpMethod = (this.attr('id') == null ? "POST" : "PUT");
+        httpMethod:THttpMethod = (this.attr('id') == null ? 'POST' : 'PUT');
 
     // New record in the origin?
-    if (httpMethod=="POST") {
-      query = new WebServices.HttpQuery({
-        httpMethod: httpMethod,
-        endpoint:   this.baseEndpoint(),
-        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+    if (httpMethod === 'POST') {
+      query = {
+        method:     httpMethod,
+        url:        this.baseEndpoint(),
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
         qsParams:   {},
         data:       this.toOriginJSON()
-      });
+      };
 
     // Existing record in the origin?
     } else {
-      query = new WebServices.HttpQuery({
-        httpMethod: httpMethod,
-        endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
-        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+      query = {
+        method:     httpMethod,
+        url:        `${this.baseEndpoint()}/${this.attrs.id}${query && query.qsParams ? qsToString(query.qsParams): ''}`,
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
         qsParams:   {},
         data:       this.toOriginJSON()
-      });
+      };
     }
 
-    request = new WebServices.HttpRequest(query);
-    return request.promise.then(
-      // Success
-      (response) => {
-        if (httpMethod=="POST") {
-          // Append id to attributes
-          _this.attrs['id'] = response.data['id'];
-        }
-        _this.lastResponse = response;
+    try {
+      const response = await fetch(query.url, {
+        method: query.method,
+        headers: query.headers,
+        body: query.data.toString()
+      });
+      if (httpMethod === 'POST') {
+        // Append id to attributes
+        _this.attrs.id = (await response.json())['id'];
       }
-    );
+      _this.lastResponse = response;
+      return response;
+    } catch(e) {
+      return Promise.reject(false);
+    }
   }
 
 
   /**
    * Destroys the current record in the origin
    */
-  public destroy() : Promise<any> {
-    let query,
-        request;
+  public async destroy() : Promise<Response> {
+    let query:IQuery;
 
-    query = new WebServices.HttpQuery({
-      httpMethod: "DELETE",
-      endpoint:   this.baseEndpoint()+'/'+this.attrs['id'],
-      headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
+    query = {
+      method:     'DELETE',
+      url:        `${this.baseEndpoint()}/${this.attrs.id}`,
+      headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
       qsParams:   {},
       data:       {}
-    });
-    request = new WebServices.HttpRequest(query);
-    return request.promise;
+    };
+
+    try {
+      return await fetch(query.url, {
+        method: query.method,
+        headers: query.headers,
+        body: query.data.toString()
+      })
+    } catch(e) {
+      return Promise.reject(false);
+    }
   }
 
 
   /**
    * Retrieves a collection of records from the origin
+   * @param httpQuery An optional query to be merged with the default one 
    */
-  public static fetchIndex(httpQuery?:WebServices.HttpQuery) : Promise<Array<any>> {
-    let query,
+  public static async fetchIndex(httpQuery?:IQuery) : Promise<Array<any>> {
+    let query:IQuery,
         request,
         instancesPromise,
         instances = [],
         instance;
 
-    instancesPromise = new Promise((resolve, reject) => {
-      query = new WebServices.HttpQuery({
-        httpMethod: "GET",
-        endpoint:   (new this().baseEndpoint()),
-        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-        qsParams:   {},
-        data:       {}
-      });
+    instancesPromise = new Promise(async (resolve, reject) => {
+      query = {
+        method:     'GET',
+        url:        `${new this().baseEndpoint()}${httpQuery && httpQuery.qsParams ? qsToString(httpQuery.qsParams): ''}`,
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
+        qsParams:   {}
+      };
 
       if (typeof(httpQuery) !== 'undefined') {
-        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
+        query = {
+          ...query,
+          ...httpQuery
+        };
       }
 
-      request = new WebServices.HttpRequest(query);
-      request.promise.then((response) => {
-        const collectionList = this.parseCollection(response.data);
-        for(let i in collectionList) {
+      try {
+        const response = await fetch(query.url, {
+          method: query.method,
+          headers: query.headers
+        });
+        const collectionList = this.parseCollection(JSON.parse(await response.json()));
+        for (let i in collectionList) {
           instance = new this();
           instance.attrs = instance.pAttrs = instance.parseRecord(collectionList[i]);
           instances.push(instance);
         }
         resolve(instances);
-      }, (error) => {
-        reject(error);
-      });
+      } catch(e) {
+        reject(e);
+      }
     });
 
     return instancesPromise;
@@ -495,42 +497,77 @@ export class Sdkzer<T extends SdkzerParams> {
    * @param id          The record id that we want to fetch by
    * @param httpQuery   Use a HttpQuery instance to override the default query
    */
-  public static fetchOne(id: number|string, httpQuery?:WebServices.HttpQuery) : Promise<any>  {
+  public static fetchOne(id: number|string, httpQuery?:IQuery) : Promise<any>  {
     let model = new this(),
-        query,
-        request,
+        query:IQuery,
         instancePromise,
         instance;
 
-    instancePromise = new Promise((resolve, reject) => {
-      query = new WebServices.HttpQuery({
-        httpMethod: "GET",
-        endpoint:   model.baseEndpoint()+'/'+id,
-        headers:    Sdkzer.DEFAULT_HTTP_HEADERS ? Sdkzer.DEFAULT_HTTP_HEADERS : [],
-        qsParams:   {},
-        data:       {}
-      });
+    instancePromise = new Promise(async (resolve, reject) => {
+      query = {
+        method:     'GET',
+        url:        `${model.baseEndpoint()}/${id}${httpQuery && httpQuery.qsParams ? qsToString(httpQuery.qsParams) : ''}`,
+        headers:    Sdkzer.DEFAULT_HTTP_HEADERS || {},
+        qsParams:   {}
+      };
 
       if (typeof(httpQuery) !== 'undefined') {
-        query = WebServices.Merger.mergeHttpQueries([ query, httpQuery ]);
+        query = {
+          ...query,
+          ...httpQuery
+        }
       }
 
-      request = new WebServices.HttpRequest(query);
-      request.promise.then((response) => {
+      try {
+        const response = await fetch(query.url, {
+          method: query.method,
+          headers: query.headers
+        })
         instance = new this();
-        instance.attrs = instance.pAttrs = instance.parseRecord(response.data);
+        instance.attrs = instance.pAttrs = instance.parseRecord(JSON.parse(await response.json()));
         resolve(instance);
-      }, (error) => {
-        reject(error);
-      });
+      } catch(e) {
+        reject(e);
+      }
     });
     return instancePromise;
   }
 }
 
+function qsToString(qs:IQueryString) {
+  let qsPart = '';
+  // Add query string to url
+  if (Object.keys(qs).length > 0) {
+    qsPart += '?';
+    let i=0;
+    let keys = Object.keys(qs);
+    for(let key of keys) {
+      if (i > 0) { qsPart += '&'; }
+      qsPart += `${key}=${qs[key]}`;
+      i++;
+    }
+  }
+  return qsPart;
+}
+
+export type THttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE'
+export type THttpHeaders = {
+  [key:string] : string
+}
+export interface IQueryString {
+  [key:string] : string | number
+}
+
+export interface IQuery {
+  url?:        string,
+  method?:     THttpMethod,
+  headers?:    THttpHeaders,
+  qsParams?:   IQueryString,
+  data?:       {}
+}
+
 export interface ISdkzerConfigOptions {
-  defaultHttpHeaders:string;
-  // parentsFetchStrategy?:String;
+  defaultHttpHeaders: THttpHeaders
 }
 
 export { ValidationRule } from "./validation_rule";

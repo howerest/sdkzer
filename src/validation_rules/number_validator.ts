@@ -5,7 +5,7 @@ interface NumberValidatorParams { min: number, max: number }
 export class NumberValidator extends ValidationRule {
   protected conditions:Array<Function> = [
     () => {
-      let match:Boolean = true;
+      let match:boolean = true;
 
       if (this.toValue < this.params['min']) {
         match = false;

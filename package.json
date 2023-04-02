@@ -1,7 +1,7 @@
 {
 	"name": "sdkzer",
-	"version": "0.7.3",
-	"description": "Implements a simple API to deal with RESTful web services (endpoints) from Javascript.",
+	"version": "0.8.1",
+	"description": "Implements a simple API to build a Model connected to a RESTful api from Javascript.",
 	"keywords": [
 		"sdk",
 		"javascript",
@@ -44,31 +44,20 @@
 	],
 	"main": "dist/howerest.sdkzer.js",
 	"typings": "dist/howerest.sdkzer.d.ts",
-	"dependencies": {
-		"js-webservices": "^0.1.3"
-	},
 	"devDependencies": {
-		"@babel/polyfill": "^7.0.0",
-		"@types/es6-promise": "0.0.32",
-		"@types/jest": "^23.3.5",
-		"@types/node": "^6.0.58",
 		"awesome-typescript-loader": "^5.2.0",
-		"jest": "^23.6.0",
-		"ts-jest": "^23.10.4",
+		"jest": "^29.5.0",
+		"jest-environment-jsdom": "^29.5.0",
+		"ts-jest": "^29.0.5",
 		"ts-loader": "^5.2.1",
 		"tslint": "^4.3.1",
-		"typedoc": "^0.11.1",
-		"typescript": "^3.1.3",
-		"uglifyjs-webpack-plugin": "^1.2.7",
-		"utf8": "2.1.0",
-		"webpack": "^4.12.0",
-		"webpack-cli": "^3.0.8",
-		"xhr-mock": "^2.4.1"
+		"typescript": "^5.0.3",
+		"utf8": "2.1.0"
 	},
 	"optionalDependencies": {},
 	"scripts": {
 		"test": "yarn jest --coverage --collectCoverageFrom='[\"src/*.ts\"]' --verbose",
-		"document": "yarn typedoc --mode file --out doc src/*.ts",
+		"document": "yarn typedoc --tsconfig tsconfig.json --excludePrivate --exclude 'node_modules/**' --out doc src/howerest.sdkzer.ts",
 		"release": "yarn test && rm -rf dist && webpack --config webpack.conf.js && yarn document && mv doc dist && mv coverage dist"
 	},
 	"jest": {
@@ -82,7 +71,20 @@
 		},
 		"testMatch": [
 			"**/__test__/**/*_spec.+(ts)"
-		]
+		],
+		"setupFiles": [
+			"./jestSetup.js"
+		],
+		"testEnvironment": "jsdom"
 	},
-	"private": false
+	"private": false,
+	"dependencies": {
+		"@babel/polyfill": "^7.12.1",
+		"@types/es6-promise": "^3.3.0",
+		"@types/jest": "^29.5.0",
+		"typedoc": "^0.23.28",
+		"uglifyjs-webpack-plugin": "^2.2.0",
+		"webpack": "^5.77.0",
+		"webpack-cli": "^5.0.1"
+	}
 }

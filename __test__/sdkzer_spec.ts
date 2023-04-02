@@ -8,8 +8,7 @@
     Sdkzer, which is how the developer will use Sdkzer (check fixtures.ts)
 
 --------------------------------------------------------------------------- */
-import { WebServices } from "js-webservices";
-import { Sdkzer, SdkzerParams } from "../src/howerest.sdkzer";
+import { IQuery, Sdkzer, SdkzerParams } from "../src/howerest.sdkzer";
 import {
   buildSdkzerModelEntity,
   SampleValidationRuleFixture,
@@ -17,7 +16,6 @@ import {
   SampleGlobalValidationRuleFixture,
   EntityFields
 } from "./fixtures";
-import xmlMock from 'xhr-mock';
 
 const emptyDto: EntityFields = {
   id: 123
@@ -27,8 +25,15 @@ describe('Sdkzer', () => {
   let defaultAttributes;
   let initialAttributes;
 
+  beforeEach(() =>
+    jest.spyOn(window, 'fetch')
+  );
+
+  afterEach(() =>
+    jest.resetAllMocks()
+  );
+
   beforeEach(() => {
-    xmlMock.setup();
     defaultAttributes = {
       id: 1001,
       name: "An initial item name",
@@ -53,24 +58,17 @@ describe('Sdkzer', () => {
     };
   });
 
-  afterEach(() => {
-    xmlMock.teardown();
-  });
-
   describe('.constructor', () => {
-    describe('without initial attributes', () => {
-      test("should not initialize with a defined id", () => {
-        let sdkzer = new Sdkzer();
-        expect(sdkzer['attrs']['id']).toEqual(null);
-      });
-
-      test("should not have any attribute defined", () => {
-        let sdkzer = new Sdkzer();
-        expect(Object.keys(sdkzer['attrs']).length).toEqual(1);
+    describe('without providing initial attributes', () => {
+      test("should not initialize with a defined id or other attributes", () => {
+        const sdkzer = new Sdkzer();
+        expect(sdkzer.attrs).toEqual({
+          id: null
+        });
       });
     });
 
-    describe('with initial attributes defined', () => {
+    describe('providing initial attributes', () => {
       let sdkzer, initialAttrs;
       beforeEach(() => {
         initialAttrs = {
@@ -81,40 +79,32 @@ describe('Sdkzer', () => {
       });
 
       test('should set the attributes (attr) and previous attributes (pAttrs) using the initial attributes', () => {
-        initialAttrs['id'] = null;
+        initialAttrs.id = null;
         expect(sdkzer.attrs).toEqual(initialAttrs);
         expect(sdkzer.pAttrs).toEqual(initialAttrs);
-      });
-
-      describe('setting an id', () => {
-        beforeEach(() => {
-          sdkzer = new Sdkzer({ id: 1000 });
-        });
-
-        test('should keep the initial id in the resulted attributes', () => {
-          expect(sdkzer.attrs['id']).toEqual(1000);
-        });
       });
     });
 
     describe('when default attributes are setted', () => {
       beforeEach(() => {
-        spyOn(Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);
+        jest.spyOn(Sdkzer.prototype, "defaults").mockReturnValue(defaultAttributes);
       });
 
-      test('should set the default attributes', () => {
-        let sdkzer = new Sdkzer();
-        expect(sdkzer['attrs']).toEqual(defaultAttributes);
+      describe('without providing initial attributes', () => {
+        test('should set the default attributes', () => {
+          let sdkzer = new Sdkzer();
+          expect(sdkzer.attrs).toEqual(defaultAttributes);
+        });
       });
 
-      describe('with initial attributes defined', () => {
+      describe('providing initial attributes', () => {
         let sdkzer;
 
         beforeEach(() => {
           sdkzer = new Sdkzer(initialAttributes)
         });
 
-        test('should override the default attributes', () => {
+        test('should override the initial attributes with the default attributes', () => {
           expect(sdkzer.attrs).toEqual({
             id: 2012,
             name: "A different name",
@@ -137,64 +127,42 @@ describe('Sdkzer', () => {
     });
   });
 
-  /*
-   * NOTE: This is not being used yet
-   */
   describe('.configure', () => {
-    xtest('should configure the default http headers', () => {
-
+    test('should configure the default http headers', () => {
+      expect(Sdkzer['DEFAULT_HTTP_HEADERS']).toEqual({});
+      Sdkzer.configure({
+        defaultHttpHeaders: {
+          'auth-token': 'mysecrettoken'
+        }
+      });
+      expect(Sdkzer['DEFAULT_HTTP_HEADERS']).toEqual({
+        'auth-token': 'mysecrettoken'
+      });
+      // reset it for next tests
+      Sdkzer['DEFAULT_HTTP_HEADERS'] = {};
     });
   });
 
   describe('.setDefaults', () => {
     test('should update the attributes with the default attributes', () => {
-      spyOn(Sdkzer.prototype, "defaults").and.returnValue(defaultAttributes);
-      let sdkzer = new Sdkzer<EntityFields>({ id: 123, name: 'Chuck Norris' });
-      // Defaults should be overwritten
+      jest.spyOn(Sdkzer.prototype, "defaults").mockReturnValue(defaultAttributes);
+      const sdkzer = new Sdkzer<EntityFields>({ id: 123, name: 'Chuck Norris' });
+      sdkzer.attr("name", "Another name");
+      expect(sdkzer.attrs).toEqual({
+        ...defaultAttributes,
+        id: 123,
+        name: "Another name"
+      });
+      // defaults should be overwritten when calling it manually
       sdkzer.setDefaults();
-      expect(sdkzer['attrs']).toEqual(defaultAttributes);
+      expect(sdkzer.attrs).toEqual(defaultAttributes);
     });
   });
-
 
   describe('.defaults', () => {
-    test('shouldnt have defaults', () => {
-      let sdkzer = new Sdkzer<EntityFields>(emptyDto);
+    test('should have a defaults() function defined that returns an empty object (no default attributes)', () => {
+      const sdkzer = new Sdkzer<EntityFields>(emptyDto);
       expect(sdkzer.defaults()).toEqual({});
-    });
-  });
-
-  describe('.isValid()', () => {
-    describe("when the entity has at least one invalid message in it", () => {
-      let Item, itemInstance;
-      beforeEach(() => {
-        Item = buildSdkzerModelEntity();
-        itemInstance = new Item({ id: 1 });
-        itemInstance['invalidMessages'] = {
-          name: ["name is invalid"],
-          items: []
-        };
-      });
-
-      test("should be invalid", () => {
-        expect(itemInstance.isValid()).toEqual(false);
-      });
-    });
-
-    describe("when the entity has not any invalid message in it", () => {
-      let Item, itemInstance;
-      beforeEach(() => {
-        Item = buildSdkzerModelEntity();
-        Item['invalidMessages'] = {
-          name: [],
-          items: []
-        };
-        itemInstance = new Item({ id: 1 });
-      });
-
-      test("should be valid", () => {
-        expect(itemInstance.isValid()).toEqual(true);
-      });
     });
   });
 
@@ -217,7 +185,7 @@ describe('Sdkzer', () => {
 
     describe("without any ValidationRule", () => {
       beforeEach(() => {
-        itemInstance['validationRules'] = {
+        itemInstance.validationRules = {
           name: [],
           items: []
         };
@@ -225,22 +193,22 @@ describe('Sdkzer', () => {
 
       test("should not generate invalid errors", () => {
         itemInstance.validate();
-        expect(itemInstance['invalidMessages']).toEqual({});
+        expect(itemInstance.invalidMessages).toEqual({});
       });
     });
 
     describe("with ValidationRules", () => {
-      describe("when at least one ValidationRule doesn't pass", () => {
+      describe("when one ValidationRule doesn't pass", () => {
         beforeEach(() => {
-          itemInstance['validationRules'] = {
+          itemInstance.validationRules = {
             name: [new SampleValidationRuleFixture2()], // This will fail
-            items: [new SampleValidationRuleFixture()]  //  This will pass
+            items: [new SampleValidationRuleFixture()]  // This will pass
           };
         });
 
-        test("should generate invalid error messages for every invalid attribute", () => {
+        test("should generate invalid error messages for the invalid attribute", () => {
           itemInstance.validate();
-          expect(itemInstance['invalidMessages']).toEqual({
+          expect(itemInstance.invalidMessages).toEqual({
             name: ["Invalid message"],
             items: []
           });
@@ -249,23 +217,23 @@ describe('Sdkzer', () => {
 
       describe("when all ValidationRules pass", () => {
         beforeEach(() => {
-          itemInstance['validationRules'] = {
-            name: [new SampleValidationRuleFixture()], // This will pass
-            items: [new SampleValidationRuleFixture()]  //  This will pass
+          itemInstance.validationRules = {
+            name: [new SampleValidationRuleFixture()],  // This will pass
+            items: [new SampleValidationRuleFixture()]  // This will pass
           };
         });
 
         describe("when the record was previously invalid", () => {
           test("should not contain invalid error messages even when the entity was previously invalid", () => {
-            // Make it invalid
-            itemInstance['invalidMessages'] = {
+            // make it initially invalid
+            itemInstance.invalidMessages = {
               name: ["name is invalid"],
               items: []
             };
 
-            // Make it pass validation now
+            // make it pass validation now
             itemInstance.validate();
-            expect(itemInstance['invalidMessages']).toEqual({
+            expect(itemInstance.invalidMessages).toEqual({
               name: [],
               items: []
             });
@@ -275,27 +243,51 @@ describe('Sdkzer', () => {
     });
   });
 
+  describe(".isValid", () => {
+    test("it should be valid when there are no validation error messages", () => {
+      const Item = buildSdkzerModelEntity();
+      const itemInstance = new Item({ id: 1 });
+      itemInstance.invalidMessages = {
+        name: [],
+        items: []
+      };
+      expect(itemInstance.isValid()).toEqual(true);
+    });
+
+    test("it should be invalid when there are no validation error messages", () => {
+      const Item = buildSdkzerModelEntity();
+      const itemInstance = new Item({ id: 1 });
+      itemInstance.invalidMessages = {
+        name: ["name is invalid"],
+        items: []
+      };
+      expect(itemInstance.isValid()).toEqual(false);
+    });
+  });
+
   describe('.attr', () => {
     let sdkzer;
 
     beforeEach(() => {
       sdkzer = new Sdkzer();
-      sdkzer.attrs['pos'] = 1999;
+      sdkzer.attrs.pos = 1999;
     });
 
     describe('when a value is not specified', () => {
-      test('should read the attribute value', () => {
+      test('should read the attribute value based on its key', () => {
         expect(sdkzer.attr("pos")).toEqual(1999);
       });
 
       describe('when the attribute key value uses dots notation', () => {
         beforeEach(() => {
-          sdkzer.attrs['personalData'] = {};
-          sdkzer.attrs['personalData']['name'] = 'Whatever Name';
+          sdkzer.attrs.personalData = {};
+          sdkzer.attrs.personalData.name = {
+            first: "David"
+          };
         });
 
-        test("should read the attribute by accessing to the json keys between each dot", () => {
-          expect(sdkzer.attr('personalData.name')).toEqual('Whatever Name');
+        test("should read the attribute by accessing to the json keys nested between each dot", () => {
+          expect(sdkzer.attr('personalData.name.first')).toEqual('David');
         });
       });
     });
@@ -303,98 +295,116 @@ describe('Sdkzer', () => {
     describe('when a value as second parameter is specified', () => {
       test("should set the value for the attribute name specified in the first parameter", () => {
         sdkzer.attr('pos', 2000);
-        expect(sdkzer.attrs['pos']).toEqual(2000);
+        expect(sdkzer.attrs.pos).toEqual(2000);
       });
 
       describe('when the attribute key value uses dots notation', () => {
         beforeEach(() => {
-          sdkzer.attrs['personalData'] = {};
-          sdkzer.attrs['personalData']['name'] = 'Whatever Name';
+          sdkzer.attrs.personalData = {};
+          sdkzer.attrs.personalData.name = {
+            initial: "Mr."
+          };
         });
 
         test("should set the right attribute by accessing to the json keys between each dot", () => {
-          sdkzer.attr('personalData.name', 'Another Name');
-          expect(sdkzer.attrs['personalData']['name']).toEqual('Another Name');
+          sdkzer.attr('personalData.name.initial', 'Mr.');
+          expect(sdkzer.attrs.personalData.name.initial).toEqual('Mr.');
         });
+      });
+    });
+
+    describe("when calling it without parameters", () => {
+      test("should return all attributes of the instance", () => {
+        expect(sdkzer.attr()).toEqual(sdkzer.attrs);
       });
     });
   });
 
   describe('.baseEndpoint', () => {
-    test('shouldnt have an empty default base endpoint defined', () => {
-      let sdkzer = new Sdkzer<EntityFields>(emptyDto);
+    test('shouldnt have an empty default base endpoint defined (function should exist)', () => {
+      const sdkzer = new Sdkzer<EntityFields>(emptyDto);
       expect(sdkzer.baseEndpoint()).toEqual(null);
     });
   });
 
   describe('.resourceEndpoint', () => {
-    test('should have a default resourceEndpoint defined', () => {
-      let sdkzer = new Sdkzer();
+    test('should have a default resourceEndpoint defined (function should exist)', () => {
+      const sdkzer = new Sdkzer();
       expect(typeof(sdkzer.resourceEndpoint)).toEqual('function');
+      expect(sdkzer.resourceEndpoint()).toEqual("");
     });
   });
 
   describe('.isNew', () => {
-    test("should check if the record exists in the origin", () => {
-      let sdkzer = new Sdkzer();
+    let sdkzer;
+
+    test("should return true when there is no id in the record", () => {
+      sdkzer = new Sdkzer();
       expect(sdkzer.isNew()).toEqual(true);
-      sdkzer['attrs']['id'] = 1;
-      sdkzer['lastResponse'] = null;
-      expect(sdkzer.isNew()).toEqual(true);
-      // Since we have a lastResponse, the entity was synced
-      sdkzer.lastResponse = new WebServices.HttpResponse("", {}, "");
+    });
+
+    test("should return false when there is an id in the record", () => {
+      sdkzer = new Sdkzer({ id: 2 });
       expect(sdkzer.isNew()).toEqual(false);
     });
   });
 
-
   describe('.hasChanged', () => {
-    test("should check if the record attributes has changed from the origin", () => {
-      let sdkzer = new Sdkzer<EntityFields>({ id: 1 });
+    test("should return false when no attributes have changed since last sync", () => {
+      const sdkzer = new Sdkzer<EntityFields>({ id: 1 });
       expect(sdkzer.hasChanged()).toEqual(false);
-      sdkzer['pAttrs'] = { id: 123, name: 'Previous name' };
-      sdkzer['attrs'] = { id: 123, name: 'New name' };
+    });
+
+    test("should return true when attributes have changed since last sync", () => {
+      const sdkzer = new Sdkzer<EntityFields>({ id: 1 });
+      sdkzer.pAttrs = { id: 123, name: 'Previous name' };
+      sdkzer.attrs = { id: 123, name: 'New name' };
       expect(sdkzer.hasChanged()).toEqual(true);
     });
   });
 
-
   describe('.hasAttrChanged', () => {
-    test("should check if the record has any specific attribute that differs from the origin", () => {
+    test("should return true when the attribute has changed since last sync", () => {
       let sdkzer = new Sdkzer<EntityFields>();
-      sdkzer['pAttrs'] = { id: 123, name: 'First Name' };
-      sdkzer['attrs'] = { id: 123, name: 'First Name' };
-      expect(sdkzer.hasAttrChanged('name')).toEqual(false);
-      sdkzer['attrs']['name'] = 'Oh yes';
+      sdkzer.pAttrs = { id: 123, name: 'First Name' };
+      sdkzer.attrs.name = 'Oh yes';
       expect(sdkzer.hasAttrChanged('name')).toEqual(true);
     });
-  });
 
+    test("should return false when the attribute has not been changed since last sync", () => {
+      let sdkzer = new Sdkzer<EntityFields>();
+      sdkzer.pAttrs = { id: 123, name: 'First Name' };
+      sdkzer.attrs = { id: 123, name: 'First Name' };
+      expect(sdkzer.hasAttrChanged('name')).toEqual(false);
+    });
+  });
 
   describe('.changedAttrs', () => {
     test("should retrieve a list of attributes different from the origin", () => {
       let sdkzer = new Sdkzer<EntityFields>();
       expect(sdkzer.changedAttrs()).toEqual([]);
-      sdkzer['attrs'].id = 123;
-      sdkzer['attrs'].age = 29;
-      sdkzer['pAttrs'] = {
+      sdkzer.attrs = {
         id: 123,
-        age: null
+        age: 29
+      };
+      sdkzer.attrs.age = 29;
+      sdkzer.pAttrs = {
+        id: 123,
+        age: 109
       };
       expect(sdkzer.changedAttrs()).toEqual(['age']);
     });
   });
 
-
   describe('.prevAttrs', () => {
     test("should retrieve a list of the previous values for the attributes changed from the origin", () => {
-      let sdkzer = new Sdkzer<EntityFields>({
+      const sdkzer = new Sdkzer<EntityFields>({
         id: 123,
         name: 'My initial name'
       });
-      sdkzer['pAttrs'] = { id: null, name: 'My other name' }; // This is like a sync with origin
+      sdkzer.pAttrs = { id: null, name: 'My other name' }; // This is like a sync with origin
       expect(sdkzer.prevAttrs()).toEqual({ id: null, name: 'My other name' });
-      sdkzer['attrs'] = {
+      sdkzer.attrs = {
         id: 123,
         name: "A Special Name",
         age: 97
@@ -407,83 +417,48 @@ describe('Sdkzer', () => {
     });
   });
 
-
   describe('.prevValue', () => {
     test("should retrieve the previous attribute value before last sync from origin", () => {
       let sdkzer = new Sdkzer<EntityFields>({
         id: 123,
         name: 'My initial name'
       });
-      sdkzer['attrs']['name'] = "New name";
+      sdkzer.attrs.name = "New name";
       expect(sdkzer.prevValue('name')).toEqual('My initial name');
     });
   });
-
 
   describe('.fetch', () => {
     let Item, itemInstance, responseJSON, responseText;
 
     describe('when the record has an id setted', () => {
-      beforeEach(() => {
-        responseJSON = {
-          id: 1000,
-          name: 'An age group',
-          items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
-        };
-        responseText = JSON.stringify(responseJSON);
-        Item = buildSdkzerModelEntity();
-        itemInstance = new Item({ id: 1 });
-      });
-
-      describe('when not using custom HttpQuery', () => {
-        test('should make an http request to the right endpoint', async () => {
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            expect(req.url()['host']).toEqual('api.mydomain.com');
-            expect(req.url()['path']).toEqual('/v1/items/1');
-            expect(req.url()['protocol']).toEqual('http');
-            expect(req.method()).toEqual("GET");
-            return res.status(201).body(responseText);
-          });
-          await itemInstance.fetch();
-        });
-      });
-
-      describe('when passing a custom HttpQuery', () => {
-        test("should merge the HttpQuery with the default HttpQuery", async () => {
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            expect(req.headers()["auth-token"]).toEqual('MyMegaScretToken');
-            expect(req.url()['host']).toEqual('api.mydomain.com');
-            expect(req.url()['path']).toEqual('/v1/items/1');
-            expect(req.url()['protocol']).toEqual('http');
-            expect(req.method()).toEqual("GET");
-            return res.status(201).body(responseText);
-          });
-          let customHttpQuery = new WebServices.HttpQuery({
-            headers: [
-              new WebServices.HttpHeader({ 'auth-token': 'MyMegaScretToken' })
-            ]
-          });
-          await itemInstance.fetch(customHttpQuery);
-        });
-      });
-
       describe('in a successful request', () => {
+        beforeEach(() => {
+          responseJSON = {
+            id: 1000,
+            name: 'An age group',
+            items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+          };
+          responseText = JSON.stringify(responseJSON);
+          Item = buildSdkzerModelEntity();
+          itemInstance = new Item({ id: 1 });
+          (window.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            status: 200,
+            json: async () => (responseText)
+          });
+        });
+
         // This will be successful since we have the requested mocked up
         test("should fetch data from the origin and resolve it in a Promise", async () => {
           let responseData;
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            return res.status(201).body(responseText);
-          });
           const response = await itemInstance.fetch();
-          responseData = response.data;
+          responseData = JSON.parse(await response.json());
           expect(responseData).toEqual(responseJSON);
         });
 
         test("should set a property called 'syncing' during syncing with the right state", (done) => {
           expect(itemInstance.syncing).toEqual(false);
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            return res.status(201).body(responseText);
-          });
           itemInstance.fetch().then(
             // Success
             () => {
@@ -495,9 +470,6 @@ describe('Sdkzer', () => {
         });
 
         test('should update the attributes parsed from the origin', async () => {
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            return res.status(201).body(responseText);
-          });
           const response = await itemInstance.fetch();
           // The record attributes here must be the ones that came from the stubRequest
           expect(itemInstance.attrs).toEqual(responseJSON);
@@ -505,23 +477,49 @@ describe('Sdkzer', () => {
 
         test("should take the parsed attributes from the origin and store them as previous attributes", async () => {
           // this.pAttrs is used to compare with this.attrs and determine the attributes that has changed
-          let originalAttrs = {
-            id: 1,
-            name: "A good choice",
-            items: [1, 100, 1, 60]
-          };
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            return res.status(201).body(responseText);
-          });
           await itemInstance.fetch();
           expect(itemInstance.pAttrs).toEqual(responseJSON);
+        });
+
+        describe('when not using custom HttpQuery', () => {
+          test('should make an http request to the right endpoint', async () => { 
+            await itemInstance.fetch();
+            expect(fetch).toHaveBeenCalledWith(
+              "http://api.mydomain.com/v1/items/1",
+              {
+                method: "GET",
+                headers: {},
+                body: "[object Object]"
+              }
+            );
+          });
+        });
+  
+        describe('when passing a custom HttpQuery', () => {
+          test("should merge the HttpQuery with the default HttpQuery", async () => {
+            const customHttpQuery:IQuery = {
+              headers: { 'auth-token': 'MyMegaScretToken' }
+            };
+            await itemInstance.fetch(customHttpQuery);
+            expect(fetch).toHaveBeenCalledWith(
+              "http://api.mydomain.com/v1/items/1",
+              {
+                method: "GET",
+                headers: { "auth-token": "MyMegaScretToken" },
+                body: "[object Object]"
+              }
+            );
+          });
         });
       });
 
       describe('in a failed request', () => {
         beforeEach(() => {
-          xmlMock.get('http://api.mydomain.com/v1/items/1', (req, res) => {
-            return res.status(422).body(responseText);
+          jest.resetAllMocks();
+          (window.fetch as jest.Mock).mockRejectedValue({
+            ok: false,
+            status: 422,
+            json: async () => (responseText)
           });
         });
 
@@ -530,7 +528,9 @@ describe('Sdkzer', () => {
           expect(itemInstance.syncing).toEqual(false);
           itemInstance.fetch().then(
             // Success
-            () => {},
+            () => {
+              // should not be called  
+            },
             // Fail
             () => {
               expect(itemInstance.syncing).toEqual(false);
@@ -538,6 +538,16 @@ describe('Sdkzer', () => {
             }
           );
           expect(itemInstance.syncing).toEqual(true);
+        });
+
+        test("it should resolve into an error", (done) => {
+          itemInstance.fetch().then(
+            () => {},
+            (error) => {
+              expect(error).toEqual(error);
+              done();
+            }
+          );
         });
       });
     });
@@ -547,11 +557,10 @@ describe('Sdkzer', () => {
         itemInstance = new Sdkzer();
       });
 
-      // xtest("shouldn't make any request", () => {
-      //   spyOn(WebServices.HttpRequest, 'constructor');
-      //   itemInstance.fetch();
-      //   expect(WebServices.HttpRequest.constructor).not.toHaveBeenCalled();
-      // });
+      test("shouldn't make any request", () => {
+        itemInstance.fetch();
+        expect(fetch).not.toHaveBeenCalled();
+      });
     });
   });
 
@@ -574,34 +583,62 @@ describe('Sdkzer', () => {
     test("should parse the data that is on a specific key when a prefix attribute is specified", () => {
       json = {
         metadata: {
-          protocol: 'https',
+          offset: 0,
+          limit: 25,
+          count: 1,
           response_time: '60ms'
         },
-        data: {
+        data: [
+          {
+            id: 1001,
+            name: "Bruce Lee"
+          }
+        ]
+      };
+      expect(itemInstance.parseRecord(json, 'data')).toEqual([
+        {
           id: 1001,
           name: "Bruce Lee"
         }
-      };
-      expectedParsedJson = {
-        id: 1001,
-        name: "Bruce Lee"
-      };
-
-      expect(itemInstance.parseRecord(json, 'data')).toEqual(expectedParsedJson);
+      ]);
     });
   });
 
 
   describe('.toOriginJSON', () => {
-    test("should return the record attributes as they are", () => {
-      let sdkzer = new Sdkzer<EntityFields>();
-      sdkzer['attrs'] = {
-        id: 1,
-        name: "Steve Jobs"
-      };
-      expect(sdkzer.toOriginJSON()).toEqual({
-        id: 1,
-        name: "Steve Jobs"
+    describe("with the default parser", () => {
+      test("should return the record attributes as they are for the origin", () => {
+        const sdkzer = new Sdkzer<EntityFields>();
+        sdkzer.attrs = {
+          id: 1,
+          name: "Steve Jobs"
+        };
+        expect(sdkzer.toOriginJSON()).toEqual({
+          id: 1,
+          name: "Steve Jobs"
+        });
+      });
+    });
+
+    describe("with a custom parser", () => {
+      test("should parse the record attributes correctly for the origin", () => {
+        const sdkzer = new Sdkzer<EntityFields>({
+          id: null,
+          name: "Chuck Norris",
+          age: 30
+        });
+        Sdkzer.prototype.toOriginJSON = function() {
+          return {
+            id: this.attrs.id,
+            full_name: this.attrs.name, // note different attribute name
+            age: this.attrs.age
+          };
+        };
+        expect(sdkzer.toOriginJSON()).toEqual({
+          id: null,
+          full_name: "Chuck Norris",
+          age: 30
+        });
       });
     });
   });
@@ -617,89 +654,125 @@ describe('Sdkzer', () => {
     });
    */
 
-
   describe('.toOrigin', () => {
-    test("should retrieve the attributes in JSON format when 'json' format is specified", () => {
-      let sdkzer = new Sdkzer(initialAttributes);
-      spyOn(Sdkzer.prototype, "toOriginJSON");
-      sdkzer.toOrigin('json');
+    test("should retrieve the attributes in JSON format by default", () => {
+      const sdkzer = new Sdkzer(initialAttributes);
+      jest.spyOn(Sdkzer.prototype, "toOriginJSON");
+      const toOriginResult = sdkzer.toOrigin();
       expect(sdkzer.toOriginJSON).toHaveBeenCalled();
-      expect(sdkzer.toOrigin('json')).toEqual(sdkzer.toOriginJSON());
+      expect(toOriginResult).toEqual(sdkzer.toOriginJSON());
+    });
+
+    test("should retrieve the attributes in JSON format when 'json' format is specified", () => {
+      const sdkzer = new Sdkzer(initialAttributes);
+      jest.spyOn(Sdkzer.prototype, "toOriginJSON");
+      const toOriginResult = sdkzer.toOrigin('json');
+      expect(sdkzer.toOriginJSON).toHaveBeenCalled();
+      expect(toOriginResult).toEqual(sdkzer.toOriginJSON());
     });
 
     test("should retrieve the attributes in xml format when 'xml' format is specified", () => {
       let sdkzer = new Sdkzer(initialAttributes);
-      spyOn(Sdkzer.prototype, "toOriginXML");
-      sdkzer.toOrigin('xml');
+      jest.spyOn(Sdkzer.prototype, "toOriginXML");
+      const toOriginResult = sdkzer.toOrigin('xml');
       expect(sdkzer.toOriginXML).toHaveBeenCalled();
-      expect(sdkzer.toOrigin('xml')).toEqual(sdkzer.toOriginXML());
+      expect(toOriginResult).toEqual(sdkzer.toOriginXML());
     });
   });
-
 
   describe('.save', () => {
     let Item, itemInstance, attributes, responseText;
 
-    describe("when the record has an id setted (existing record in the origin)", () => {
-      beforeEach(() => {
-        // Since we are not testing backend http API, both attributes and response match
-        attributes = {
-          id: 999,
-          name: 'An age group',
-          items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
-        };
-        responseText = JSON.stringify(attributes);
-        Item = buildSdkzerModelEntity();
-        itemInstance = new Item(attributes);
-      });
-
-      test("should update the attributes in the origin using the local attributes and using PUT method", async () => {
-        xmlMock.put('http://api.mydomain.com/v1/items/999', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items/999');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.body()).toEqual(responseText);
-          expect(req.method()).toEqual("PUT");
-          return res.status(201).body(responseText);
+    describe("in a successful request", () => {
+      describe("when the record has an id setted (considered an existing record in the origin)", () => {
+        beforeEach(() => {
+          // Since we are not testing backend http API, both attributes and response match
+          attributes = {
+            id: 999,
+            name: 'An age group',
+            items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+          };
+          responseText = JSON.stringify(attributes);
+          Item = buildSdkzerModelEntity();
+          itemInstance = new Item(attributes);
+          (window.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            status: 200,
+            json: async () => (responseText)
+          });
         });
-        await itemInstance.save();
+  
+        test("should update the attributes in the origin using the local attributes and using PUT method", async () => {
+          await itemInstance.save();
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items/999",
+            {
+              method: "PUT",
+              headers: {},
+              body: "[object Object]"
+            }
+          );
+        });
+      });
+  
+      describe("when the record does't have an id setted (considered a new record in the origin)", () => {
+        beforeEach(() => {
+          attributes = {
+            id: null,
+            name: 'A new age group',
+            items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
+          };
+          responseText = JSON.stringify(attributes);
+          Item = buildSdkzerModelEntity();
+          itemInstance = new Item(attributes);
+          (window.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            status: 201,
+            json: async () => ({
+              ...responseText,
+              id: 10101011
+            })
+          });
+        });
+  
+        test("should create the record in the origin using the local attributes and using POST method", async () => {
+          await itemInstance.save();
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items",
+            {
+              method: "POST",
+              headers: {},
+              body: "[object Object]"
+            }
+          )
+        });
+  
+        test("should set the id attribute retrieved from the origin", async () => {
+          // NOTE: We POST without an id but the id received after sync should be
+          // part of the entity
+          await itemInstance.save();
+          expect(itemInstance.attrs.id).toBe(10101011);
+        });
       });
     });
 
-    describe("when the record does't have an id setted (its a new record in the origin)", () => {
-      let attributes = {
-        name: 'A new age group',
-        items: [{ age: 2 }, { older_than: 68 }, { older_than: 10, younger_than: 19 }]
-      }, responseText, Item, itemInstance;
-
+    describe('in a failed request', () => {
       beforeEach(() => {
-        responseText = JSON.stringify(attributes);
-        Item = buildSdkzerModelEntity();
-        itemInstance = new Item(attributes);
+        (window.fetch as jest.Mock).mockRejectedValue({
+          ok: false,
+          status: 404,
+          json: async () => ({})
+        });
       });
 
-      test("should create the recordin the origin using the local attributes and using POST method", async () => {
-        xmlMock.post('http://api.mydomain.com/v1/items', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("POST");
-          return res.status(201).body(responseText);
-        });
-        await itemInstance.save();
-      });
-
-      test("should set the id attribute retrieved from the origin", async () => {
-        xmlMock.post('http://api.mydomain.com/v1/items', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("POST");
-          return res.status(201).body(JSON.stringify(Object['assign']({}, attributes, { id: 10101011 })));
-        });
-        // NOTE: We POST without an id but http response must contain an id referencing to persisted entity
-        await itemInstance.save();
-        expect(itemInstance['attrs']['id']).toBe(10101011);
+      test("it should resolve into an error", (done) => {
+        itemInstance.save().then(
+          () => {},
+          (error) => {
+            expect(error).toEqual(error);
+            done();
+          }
+        );
       });
     });
   });
@@ -713,15 +786,41 @@ describe('Sdkzer', () => {
       itemInstance = new Item({ id : 9771 });
     });
 
-    test("should destroy the record in the origin", async () => {
-      xmlMock.delete('http://api.mydomain.com/v1/items/9771', (req, res) => {
-        expect(req.method()).toEqual('DELETE');
-        expect(req.url()['host']).toEqual('api.mydomain.com');
-        expect(req.url()['path']).toEqual('/v1/items/9771');
-        expect(req.url()['protocol']).toEqual('http');
-        return res.status(200);
+    test("should try to destroy the record in the origin", async () => {
+      (window.fetch as jest.Mock).mockResolvedValueOnce({
+        ok: true,
+        status: 204,
+        json: async () => ({})
       });
       await itemInstance.destroy();
+      expect(fetch).toHaveBeenCalledWith(
+        "http://api.mydomain.com/v1/items/9771",
+        {
+          method: "DELETE",
+          headers: {},
+          body: expect.objectContaining({})
+        }
+      );
+    });
+
+    describe('in a failed request', () => {
+      beforeEach(() => {
+        (window.fetch as jest.Mock).mockRejectedValue({
+          ok: false,
+          status: 404,
+          json: async () => ({})
+        });
+      });
+
+      test("it should resolve into an error", (done) => {
+        itemInstance.destroy().then(
+          () => {},
+          (error) => {
+            expect(error).toEqual(error);
+            done();
+          }
+        );
+      });
     });
 
   });
@@ -737,47 +836,46 @@ describe('Sdkzer', () => {
       ];
       responseText = JSON.stringify(responseJSON);
       Item = buildSdkzerModelEntity();
-    });
-
-    describe('when not using custom HttpQuery', () => {
-      test('should make an http request to the right endpoint', async () => {
-        Item = buildSdkzerModelEntity();
-        xmlMock.get('http://api.mydomain.com/v1/items', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("GET");
-          return res.status(200);
-        });
-        await Item.fetchIndex();
-      });
-    });
-
-    describe('when passing a custom HttpQuery', () => {
-      test("should merge the HttpQuery with the default HttpQuery", async () => {
-        Item = buildSdkzerModelEntity();
-        let customHttpQuery = new WebServices.HttpQuery({
-          headers: [
-            new WebServices.HttpHeader({ 'auth-token': 'MyMegaScretToken' })
-          ]
-        });
-        xmlMock.get('http://api.mydomain.com/v1/items', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("GET");
-          return res.status(200).body(responseText);
-        });
-        await Item.fetchIndex(customHttpQuery);
+      (window.fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        status: 200,
+        json: async () => (responseText)
       });
     });
 
     describe('in a successful request', () => {
-      // This will be successful since we have the requested mocked up
-      test("should fetch a collection of records from the origin and return a Promise resolves into an array of instances of Item", async () => {
-        xmlMock.get('http://api.mydomain.com/v1/items', (req, res) => {
-          return res.status(200).body(responseText);
+      describe('when not using custom HttpQuery', () => {
+        test('should make an http request to the right endpoint', async () => {
+          await Item.fetchIndex();
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items",
+            {
+              method: "GET",
+              headers: {}
+            }
+          );
         });
+      });
+  
+      describe('when passing a custom HttpQuery', () => {
+        test("should merge the HttpQuery with the default HttpQuery", async () => {
+          const customHttpQuery:IQuery = {
+            headers: { 'auth-token': 'MyMegaScretToken' },
+            qsParams: { offset: 0, limit: 20 }
+          };
+  
+          await Item.fetchIndex(customHttpQuery);
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items?offset=0&limit=20",
+            {
+              method: "GET",
+              headers: { 'auth-token': 'MyMegaScretToken' }
+            }
+          );
+        });
+      });
+
+      test("should fetch a collection of records from the origin and return a Promise resolves into an array of instances of Item", async () => {
         const instances = await Item.fetchIndex();
         expect(instances[0] instanceof Item).toBeTruthy();
         expect(instances[0].attrs).toEqual({ id: 1, name: "Event 1" });
@@ -790,98 +888,15 @@ describe('Sdkzer', () => {
 
     describe('in a failed request', () => {
       beforeEach(() => {
-        xmlMock.get('http://api.mydomain.com/v1/items', (req, res) => {
-          return res.status(404);
-        });
-      });
-    });
-  });
-
-  describe('#fetchOne', () => {
-    let Item, responseText, responseJSON;
-    beforeEach(() => {
-      responseJSON = {
-        id: 1010,
-        name: "An awesome choice!",
-        items: [24, 7, 19, 57]
-      };
-      responseText = JSON.stringify(responseJSON);
-      Item = buildSdkzerModelEntity();
-    });
-
-    describe('when not using custom HttpQuery', () => {
-      test('should make an http request to the right endpoint', async () => {
-        Item = buildSdkzerModelEntity();
-        xmlMock.get('http://api.mydomain.com/v1/items/1010', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items/1010');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("GET");
-          return res.status(200).body(responseText);
-        });
-        await Item.fetchOne(1010);
-      });
-    });
-
-    describe('when passing a custom HttpQuery', () => {
-      test("should merge the HttpQuery with the default HttpQuery", async () => {
-        let customHttpQuery = new WebServices.HttpQuery({
-          headers: [
-            new WebServices.HttpHeader({ 'auth-token': 'MyMegaScretToken' })
-          ]
-        });
-        xmlMock.get('http://api.mydomain.com/v1/items/1010', (req, res) => {
-          expect(req.headers()['auth-token']).toEqual('MyMegaScretToken');
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items/1010');
-          expect(req.url()['protocol']).toEqual('http');
-          expect(req.method()).toEqual("GET");
-          return res.status(200).body(JSON.stringify(responseText));
-        });
-        await Item.fetchOne(1010, customHttpQuery);
-      });
-    });
-
-    describe('in a successful request', () => {
-      // This will be successful since we have the requested mocked up
-
-      test("should fetch a record from the origin and return a Promise resolves an instance of Item", async () => {
-        // Ensure that parseRecord gets called per instance too
-        Item.prototype.parseRecord = (data) => {
-          let newName = data.name;
-          return {
-            id: data.id,
-            newNameKey: newName,
-            items: data.items
-          };
-        };
-
-        xmlMock.get('http://api.mydomain.com/v1/items/1010', (req, res) => {
-          return res.status(200).body(responseText);
-        });
-
-        const instance = await Item.fetchOne(1010);
-        //expect(instance instanceof Item).toBeTruthy();
-        expect(instance.attrs).toEqual({
-          id: 1010,
-          newNameKey: "An awesome choice!",
-          items: [24, 7, 19, 57]
-        });
-      });
-    });
-
-    describe('in a failed request', () => {
-      beforeEach(() => {
-        xmlMock.get('http://api.mydomain.com/v1/items/1010', (req, res) => {
-          expect(req.url()['host']).toEqual('api.mydomain.com');
-          expect(req.url()['path']).toEqual('/v1/items/1010');
-          expect(req.url()['protocol']).toEqual('http');
-          return res.status(404);
+        (window.fetch as jest.Mock).mockRejectedValue({
+          ok: false,
+          status: 404,
+          json: async () => ({})
         });
       });
 
       test("it should resolve into an error", (done) => {
-        const instance = Item.fetchOne(1010).then(
+        Item.fetchIndex().then(
           () => {},
           (error) => {
             expect(error).toEqual(error);
@@ -892,4 +907,112 @@ describe('Sdkzer', () => {
     });
   });
 
+  describe('#fetchOne', () => {
+    let Item, responseText, responseJSON;
+
+    describe('in a successful request', () => {
+      beforeEach(() => {
+        responseJSON = {
+          id: 1010,
+          name: "An awesome choice!",
+          items: [24, 7, 19, 57]
+        };
+        responseText = JSON.stringify(responseJSON);
+        Item = buildSdkzerModelEntity();
+      });
+
+      describe('when not using custom HttpQuery', () => {
+        test('should make an http request to the right endpoint', async () => {
+          Item = buildSdkzerModelEntity();
+          (window.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            status: 200,
+            json: async () => (responseText)
+          });
+          await Item.fetchOne(1010);
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items/1010",
+            {
+              method: "GET",
+              headers: {}
+            }
+          );
+        });
+      });
+  
+      describe('when passing a custom HttpQuery', () => {
+        test("should merge the HttpQuery with the default HttpQuery", async () => {
+          const customHttpQuery:IQuery = {
+            headers: { 'auth-token': 'MyMegaScretToken' }
+          };
+          (window.fetch as jest.Mock).mockResolvedValueOnce({
+            ok: true,
+            status: 200,
+            json: async () => (responseText)
+          });
+  
+          await Item.fetchOne(1010, customHttpQuery);
+          expect(fetch).toHaveBeenCalledWith(
+            "http://api.mydomain.com/v1/items/1010",
+            {
+              method: "GET",
+              headers: { "auth-token": "MyMegaScretToken" }
+            }
+          );
+        });
+      });
+
+      test("should fetch a record from the origin and return a Promise resolves an instance of Item", async () => {
+        Item.prototype.parseRecord = (data) => {
+          let newName = data.name;
+          return {
+            id: data.id,
+            newNameKey: newName,
+            items: data.items
+          };
+        };
+
+        (window.fetch as jest.Mock).mockResolvedValueOnce({
+          ok: true,
+          status: 200,
+          json: async () => (responseText)
+        });
+
+        const instance = await Item.fetchOne(1010);
+        expect(fetch).toHaveBeenCalledWith(
+          "http://api.mydomain.com/v1/items/1010",
+          {
+            method: "GET",
+            headers: {}
+          }
+        );
+        expect(instance instanceof Item).toBeTruthy();
+        expect(instance.attrs).toEqual({
+          id: 1010,
+          newNameKey: "An awesome choice!",
+          items: [24, 7, 19, 57]
+        });
+      });
+    });
+
+    describe('in a failed request', () => {
+      beforeEach(() => {
+        (window.fetch as jest.Mock).mockRejectedValue({
+          ok: false,
+          status: 404,
+          json: async () => ({})
+        });
+      });
+
+      test("it should resolve into an error", (done) => {
+        Item.fetchOne(1010).then(
+          () => {},
+          (error) => {
+            expect(error).toEqual(error);
+            done();
+          }
+        );
+      });
+    });
+  });
 });

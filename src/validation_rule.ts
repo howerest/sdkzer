@@ -13,7 +13,7 @@ export class ValidationRule implements IValidationRule {
   protected conditions: Array<Function|any> = [];
   public fromValue:any;
   public toValue:any
-  public params:Object
+  public params:object
   private _invalidMessage = "Invalid";
 
   constructor(params?:any) {
@@ -31,7 +31,7 @@ export class ValidationRule implements IValidationRule {
   /**
    * Checks if the ValidationRule is valid
    */
-  public isValid(fromValue:any, toValue:any): Boolean {
+  public isValid(fromValue:any, toValue:any): boolean {
     this.fromValue = fromValue;
     this.toValue = toValue;
 
@@ -49,14 +49,14 @@ export class ValidationRule implements IValidationRule {
   /**
    * Adds an invalid message to the ValidationRule
    */
-  public addInvalidMessage(message:String) {
+  public addInvalidMessage(message:string) {
     this._invalidMessage += message;
   }
 }
 
 export interface IValidationRule {
   params: any;
-  invalidMessage: String;
+  invalidMessage: string;
 
   isValid(fromValue:any, toValue:any);
 }

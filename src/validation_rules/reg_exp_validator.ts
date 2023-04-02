@@ -3,7 +3,7 @@ import {ValidationRule} from '../validation_rule'
 export class RegExpValidator extends ValidationRule {
   protected conditions:Array<Function> = [
     () => {
-      let match:Boolean = true;
+      let match:boolean = true;
       if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params['rule'])) {
         match = false;
         this.addInvalidMessage(this.toValue + " is not valid");

@@ -5,7 +5,7 @@ interface LengthValidatorParams { min: number, max: number }
 export class LengthValidator extends ValidationRule {
   protected conditions:Array<Function> = [
     () => {
-      let match:Boolean = true;
+      let match:boolean = true;
 
       if (this.toValue.length < this.params['min']) {
         match = false;

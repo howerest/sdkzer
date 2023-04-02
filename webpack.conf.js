@@ -23,11 +23,6 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
-  // js-webservice is used but not bundled with Sdkzer. This has to be imported
-  // in the sdk you create using Sdkzer
-  externals: {
-    'js-webservices': 'commonjs js-webservices'
-  },
   module: {
     rules: [
       {
@@ -37,10 +32,10 @@ module.exports = {
     ]
   },
   plugins: [
-      // new CheckerPlugin(),
-      new webpack.BannerPlugin({
-        banner: "sdkzer 0.7.3 - By David Valin - www.davidvalin.com",
-        entryOnly: true
+    // new CheckerPlugin(),
+    new webpack.BannerPlugin({
+      banner: "sdkzer 0.8.1 - By David Valin - www.davidvalin.com",
+      entryOnly: true
     })
   ]
 };

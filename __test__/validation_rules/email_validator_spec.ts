@@ -6,14 +6,14 @@ describe("EmailValidator", () => {
   const emailValidator = new EmailValidator();
 
   invalidEmails.map((invalidEmail) => {
-    it(`it should be INVALID with '${invalidEmail}'`, () => {
+    test(`it should be INVALID with '${invalidEmail}'`, () => {
       expect(emailValidator.isValid(null, invalidEmail)).toEqual(false);
       expect(emailValidator['_invalidMessage']).toEqual(`${invalidEmail} is not a valid email address`);
     });
   });
 
   validEmails.map((validEmail) => {
-    it(`it should be VALID with '${validEmail}'`, () => {
+    test(`it should be VALID with '${validEmail}'`, () => {
       expect(emailValidator.isValid(null, validEmail)).toEqual(true);
       expect(emailValidator['_invalidMessage']).toEqual('');
     });

@@ -12,7 +12,7 @@ export class AllowedValueSwitchValidator extends ValidationRule {
 
   protected conditions:Array<Function> = [
     () => {
-      let match:Boolean = false,
+      let match:boolean = false,
           rule;
 
       if (this.params && this.params['allowed'] && this.params['allowed'].length) {
