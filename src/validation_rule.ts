@@ -9,11 +9,11 @@
 
 --------------------------------------------------------------------------- */
 
-export class ValidationRule implements IValidationRule {
+export class ValidationRule<IParams = {}> implements IValidationRule {
   protected conditions: Array<Function|any> = [];
   public fromValue:any;
   public toValue:any
-  public params:object
+  public params: IParams
   private _invalidMessage = "Invalid";
 
   constructor(params?:any) {

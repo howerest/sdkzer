@@ -1,12 +1,16 @@
 import {ValidationRule} from '../validation_rule'
 
-export class RegExpValidator extends ValidationRule {
+export interface IParams {
+  rule: RegExp
+}
+
+export class RegExpValidator extends ValidationRule<IParams> {
   protected conditions:Array<Function> = [
     () => {
       let match:boolean = true;
-      if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params['rule'])) {
+      if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params.rule)) {
         match = false;
-        this.addInvalidMessage(this.toValue + " is not valid");
+        this.addInvalidMessage(`${this.toValue} is not valid`);
       }
       return match;
     }
