@@ -1,6 +1,6 @@
 ## sdkzer ##
 
-[![Build Status](https://travis-ci.org/howerest/sdkzer.svg?branch=master)](https://travis-ci.org/howerest/sdkzer)
+![Build Status](dist/build_pass.png)
 
 # Full API docs
 [Read full API docs](http://howerest.com/sdkzer/docs/0.8.1/classes/sdkzer.html)
@@ -31,10 +31,6 @@ like.save() // We got a Promise
 ## The reason of this ##
 
 After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. Sdkzer helps you to get rid of spagetti code by centralizing your business logic into your model layer.
-
-This is inspired in "[angular-activerecord](https://github.com/bfanger/angular-activerecord)". I've being loving angular-activerecord but it was depending on Angular 1.x code, this didn't fix my requirement of cross-framework and environment. A deeper layer of objects (without dependencies) to handle XHR, HttpRequest, HttpResponse, HttpQuery... was a potential improvement.
-
-The use of TypeScript would help to organize the code, the tests, and understand it better.
 
 ## Typescript / Javascript ES6 ##
 
