@@ -139,7 +139,7 @@ export class Sdkzer<T extends SdkzerParams> {
    * @param attrName  The attribute name that we want to read or set
    * @param value     The attribute value that we want to set for "attrName"
    */
-   public attr(attrName?: string, value?: any) : object|void {
+   public attr(attrName?: string, value?: any) : string | number | boolean | object {
      // Setting an attribute?
      if (attrName !== undefined && value !== undefined) {
        // TODO: Add before&after-callback
@@ -157,7 +157,7 @@ export class Sdkzer<T extends SdkzerParams> {
      } else {
        // Reading all attributes?
        // TODO: Add before&after-callbacks
-       return this.attrs;
+       return this.attrs || {};
      }
    }
 

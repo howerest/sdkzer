@@ -42,9 +42,9 @@ Sdkzer is developed in Typescript and available as Typescript and Javascript ES6
 
 ## 1. Implementing your SDK with sdkzer ##
 
-Build an npm package exporting all your SDK entities.
+Build an npm package exporting all your SDK entities. Each entity is a class which inherits from Sdkzer.
 
-To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
+To see an SDK example using Sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
 ### Install
 
@@ -57,11 +57,22 @@ Sample code. In this case we want an entity called called "Event" that will be m
 ```
 import { Sdkzer } from 'sdkzer'
 
+export interface EventFields {
+  id: number | null;
+  name: string,
+  geo: {
+    lat: number;
+    lon: number;
+  }
+  start_date: string;
+  end_date: string;
+}
+
 /**
-  * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events
+  * Perform CRUD operations (Create, Read, Update and Delete) to deal with Events.
   * Event is mapped to "http://localhost:8000/api/v1/events" endpoint
   */
-export class Event extends Sdkzer {
+export class Event extends Sdkzer<EventFields> {
   public baseEndpoint() {
     return "http://localhost:8000/api/v1/events";
   }
@@ -76,20 +87,6 @@ export class Event extends Sdkzer {
       start_date: null,
       end_date: null
     };
-  }
-
-  /*
-   * This parses the data received from the origin endpoint
-   */
-  public parseRecord(data:object) {
-    return data['event'];
-  }
-
-  /*
-   * This converts local state into data understandable by the origin endpoint
-   */
-  public toOriginJSON() {
-    return { 'event': this.attr() };
   }
 
   /*
@@ -118,6 +115,7 @@ export class Event extends Sdkzer {
     // to retrieve collections. if you need to override it do it
     return Event.fetchIndex(indexByCityNameHttpQuery);
   }
+
   // [...]
 }
 ```

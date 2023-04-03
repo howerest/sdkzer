@@ -160,7 +160,7 @@ class Sdkzer {
         else {
             // Reading all attributes?
             // TODO: Add before&after-callbacks
-            return this.attrs;
+            return this.attrs || {};
         }
     }
     /**

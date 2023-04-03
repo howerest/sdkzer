@@ -56,7 +56,7 @@ export declare class Sdkzer<T extends SdkzerParams> {
      * @param attrName  The attribute name that we want to read or set
      * @param value     The attribute value that we want to set for "attrName"
      */
-    attr(attrName?: string, value?: any): object | void;
+    attr(attrName?: string, value?: any): string | number | boolean | object;
     /**
      * Retrieves the base resource url. Override it using your base endpoint
      * for your resource.
