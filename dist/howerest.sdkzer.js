@@ -107,7 +107,7 @@ class Sdkzer {
         // Reset previous invalid messages from previous validations
         this.invalidMessages = {};
         let toValidateAttr, validationRule;
-        const toValidateAttrs = Object.keys(this.validationRules);
+        const toValidateAttrs = Object.keys(this.validationRules || {});
         // Validate attribute's ValidationRules
         for (toValidateAttr of toValidateAttrs) {
             for (validationRule of this.validationRules[toValidateAttr]) {
@@ -600,9 +600,9 @@ class RegExpValidator extends validation_rule_1.ValidationRule {
         this.conditions = [
             () => {
                 let match = true;
-                if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params['rule'])) {
+                if (!this.toValue || !this.toValue.match || !this.toValue.match(this.params.rule)) {
                     match = false;
-                    this.addInvalidMessage(this.toValue + " is not valid");
+                    this.addInvalidMessage(`${this.toValue} is not valid`);
                 }
                 return match;
             }
@@ -626,13 +626,13 @@ class NumberValidator extends validation_rule_1.ValidationRule {
         this.conditions = [
             () => {
                 let match = true;
-                if (this.toValue < this.params['min']) {
+                if (this.toValue < this.params.min) {
                     match = false;
-                    this.addInvalidMessage(this.toValue + " is smaller than " + this.params['min']);
+                    this.addInvalidMessage(`${this.toValue} is smaller than ${this.params.min}`);
                 }
-                if (this.toValue > this.params['max']) {
+                if (this.toValue > this.params.max) {
                     match = false;
-                    this.addInvalidMessage(this.toValue + " is bigger than " + this.params['max']);
+                    this.addInvalidMessage(`${this.toValue} is bigger than ${this.params.max}`);
                 }
                 return match;
             }
@@ -656,13 +656,13 @@ class LengthValidator extends validation_rule_1.ValidationRule {
         this.conditions = [
             () => {
                 let match = true;
-                if (this.toValue.length < this.params['min']) {
+                if (this.toValue.length < this.params.min) {
                     match = false;
-                    this.addInvalidMessage(`${this.toValue} contains less than ${this.params['min']} items`);
+                    this.addInvalidMessage(`${this.toValue} contains less than ${this.params.min} items`);
                 }
-                if (this.toValue.length > this.params['max']) {
+                if (this.toValue.length > this.params.max) {
                     match = false;
-                    this.addInvalidMessage(`${this.toValue} contains more than ${this.params['max']} items`);
+                    this.addInvalidMessage(`${this.toValue} contains more than ${this.params.max} items`);
                 }
                 return match;
             }
@@ -690,7 +690,7 @@ class EmailValidator extends validation_rule_1.ValidationRule {
                 let match = true;
                 const regExpValidator = new reg_exp_validator_1.RegExpValidator({ rule: /^[-a-z0-9~!$%^&*_=+}{\'?]+(\.[-a-z0-9~!$%^&*_=+}{\'?]+)*@([a-z0-9_][-a-z0-9_]*(\.[-a-z0-9_]+)*\.(aero|arpa|biz|com|coop|edu|gov|info|int|mil|museum|name|net|org|pro|travel|mobi|[a-z][a-z])|([0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}))(:[0-9]{1,5})?$/i });
                 if (!regExpValidator.isValid(this.fromValue, this.toValue)) {
-                    this.addInvalidMessage(this.toValue + ' is not a valid email address');
+                    this.addInvalidMessage(`${this.toValue} is not a valid email address`);
                     match = false;
                 }
                 return match;
@@ -722,16 +722,16 @@ class AllowedValueSwitchValidator extends validation_rule_1.ValidationRule {
         this.conditions = [
             () => {
                 let match = false, rule;
-                if (this.params && this.params['allowed'] && this.params['allowed'].length) {
-                    for (let i = 0; i < this.params['allowed'].length; i++) {
-                        rule = this.params['allowed'][i];
-                        if (rule['from'] && rule['to'] && rule['to'].length) {
+                if (this.params && this.params.allowed && this.params.allowed.length) {
+                    for (let i = 0; i < this.params.allowed.length; i++) {
+                        rule = this.params.allowed[i];
+                        if (rule.from && rule.to && rule.to.length) {
                             // Origin value matched
-                            if (rule['from'] === this.fromValue) {
+                            if (rule.from === this.fromValue) {
                                 // Check that the destination value also allowed
-                                for (let i2 = 0; i2 < rule['to'].length; i2++) {
+                                for (let i2 = 0; i2 < rule.to.length; i2++) {
                                     if (!match) {
-                                        if (this.toValue === rule['to'][i2]) {
+                                        if (this.toValue === rule.to[i2]) {
                                             match = true;
                                         }
                                     }
@@ -741,7 +741,7 @@ class AllowedValueSwitchValidator extends validation_rule_1.ValidationRule {
                     }
                 }
                 if (!match) {
-                    this.addInvalidMessage(this.fromValue + " cannot change to '" + this.toValue + "'");
+                    this.addInvalidMessage(`${this.fromValue} cannot change to '${this.toValue}'`);
                 }
                 return match;
             }

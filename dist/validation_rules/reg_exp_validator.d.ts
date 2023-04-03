@@ -1,4 +1,7 @@
 import { ValidationRule } from '../validation_rule';
-export declare class RegExpValidator extends ValidationRule {
+export interface IParams {
+    rule: RegExp;
+}
+export declare class RegExpValidator extends ValidationRule<IParams> {
     protected conditions: Array<Function>;
 }

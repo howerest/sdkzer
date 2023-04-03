@@ -1,8 +1,8 @@
-export declare class ValidationRule implements IValidationRule {
+export declare class ValidationRule<IParams = {}> implements IValidationRule {
     protected conditions: Array<Function | any>;
     fromValue: any;
     toValue: any;
-    params: object;
+    params: IParams;
     private _invalidMessage;
     constructor(params?: any);
     /**

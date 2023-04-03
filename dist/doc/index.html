@@ -16,13 +16,13 @@
 <a href="#sdkzer" id="sdkzer" style="color: inherit; text-decoration: none;">
   <h2>sdkzer</h2>
 </a>
-<p><a href="https://travis-ci.org/howerest/sdkzer"><img src="https://travis-ci.org/howerest/sdkzer.svg?branch=master" alt="Build Status"></a></p>
+<p><img src="dist/build_pass.png" alt="Build Status"></p>
+<p><a href="http://howerest.com/labs/sdkzer">http://howerest.com/labs/sdkzer</a></p>
 
 <a href="#full-api-docs" id="full-api-docs" style="color: inherit; text-decoration: none;">
   <h1>Full API docs</h1>
 </a>
-<p><a href="http://howerest.com/sdkzer/docs/0.8.1/classes/sdkzer.html">Read full API docs</a>
-<a href="http://howerest.com/labs/sdkzer">More info about sdkzer</a></p>
+<p>For a full API specification see <code>dist/doc/index.html</code>.</p>
 
 <a href="#introduction" id="introduction" style="color: inherit; text-decoration: none;">
   <h2>Introduction</h2>
@@ -31,6 +31,7 @@
 <p>You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your <a href="http://yourdomain.com/api/v1/users">http://yourdomain.com/api/v1/users</a> endpoint. One important point is that resources should never be implemented nested (always flatten).</p>
 <p>If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.</p>
 <p>On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. Sdkzer makes only the repetitive work for you: communicate with the backend. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.</p>
+<p>Sdkzer allows you to add validation rules to your entities and generate error messages automatically based on computing the validators for each attribute.</p>
 <p>sdkzer play nice with any frontend framework as well as with Node.js and will help you to have a model layer in your software that you can easily migrate to a different javascript environment in the future if you wish.</p>
 <p>With sdkzer you don&#39;t talk low level to your http API, you do it through a javascript API like so:</p>
 <pre><code><span class="hl-0">const</span><span class="hl-1"> </span><span class="hl-2">like</span><span class="hl-1"> = </span><span class="hl-0">new</span><span class="hl-1"> </span><span class="hl-3">Like</span><span class="hl-1">({</span><br/><span class="hl-1">  </span><span class="hl-4">userId:</span><span class="hl-1"> </span><span class="hl-5">10</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">productId:</span><span class="hl-1"> </span><span class="hl-5">29188</span><br/><span class="hl-1">});</span><br/><br/><span class="hl-4">like</span><span class="hl-1">.</span><span class="hl-3">save</span><span class="hl-1">() </span><span class="hl-6">// We got a Promise</span>
@@ -40,8 +41,6 @@
   <h2>The reason of this</h2>
 </a>
 <p>After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. Sdkzer helps you to get rid of spagetti code by centralizing your business logic into your model layer.</p>
-<p>This is inspired in &quot;<a href="https://github.com/bfanger/angular-activerecord">angular-activerecord</a>&quot;. I&#39;ve being loving angular-activerecord but it was depending on Angular 1.x code, this didn&#39;t fix my requirement of cross-framework and environment. A deeper layer of objects (without dependencies) to handle XHR, HttpRequest, HttpResponse, HttpQuery... was a potential improvement.</p>
-<p>The use of TypeScript would help to organize the code, the tests, and understand it better.</p>
 
 <a href="#typescript--javascript-es6" id="typescript--javascript-es6" style="color: inherit; text-decoration: none;">
   <h2>Typescript / Javascript ES6</h2>
@@ -171,8 +170,12 @@
 <li class="tsd-kind-class"><a href="classes/RequiredValidator.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Required<wbr/>Validator</a></li>
 <li class="tsd-kind-class"><a href="classes/Sdkzer.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Sdkzer</a></li>
 <li class="tsd-kind-class"><a href="classes/ValidationRule.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-128-path"></use><use href="#icon-128-text"></use></svg>Validation<wbr/>Rule</a></li>
-<li class="tsd-kind-interface"><a href="interfaces/IQuery.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-256-path"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)" id="icon-256-text"></path></svg>IQuery</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/IAllowedValueSwitchValidatorParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts-interface)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-256-path"></rect><path d="M9.51 16V15.016H11.298V8.224H9.51V7.24H14.19V8.224H12.402V15.016H14.19V16H9.51Z" fill="var(--color-text)" id="icon-256-text"></path></svg>IAllowed<wbr/>Value<wbr/>Switch<wbr/>Validator<wbr/>Params</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/ILengthValidatorParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>ILength<wbr/>Validator<wbr/>Params</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/INumberValidatorParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>INumber<wbr/>Validator<wbr/>Params</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/IQuery.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>IQuery</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/IQueryString.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>IQuery<wbr/>String</a></li>
+<li class="tsd-kind-interface"><a href="interfaces/IRegExpValidatorParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>IReg<wbr/>Exp<wbr/>Validator<wbr/>Params</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/ISdkzerConfigOptions.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>ISdkzer<wbr/>Config<wbr/>Options</a></li>
 <li class="tsd-kind-interface"><a href="interfaces/SdkzerParams.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><use href="#icon-256-path"></use><use href="#icon-256-text"></use></svg>Sdkzer<wbr/>Params</a></li>
 <li class="tsd-kind-type-alias"><a href="types/THttpHeaders.html" class="tsd-index-link"><svg class="tsd-kind-icon" width="24" height="24" viewBox="0 0 24 24"><rect fill="var(--color-icon-background)" stroke="var(--color-ts)" stroke-width="1.5" x="1" y="1" width="22" height="22" rx="6" id="icon-4194304-path"></rect><path d="M11.31 16V8.224H8.91V7.24H14.79V8.224H12.39V16H11.31Z" fill="var(--color-text)" id="icon-4194304-text"></path></svg>THttp<wbr/>Headers</a></li>
