@@ -1,4 +1,7 @@
-name: Node.js CI
+name: ci
+
+permissions:
+  contents: write
 
 on:
   push:
@@ -8,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     strategy:
       matrix:
         node-version: [16.x, 18.x]
@@ -22,4 +23,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: yarn install
-    - run: yarn test
+    - run: TERM=xterm-color yarn build
+    - run: TERM=xterm-color yarn test
+    - run: TERM=xterm-color yarn document

@@ -1,6 +1,6 @@
 ## sdkzer ##
 
-<img src="https://raw.githubusercontent.com/howerest/sdkzer/master/dist/build_pass.png"  alt="build pass" />
+[<img src="https://github.com/howerest/sdkzer/workflows/ci/badge.svg"  alt="Continuous Integration" />](https://htmlpreview.github.io/?https://github.com/howerest/sdkzer/blob/master/dist/tests_report.html) ![Coverage](./dist/coverage/badges.svg)
 
 [http://howerest.com/labs/sdkzer](http://howerest.com/labs/sdkzer)
 

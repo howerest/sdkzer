@@ -570,7 +570,7 @@ export interface ISdkzerConfigOptions {
   defaultHttpHeaders: THttpHeaders
 }
 
-export { ValidationRule } from "./validation_rule";
+export { ValidationRule, IValidationRule } from "./validation_rule";
 export { RequiredValidator } from "./validation_rules/required_validator"
 export {
   RegExpValidator,

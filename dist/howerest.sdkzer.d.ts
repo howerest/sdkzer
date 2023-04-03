@@ -163,7 +163,7 @@ export interface IQuery {
 export interface ISdkzerConfigOptions {
     defaultHttpHeaders: THttpHeaders;
 }
-export { ValidationRule } from "./validation_rule";
+export { ValidationRule, IValidationRule } from "./validation_rule";
 export { RequiredValidator } from "./validation_rules/required_validator";
 export { RegExpValidator, IParams as IRegExpValidatorParams } from "./validation_rules/reg_exp_validator";
 export { NumberValidator, IParams as INumberValidatorParams } from "./validation_rules/number_validator";
