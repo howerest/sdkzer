@@ -2,9 +2,11 @@
 
 ![Build Status](dist/build_pass.png)
 
+[http://howerest.com/labs/sdkzer](http://howerest.com/labs/sdkzer)
+
 # Full API docs
-[Read full API docs](http://howerest.com/sdkzer/docs/0.8.1/classes/sdkzer.html)
-[More info about sdkzer](http://howerest.com/labs/sdkzer)
+
+For a full API specification see `dist/doc/index.html`.
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. This is an ORM-type approach in which your source of truth is a REST api instead of a database.
@@ -14,6 +16,8 @@ You create entities that extend Sdkzer class and those will automatically be con
 If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
 
 On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. Sdkzer makes only the repetitive work for you: communicate with the backend. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.
+
+Sdkzer allows you to add validation rules to your entities and generate error messages automatically based on computing the validators for each attribute.
 
 sdkzer play nice with any frontend framework as well as with Node.js and will help you to have a model layer in your software that you can easily migrate to a different javascript environment in the future if you wish.
 
