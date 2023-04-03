@@ -1,6 +1,6 @@
 ## sdkzer ##
 
-[<img src="https://github.com/howerest/sdkzer/workflows/ci/badge.svg"  alt="Continuous Integration" />](https://htmlpreview.github.io/?https://github.com/howerest/sdkzer/blob/master/dist/tests_report.html) ![Coverage](./dist/coverage/badges.svg)
+[<img src="https://github.com/howerest/sdkzer/workflows/ci/badge.svg"  alt="Continuous Integration" />](https://htmlpreview.github.io/?https://github.com/howerest/sdkzer/blob/master/dist/tests_report.html) [<img src="https://raw.githubusercontent.com/howerest/sdkzer/master/dist/coverage/badges.svg"  alt="Continuous Integration" />](https://htmlpreview.github.io/?https://github.com/howerest/sdkzer/blob/master/dist/tests_report.html)
 
 [http://howerest.com/labs/sdkzer](http://howerest.com/labs/sdkzer)
 
