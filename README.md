@@ -1,23 +1,24 @@
 ## sdkzer ##
 
-![Build Status](dist/build_pass.png)
+<img src="https://raw.githubusercontent.com/howerest/sdkzer/master/dist/build_pass.png"  alt="build pass" />
 
 [http://howerest.com/labs/sdkzer](http://howerest.com/labs/sdkzer)
 
-# Full API docs
+<img src="https://raw.githubusercontent.com/howerest/sdkzer/master/sdkzer.png"  alt="sdkzer" />
 
+# Full API docs
 For a full API specification see `dist/doc/index.html`.
 
 ## Introduction ##
 sdkzer implements a dev-friendly javascript API to interact with http services implemented as RESTful which implement CRUD operations: Create, Read, Update and Delete. This is an ORM-type approach in which your source of truth is a REST api instead of a database.
 
-You create entities that extend Sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint. One important point is that resources should never be implemented nested (always flatten).
+You create entities that extend sdkzer class and those will automatically be connected to your restful backend endpoints. A class like User will allow you to deal with your http://yourdomain.com/api/v1/users endpoint. One important point is that resources should never be implemented nested (always flatten).
 
 If you have a RESTful (CRUD) http API, sdkzer will work out of the box allowing you to Create, Read, Update and Delete records from a javascript API that makes sense, along with multiple methods to deal with the record state.
 
-On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. Sdkzer makes only the repetitive work for you: communicate with the backend. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.
+On top of that communication layer that sdkzer does for you out of the box you will write your custom model methods and  attributes. sdkzer makes only the repetitive work for you: communicate with the backend. By providing a predictable http api in your backend we are able to easily build an SDK that knows how to talk to your backend to make any imaginable request.
 
-Sdkzer allows you to add validation rules to your entities and generate error messages automatically based on computing the validators for each attribute.
+sdkzer allows you to add validation rules to your entities and generate error messages automatically based on computing the validators for each attribute.
 
 sdkzer play nice with any frontend framework as well as with Node.js and will help you to have a model layer in your software that you can easily migrate to a different javascript environment in the future if you wish.
 
@@ -34,17 +35,17 @@ like.save() // We got a Promise
 
 ## The reason of this ##
 
-After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. Sdkzer helps you to get rid of spagetti code by centralizing your business logic into your model layer.
+After seen big amounts of spagetti code in big frontend applications, I realize that we require a way to create models in the frontend in an standard way that helps us to Create, Read, Update and Delete records easily without having to write all the logic everytime. sdkzer helps you to get rid of spagetti code by centralizing your business logic into your model layer.
 
 ## Typescript / Javascript ES6 ##
 
-Sdkzer is developed in Typescript and available as Typescript and Javascript ES6. You can extend Sdkzer class for each of your SDK entities and you are ready to go.
+sdkzer is developed in Typescript and available as Typescript and Javascript ES6. You can extend "Sdkzer" class for each of your SDK entities and you are ready to go.
 
 ## 1. Implementing your SDK with sdkzer ##
 
-Build an npm package exporting all your SDK entities. Each entity is a class which inherits from Sdkzer.
+Build an npm package exporting all your SDK entities. Each entity is a class which inherits from "Sdkzer".
 
-To see an SDK example using Sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
+To see an SDK example using sdkzer, have a look at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
 ### Install
 
@@ -119,6 +120,8 @@ export class Event extends Sdkzer<EventFields> {
   // [...]
 }
 ```
+
+See a more complete example at [sdkzer-sdk-sample](https://github.com/howerest/sdkzer-sdk-sample) repository.
 
 ### 1.2. Default headers
 
