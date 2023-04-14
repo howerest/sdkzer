@@ -41,7 +41,7 @@ After seen big amounts of spagetti code in big frontend applications, I realize 
 
 sdkzer is developed in Typescript and available as Typescript and Javascript ES6. You can extend "Sdkzer" class for each of your SDK entities and you are ready to go.
 
-## 1. Implementing your SDK with sdkzer ##
+## 1. Implementing your SDK ##
 
 Build an npm package exporting all your SDK entities. Each entity is a class which inherits from "Sdkzer".
 
@@ -171,7 +171,7 @@ await myEvent.save();
 
 ### 2.2.2. Read (retrieve) a record ###
 
-##### Option A. When you have an instance already
+##### Option A. read (When you have an instance already)
 ```
 import {Event} from 'sdk';
 
@@ -179,7 +179,7 @@ import {Event} from 'sdk';
 const event = new Event({ id: 19 });
 await event.fetch();
 ```
-##### Option B. When you don't have an instance already
+##### Option B. read (When you don't have an instance already)
 ```
 import {Event} from 'sdk';
 
@@ -190,15 +190,26 @@ const event = await Event.fetchOne(19); // we got an Event instance
 ```
 import {Event} from 'sdk';
 
-await Event.save();
+const event = await Event.fetchOne(1);
+event.attr('name', 'Another salsa event');
+event.validate() &&
+  event.isValid() &&
+    await event.save();
 ```
 
 ### 2.2.4. Delete a record ###
 ```
 import {Event} from 'sdk';
 
-await Event.destroy();
+const event = await Event.fetchOne(1);
+await event.destroy();
 ```
+
+## 2.3. Validation ##
+
+your model entity extended from sdkzer will have a `validate()` and `isValid()` methods. This validation is checked against all validation rules defined for each attribute.
+
+To see how to use validation [see our example of validation](https://github.com/howerest/sdkzer-sdk-sample/blob/f97b3cef4ec0473749c03cfeb63e17a790cd1702/src/comment.ts#L21) using sdkzer. 
 
 ## Contribute ##
 
