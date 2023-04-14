@@ -34,7 +34,7 @@ module.exports = {
   plugins: [
     // new CheckerPlugin(),
     new webpack.BannerPlugin({
-      banner: "sdkzer 0.8.3 - By David Valin - www.davidvalin.com",
+      banner: "sdkzer 0.8.4 - By David Valin - www.davidvalin.com",
       entryOnly: true
     })
   ]

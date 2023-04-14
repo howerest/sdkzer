@@ -1,6 +1,6 @@
 {
   "name": "sdkzer",
-  "version": "0.8.3",
+  "version": "0.8.4",
   "description": "Implements a simple API to build a Model connected to a RESTful api from Javascript.",
   "keywords": [
     "sdk",
